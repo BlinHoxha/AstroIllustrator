@@ -1,0 +1,1434 @@
+{
+  "name": "HYG v4.1 Orion subset",
+  "source": "https://raw.githubusercontent.com/astronexus/HYG-Database/3bf37f4b2d5460e1278286320d1d62fab9b493c1/hyg/CURRENT/hygdata_v41.csv",
+  "upstreamCommit": "3bf37f4b2d5460e1278286320d1d62fab9b493c1",
+  "upstreamSha256": "d9f69fd86bbf90a4e4d52b4c5c53eacfa6dfc0bfdef85bfd94f095e0bebe4ebd",
+  "license": "CC-BY-SA-4.0",
+  "attribution": "David Nash / Astronexus and contributors",
+  "epoch": "J2000.0",
+  "frame": "J2000 equatorial",
+  "selection": "con=Ori, HIP identifier present, magnitude <=6.5; RA hours converted to degrees",
+  "stars": [
+    {
+      "hip": 22044,
+      "name": "HIP 22044",
+      "raDeg": 71.10762,
+      "decDeg": 11.146137,
+      "magnitude": 5.39
+    },
+    {
+      "hip": 22157,
+      "name": "HIP 22157",
+      "raDeg": 71.50725,
+      "decDeg": 11.705591,
+      "magnitude": 5.35
+    },
+    {
+      "hip": 22189,
+      "name": "HIP 22189",
+      "raDeg": 71.600685,
+      "decDeg": -2.954532,
+      "magnitude": 6.33
+    },
+    {
+      "hip": 22354,
+      "name": "HIP 22354",
+      "raDeg": 72.18593999999999,
+      "decDeg": 3.588526,
+      "magnitude": 6.04
+    },
+    {
+      "hip": 22449,
+      "name": "Tabit",
+      "raDeg": 72.460035,
+      "decDeg": 6.961276,
+      "magnitude": 3.19
+    },
+    {
+      "hip": 22509,
+      "name": "Pi-2",
+      "raDeg": 72.65301,
+      "decDeg": 8.900176,
+      "magnitude": 4.35
+    },
+    {
+      "hip": 22549,
+      "name": "Pi-4",
+      "raDeg": 72.80151000000001,
+      "decDeg": 5.605104,
+      "magnitude": 3.68
+    },
+    {
+      "hip": 22597,
+      "name": "HIP 22597",
+      "raDeg": 72.93076500000001,
+      "decDeg": 9.975078,
+      "magnitude": 6.11
+    },
+    {
+      "hip": 22607,
+      "name": "HIP 22607",
+      "raDeg": 72.958275,
+      "decDeg": 13.655155,
+      "magnitude": 6.3
+    },
+    {
+      "hip": 22667,
+      "name": "Omi-1",
+      "raDeg": 73.133175,
+      "decDeg": 14.250642,
+      "magnitude": 4.71
+    },
+    {
+      "hip": 22730,
+      "name": "HIP 22730",
+      "raDeg": 73.344885,
+      "decDeg": 2.508225,
+      "magnitude": 5.33
+    },
+    {
+      "hip": 22797,
+      "name": "Pi-5",
+      "raDeg": 73.562895,
+      "decDeg": 2.440672,
+      "magnitude": 3.71
+    },
+    {
+      "hip": 22833,
+      "name": "HIP 22833",
+      "raDeg": 73.695405,
+      "decDeg": 11.426006,
+      "magnitude": 5.18
+    },
+    {
+      "hip": 22834,
+      "name": "HIP 22834",
+      "raDeg": 73.699095,
+      "decDeg": 7.779097,
+      "magnitude": 5.33
+    },
+    {
+      "hip": 22840,
+      "name": "HIP 22840",
+      "raDeg": 73.71129,
+      "decDeg": 0.467167,
+      "magnitude": 5.98
+    },
+    {
+      "hip": 22845,
+      "name": "Pi-1",
+      "raDeg": 73.72386,
+      "decDeg": 10.150833,
+      "magnitude": 4.64
+    },
+    {
+      "hip": 22913,
+      "name": "HIP 22913",
+      "raDeg": 73.95897,
+      "decDeg": 15.040278,
+      "magnitude": 5.79
+    },
+    {
+      "hip": 22923,
+      "name": "HIP 22923",
+      "raDeg": 73.993125,
+      "decDeg": 5.399024,
+      "magnitude": 6.5
+    },
+    {
+      "hip": 22938,
+      "name": "HIP 22938",
+      "raDeg": 74.03737500000001,
+      "decDeg": 7.904696,
+      "magnitude": 6.42
+    },
+    {
+      "hip": 22957,
+      "name": "Omi-2",
+      "raDeg": 74.092815,
+      "decDeg": 13.514466,
+      "magnitude": 4.06
+    },
+    {
+      "hip": 23041,
+      "name": "HIP 23041",
+      "raDeg": 74.321625,
+      "decDeg": -1.067258,
+      "magnitude": 6.25
+    },
+    {
+      "hip": 23092,
+      "name": "HIP 23092",
+      "raDeg": 74.54547000000001,
+      "decDeg": -2.212738,
+      "magnitude": 6.34
+    },
+    {
+      "hip": 23123,
+      "name": "Pi-6",
+      "raDeg": 74.63709,
+      "decDeg": 1.714016,
+      "magnitude": 4.47
+    },
+    {
+      "hip": 23161,
+      "name": "HIP 23161",
+      "raDeg": 74.74755,
+      "decDeg": 14.54324,
+      "magnitude": 6.14
+    },
+    {
+      "hip": 23296,
+      "name": "HIP 23296",
+      "raDeg": 75.16587,
+      "decDeg": -2.066032,
+      "magnitude": 6.31
+    },
+    {
+      "hip": 23408,
+      "name": "HIP 23408",
+      "raDeg": 75.45981,
+      "decDeg": 0.722112,
+      "magnitude": 5.91
+    },
+    {
+      "hip": 23419,
+      "name": "HIP 23419",
+      "raDeg": 75.5001,
+      "decDeg": 1.608865,
+      "magnitude": 6.45
+    },
+    {
+      "hip": 23607,
+      "name": "HIP 23607",
+      "raDeg": 76.14229499999999,
+      "decDeg": 15.404105,
+      "magnitude": 4.65
+    },
+    {
+      "hip": 23643,
+      "name": "HIP 23643",
+      "raDeg": 76.22719500000001,
+      "decDeg": -3.039675,
+      "magnitude": 6.04
+    },
+    {
+      "hip": 23680,
+      "name": "HIP 23680",
+      "raDeg": 76.348815,
+      "decDeg": 1.177627,
+      "magnitude": 6.1
+    },
+    {
+      "hip": 23852,
+      "name": "HIP 23852",
+      "raDeg": 76.90963500000001,
+      "decDeg": 9.47178,
+      "magnitude": 6.15
+    },
+    {
+      "hip": 23879,
+      "name": "HIP 23879",
+      "raDeg": 76.970385,
+      "decDeg": 8.498429,
+      "magnitude": 5.33
+    },
+    {
+      "hip": 23983,
+      "name": "HIP 23983",
+      "raDeg": 77.33184,
+      "decDeg": 9.829579,
+      "magnitude": 5.43
+    },
+    {
+      "hip": 24010,
+      "name": "HIP 24010",
+      "raDeg": 77.42481000000001,
+      "decDeg": 15.597232,
+      "magnitude": 4.81
+    },
+    {
+      "hip": 24041,
+      "name": "HIP 24041",
+      "raDeg": 77.513595,
+      "decDeg": -0.565323,
+      "magnitude": 6.11
+    },
+    {
+      "hip": 24130,
+      "name": "HIP 24130",
+      "raDeg": 77.741775,
+      "decDeg": -2.254114,
+      "magnitude": 6.24
+    },
+    {
+      "hip": 24162,
+      "name": "HIP 24162",
+      "raDeg": 77.8299,
+      "decDeg": -2.490782,
+      "magnitude": 5.89
+    },
+    {
+      "hip": 24197,
+      "name": "HIP 24197",
+      "raDeg": 77.923185,
+      "decDeg": 16.045673,
+      "magnitude": 5.18
+    },
+    {
+      "hip": 24203,
+      "name": "HIP 24203",
+      "raDeg": 77.938965,
+      "decDeg": 1.037028,
+      "magnitude": 5.88
+    },
+    {
+      "hip": 24294,
+      "name": "HIP 24294",
+      "raDeg": 78.200535,
+      "decDeg": -6.05719,
+      "magnitude": 5.9
+    },
+    {
+      "hip": 24331,
+      "name": "Rho",
+      "raDeg": 78.322845,
+      "decDeg": 2.861265,
+      "magnitude": 4.46
+    },
+    {
+      "hip": 24349,
+      "name": "HIP 24349",
+      "raDeg": 78.38148,
+      "decDeg": 1.967684,
+      "magnitude": 6.08
+    },
+    {
+      "hip": 24377,
+      "name": "HIP 24377",
+      "raDeg": 78.446895,
+      "decDeg": 0.560423,
+      "magnitude": 6.33
+    },
+    {
+      "hip": 24436,
+      "name": "Rigel",
+      "raDeg": 78.63447,
+      "decDeg": -8.20164,
+      "magnitude": 0.18
+    },
+    {
+      "hip": 24450,
+      "name": "HIP 24450",
+      "raDeg": 78.68353499999999,
+      "decDeg": 5.156151,
+      "magnitude": 5.5
+    },
+    {
+      "hip": 24493,
+      "name": "HIP 24493",
+      "raDeg": 78.827085,
+      "decDeg": -1.40904,
+      "magnitude": 6.15
+    },
+    {
+      "hip": 24555,
+      "name": "HIP 24555",
+      "raDeg": 79.017225,
+      "decDeg": 11.341354,
+      "magnitude": 5.52
+    },
+    {
+      "hip": 24607,
+      "name": "HIP 24607",
+      "raDeg": 79.17100500000001,
+      "decDeg": 1.947328,
+      "magnitude": 6.42
+    },
+    {
+      "hip": 24674,
+      "name": "Tau",
+      "raDeg": 79.40163,
+      "decDeg": -6.844409,
+      "magnitude": 3.59
+    },
+    {
+      "hip": 24817,
+      "name": "HIP 24817",
+      "raDeg": 79.796745,
+      "decDeg": 2.595806,
+      "magnitude": 5.34
+    },
+    {
+      "hip": 24847,
+      "name": "HIP 24847",
+      "raDeg": 79.89702,
+      "decDeg": -1.411892,
+      "magnitude": 6.33
+    },
+    {
+      "hip": 24925,
+      "name": "HIP 24925",
+      "raDeg": 80.110035,
+      "decDeg": -5.367528,
+      "magnitude": 6.4
+    },
+    {
+      "hip": 24960,
+      "name": "HIP 24960",
+      "raDeg": 80.182335,
+      "decDeg": 2.54478,
+      "magnitude": 6.43
+    },
+    {
+      "hip": 25011,
+      "name": "HIP 25011",
+      "raDeg": 80.330445,
+      "decDeg": 4.011948,
+      "magnitude": 6.49
+    },
+    {
+      "hip": 25028,
+      "name": "HIP 25028",
+      "raDeg": 80.38267499999999,
+      "decDeg": -0.416491,
+      "magnitude": 5.68
+    },
+    {
+      "hip": 25041,
+      "name": "HIP 25041",
+      "raDeg": 80.4315,
+      "decDeg": 8.428556,
+      "magnitude": 5.78
+    },
+    {
+      "hip": 25044,
+      "name": "HIP 25044",
+      "raDeg": 80.44062,
+      "decDeg": -0.382465,
+      "magnitude": 4.72
+    },
+    {
+      "hip": 25142,
+      "name": "HIP 25142",
+      "raDeg": 80.70834,
+      "decDeg": 3.544452,
+      "magnitude": 4.99
+    },
+    {
+      "hip": 25187,
+      "name": "HIP 25187",
+      "raDeg": 80.827125,
+      "decDeg": -8.415595,
+      "magnitude": 5.99
+    },
+    {
+      "hip": 25205,
+      "name": "HIP 25205",
+      "raDeg": 80.87944499999999,
+      "decDeg": 5.323086,
+      "magnitude": 6.34
+    },
+    {
+      "hip": 25223,
+      "name": "HIP 25223",
+      "raDeg": 80.92629,
+      "decDeg": -0.159818,
+      "magnitude": 5.69
+    },
+    {
+      "hip": 25240,
+      "name": "HIP 25240",
+      "raDeg": 80.96388,
+      "decDeg": -0.866622,
+      "magnitude": 6.13
+    },
+    {
+      "hip": 25247,
+      "name": "HIP 25247",
+      "raDeg": 80.986785,
+      "decDeg": -7.808065,
+      "magnitude": 4.13
+    },
+    {
+      "hip": 25281,
+      "name": "Eta",
+      "raDeg": 81.119235,
+      "decDeg": -2.397146,
+      "magnitude": 3.35
+    },
+    {
+      "hip": 25282,
+      "name": "HIP 25282",
+      "raDeg": 81.12045,
+      "decDeg": -0.891328,
+      "magnitude": 5.07
+    },
+    {
+      "hip": 25288,
+      "name": "HIP 25288",
+      "raDeg": 81.15042,
+      "decDeg": 2.353165,
+      "magnitude": 6.33
+    },
+    {
+      "hip": 25302,
+      "name": "Psi-1",
+      "raDeg": 81.18678,
+      "decDeg": 1.846445,
+      "magnitude": 4.89
+    },
+    {
+      "hip": 25329,
+      "name": "HIP 25329",
+      "raDeg": 81.25726499999999,
+      "decDeg": -10.328887,
+      "magnitude": 5.6
+    },
+    {
+      "hip": 25336,
+      "name": "Bellatrix",
+      "raDeg": 81.282765,
+      "decDeg": 6.349702,
+      "magnitude": 1.64
+    },
+    {
+      "hip": 25368,
+      "name": "HIP 25368",
+      "raDeg": 81.402075,
+      "decDeg": -1.491294,
+      "magnitude": 6.44
+    },
+    {
+      "hip": 25378,
+      "name": "HIP 25378",
+      "raDeg": 81.445905,
+      "decDeg": 0.520244,
+      "magnitude": 6.18
+    },
+    {
+      "hip": 25401,
+      "name": "HIP 25401",
+      "raDeg": 81.50985,
+      "decDeg": -5.518501,
+      "magnitude": 6.24
+    },
+    {
+      "hip": 25453,
+      "name": "HIP 25453",
+      "raDeg": 81.661785,
+      "decDeg": 6.868658,
+      "magnitude": 6.41
+    },
+    {
+      "hip": 25473,
+      "name": "Psi-2",
+      "raDeg": 81.70929,
+      "decDeg": 3.095674,
+      "magnitude": 4.59
+    },
+    {
+      "hip": 25502,
+      "name": "HIP 25502",
+      "raDeg": 81.80789999999999,
+      "decDeg": 15.25763,
+      "magnitude": 6.18
+    },
+    {
+      "hip": 25505,
+      "name": "HIP 25505",
+      "raDeg": 81.81417,
+      "decDeg": 2.3412,
+      "magnitude": 6.36
+    },
+    {
+      "hip": 25582,
+      "name": "HIP 25582",
+      "raDeg": 82.00612500000001,
+      "decDeg": 1.298251,
+      "magnitude": 6.41
+    },
+    {
+      "hip": 25638,
+      "name": "HIP 25638",
+      "raDeg": 82.14489,
+      "decDeg": 13.678979,
+      "magnitude": 6.35
+    },
+    {
+      "hip": 25667,
+      "name": "HIP 25667",
+      "raDeg": 82.237125,
+      "decDeg": -3.307429,
+      "magnitude": 6.39
+    },
+    {
+      "hip": 25708,
+      "name": "HIP 25708",
+      "raDeg": 82.34869499999999,
+      "decDeg": -3.446394,
+      "magnitude": 5.8
+    },
+    {
+      "hip": 25732,
+      "name": "HIP 25732",
+      "raDeg": 82.423425,
+      "decDeg": -0.802512,
+      "magnitude": 6.49
+    },
+    {
+      "hip": 25737,
+      "name": "HIP 25737",
+      "raDeg": 82.43325,
+      "decDeg": -1.092239,
+      "magnitude": 4.71
+    },
+    {
+      "hip": 25751,
+      "name": "HIP 25751",
+      "raDeg": 82.47822000000001,
+      "decDeg": 1.78926,
+      "magnitude": 5.77
+    },
+    {
+      "hip": 25785,
+      "name": "HIP 25785",
+      "raDeg": 82.58301,
+      "decDeg": 4.204795,
+      "magnitude": 6.21
+    },
+    {
+      "hip": 25786,
+      "name": "HIP 25786",
+      "raDeg": 82.58647500000001,
+      "decDeg": -7.434811,
+      "magnitude": 6.33
+    },
+    {
+      "hip": 25790,
+      "name": "HIP 25790",
+      "raDeg": 82.60902,
+      "decDeg": 15.360449,
+      "magnitude": 5.93
+    },
+    {
+      "hip": 25813,
+      "name": "HIP 25813",
+      "raDeg": 82.69605,
+      "decDeg": 5.948139,
+      "magnitude": 4.2
+    },
+    {
+      "hip": 25861,
+      "name": "HIP 25861",
+      "raDeg": 82.810545,
+      "decDeg": 3.292133,
+      "magnitude": 5.46
+    },
+    {
+      "hip": 25869,
+      "name": "HIP 25869",
+      "raDeg": 82.83705,
+      "decDeg": -6.708379,
+      "magnitude": 6.23
+    },
+    {
+      "hip": 25923,
+      "name": "Ups",
+      "raDeg": 82.982745,
+      "decDeg": -7.301537,
+      "magnitude": 4.62
+    },
+    {
+      "hip": 25930,
+      "name": "Mintaka",
+      "raDeg": 83.001675,
+      "decDeg": -0.299092,
+      "magnitude": 2.25
+    },
+    {
+      "hip": 25976,
+      "name": "HIP 25976",
+      "raDeg": 83.15824500000001,
+      "decDeg": 0.011933,
+      "magnitude": 6.15
+    },
+    {
+      "hip": 25980,
+      "name": "HIP 25980",
+      "raDeg": 83.17229999999999,
+      "decDeg": -1.591831,
+      "magnitude": 5.34
+    },
+    {
+      "hip": 26063,
+      "name": "HIP 26063",
+      "raDeg": 83.38102500000001,
+      "decDeg": -1.156073,
+      "magnitude": 5.36
+    },
+    {
+      "hip": 26093,
+      "name": "HIP 26093",
+      "raDeg": 83.476185,
+      "decDeg": 14.305578,
+      "magnitude": 5.6
+    },
+    {
+      "hip": 26104,
+      "name": "HIP 26104",
+      "raDeg": 83.510295,
+      "decDeg": -7.02375,
+      "magnitude": 6.45
+    },
+    {
+      "hip": 26106,
+      "name": "HIP 26106",
+      "raDeg": 83.516205,
+      "decDeg": -1.035726,
+      "magnitude": 6.24
+    },
+    {
+      "hip": 26108,
+      "name": "HIP 26108",
+      "raDeg": 83.516865,
+      "decDeg": -1.470253,
+      "magnitude": 5.92
+    },
+    {
+      "hip": 26126,
+      "name": "HIP 26126",
+      "raDeg": 83.56989,
+      "decDeg": 3.766895,
+      "magnitude": 5.32
+    },
+    {
+      "hip": 26149,
+      "name": "HIP 26149",
+      "raDeg": 83.62203,
+      "decDeg": -0.012345,
+      "magnitude": 6.25
+    },
+    {
+      "hip": 26176,
+      "name": "Phi-1",
+      "raDeg": 83.70516,
+      "decDeg": 9.489579,
+      "magnitude": 4.39
+    },
+    {
+      "hip": 26197,
+      "name": "HIP 26197",
+      "raDeg": 83.754195,
+      "decDeg": -6.00927,
+      "magnitude": 5.67
+    },
+    {
+      "hip": 26199,
+      "name": "HIP 26199",
+      "raDeg": 83.76116999999999,
+      "decDeg": -6.002027,
+      "magnitude": 4.78
+    },
+    {
+      "hip": 26207,
+      "name": "Meissa",
+      "raDeg": 83.78449499999999,
+      "decDeg": 9.934158,
+      "magnitude": 3.39
+    },
+    {
+      "hip": 26215,
+      "name": "HIP 26215",
+      "raDeg": 83.805165,
+      "decDeg": 10.240093,
+      "magnitude": 5.6
+    },
+    {
+      "hip": 26220,
+      "name": "The-1",
+      "raDeg": 83.81592,
+      "decDeg": -5.387315,
+      "magnitude": 4.98
+    },
+    {
+      "hip": 26221,
+      "name": "The-1",
+      "raDeg": 83.818605,
+      "decDeg": -5.389696,
+      "magnitude": 5.13
+    },
+    {
+      "hip": 26234,
+      "name": "HIP 26234",
+      "raDeg": 83.84298,
+      "decDeg": -4.42432,
+      "magnitude": 6.24
+    },
+    {
+      "hip": 26235,
+      "name": "The-2",
+      "raDeg": 83.84542499999999,
+      "decDeg": -5.41606,
+      "magnitude": 4.98
+    },
+    {
+      "hip": 26237,
+      "name": "HIP 26237",
+      "raDeg": 83.84652,
+      "decDeg": -4.838358,
+      "magnitude": 4.58
+    },
+    {
+      "hip": 26241,
+      "name": "Hatysa",
+      "raDeg": 83.85826499999999,
+      "decDeg": -5.909901,
+      "magnitude": 2.75
+    },
+    {
+      "hip": 26263,
+      "name": "HIP 26263",
+      "raDeg": 83.89960500000001,
+      "decDeg": -3.25284,
+      "magnitude": 6.4
+    },
+    {
+      "hip": 26268,
+      "name": "HIP 26268",
+      "raDeg": 83.914515,
+      "decDeg": -4.856067,
+      "magnitude": 5.24
+    },
+    {
+      "hip": 26311,
+      "name": "Alnilam",
+      "raDeg": 84.05338499999999,
+      "decDeg": -1.20192,
+      "magnitude": 1.69
+    },
+    {
+      "hip": 26345,
+      "name": "HIP 26345",
+      "raDeg": 84.148725,
+      "decDeg": -6.064752,
+      "magnitude": 5.71
+    },
+    {
+      "hip": 26366,
+      "name": "Phi-2",
+      "raDeg": 84.22662,
+      "decDeg": 9.290673,
+      "magnitude": 4.09
+    },
+    {
+      "hip": 26386,
+      "name": "HIP 26386",
+      "raDeg": 84.26826,
+      "decDeg": 11.035005,
+      "magnitude": 5.97
+    },
+    {
+      "hip": 26414,
+      "name": "HIP 26414",
+      "raDeg": 84.330465,
+      "decDeg": 8.951875,
+      "magnitude": 6.11
+    },
+    {
+      "hip": 26427,
+      "name": "HIP 26427",
+      "raDeg": 84.36399,
+      "decDeg": -5.938391,
+      "magnitude": 6.03
+    },
+    {
+      "hip": 26477,
+      "name": "HIP 26477",
+      "raDeg": 84.47244,
+      "decDeg": -4.814034,
+      "magnitude": 6.16
+    },
+    {
+      "hip": 26487,
+      "name": "HIP 26487",
+      "raDeg": 84.50466,
+      "decDeg": 7.54142,
+      "magnitude": 5.87
+    },
+    {
+      "hip": 26535,
+      "name": "HIP 26535",
+      "raDeg": 84.65821500000001,
+      "decDeg": -6.573959,
+      "magnitude": 5.96
+    },
+    {
+      "hip": 26549,
+      "name": "Sig",
+      "raDeg": 84.68653499999999,
+      "decDeg": -2.600069,
+      "magnitude": 3.77
+    },
+    {
+      "hip": 26563,
+      "name": "HIP 26563",
+      "raDeg": 84.721185,
+      "decDeg": -7.212829,
+      "magnitude": 4.77
+    },
+    {
+      "hip": 26594,
+      "name": "Ome",
+      "raDeg": 84.79643999999999,
+      "decDeg": 4.121467,
+      "magnitude": 4.5
+    },
+    {
+      "hip": 26623,
+      "name": "HIP 26623",
+      "raDeg": 84.87850499999999,
+      "decDeg": -9.706628,
+      "magnitude": 6.49
+    },
+    {
+      "hip": 26624,
+      "name": "HIP 26624",
+      "raDeg": 84.879795,
+      "decDeg": -3.564704,
+      "magnitude": 5.99
+    },
+    {
+      "hip": 26713,
+      "name": "HIP 26713",
+      "raDeg": 85.155405,
+      "decDeg": -2.825236,
+      "magnitude": 6.22
+    },
+    {
+      "hip": 26727,
+      "name": "Alnitak",
+      "raDeg": 85.189695,
+      "decDeg": -1.942572,
+      "magnitude": 1.74
+    },
+    {
+      "hip": 26728,
+      "name": "HIP 26728",
+      "raDeg": 85.19247,
+      "decDeg": -10.408664,
+      "magnitude": 6.46
+    },
+    {
+      "hip": 26736,
+      "name": "HIP 26736",
+      "raDeg": 85.21131,
+      "decDeg": -1.128787,
+      "magnitude": 4.95
+    },
+    {
+      "hip": 26762,
+      "name": "HIP 26762",
+      "raDeg": 85.27332,
+      "decDeg": 0.337753,
+      "magnitude": 5.93
+    },
+    {
+      "hip": 26820,
+      "name": "HIP 26820",
+      "raDeg": 85.41807,
+      "decDeg": -2.896457,
+      "magnitude": 6.41
+    },
+    {
+      "hip": 26885,
+      "name": "HIP 26885",
+      "raDeg": 85.619295,
+      "decDeg": 1.474629,
+      "magnitude": 4.9
+    },
+    {
+      "hip": 26926,
+      "name": "HIP 26926",
+      "raDeg": 85.72464,
+      "decDeg": -6.796168,
+      "magnitude": 5.97
+    },
+    {
+      "hip": 26953,
+      "name": "HIP 26953",
+      "raDeg": 85.788825,
+      "decDeg": -1.613248,
+      "magnitude": 6.31
+    },
+    {
+      "hip": 27118,
+      "name": "HIP 27118",
+      "raDeg": 86.25747000000001,
+      "decDeg": 4.008111,
+      "magnitude": 6.09
+    },
+    {
+      "hip": 27212,
+      "name": "HIP 27212",
+      "raDeg": 86.511945,
+      "decDeg": -4.268484,
+      "magnitude": 6.24
+    },
+    {
+      "hip": 27253,
+      "name": "HIP 27253",
+      "raDeg": 86.64546,
+      "decDeg": 1.168193,
+      "magnitude": 5.95
+    },
+    {
+      "hip": 27280,
+      "name": "HIP 27280",
+      "raDeg": 86.717235,
+      "decDeg": 9.522343,
+      "magnitude": 5.78
+    },
+    {
+      "hip": 27341,
+      "name": "HIP 27341",
+      "raDeg": 86.86204500000001,
+      "decDeg": -10.532958,
+      "magnitude": 6.04
+    },
+    {
+      "hip": 27366,
+      "name": "Saiph",
+      "raDeg": 86.939115,
+      "decDeg": -9.669605,
+      "magnitude": 2.07
+    },
+    {
+      "hip": 27386,
+      "name": "HIP 27386",
+      "raDeg": 87.000975,
+      "decDeg": 6.454156,
+      "magnitude": 5.26
+    },
+    {
+      "hip": 27435,
+      "name": "HIP 27435",
+      "raDeg": 87.14559,
+      "decDeg": -4.094648,
+      "magnitude": 5.97
+    },
+    {
+      "hip": 27549,
+      "name": "HIP 27549",
+      "raDeg": 87.511185,
+      "decDeg": 9.871218,
+      "magnitude": 5.79
+    },
+    {
+      "hip": 27560,
+      "name": "HIP 27560",
+      "raDeg": 87.55443,
+      "decDeg": 4.423406,
+      "magnitude": 5.96
+    },
+    {
+      "hip": 27588,
+      "name": "HIP 27588",
+      "raDeg": 87.62511,
+      "decDeg": 2.0247,
+      "magnitude": 5.97
+    },
+    {
+      "hip": 27658,
+      "name": "HIP 27658",
+      "raDeg": 87.841605,
+      "decDeg": -7.518003,
+      "magnitude": 5.36
+    },
+    {
+      "hip": 27713,
+      "name": "HIP 27713",
+      "raDeg": 88.03221,
+      "decDeg": -9.0419,
+      "magnitude": 5.95
+    },
+    {
+      "hip": 27747,
+      "name": "HIP 27747",
+      "raDeg": 88.09752,
+      "decDeg": 19.867849,
+      "magnitude": 5.96
+    },
+    {
+      "hip": 27750,
+      "name": "HIP 27750",
+      "raDeg": 88.11016500000001,
+      "decDeg": 1.855134,
+      "magnitude": 4.76
+    },
+    {
+      "hip": 27900,
+      "name": "HIP 27900",
+      "raDeg": 88.55562,
+      "decDeg": 10.586403,
+      "magnitude": 6.13
+    },
+    {
+      "hip": 27902,
+      "name": "HIP 27902",
+      "raDeg": 88.565655,
+      "decDeg": 3.225641,
+      "magnitude": 6.3
+    },
+    {
+      "hip": 27913,
+      "name": "Chi-1",
+      "raDeg": 88.59579000000001,
+      "decDeg": 20.276174,
+      "magnitude": 4.39
+    },
+    {
+      "hip": 27939,
+      "name": "HIP 27939",
+      "raDeg": 88.68348,
+      "decDeg": 0.968615,
+      "magnitude": 5.99
+    },
+    {
+      "hip": 27965,
+      "name": "HIP 27965",
+      "raDeg": 88.73619000000001,
+      "decDeg": 19.749614,
+      "magnitude": 5.92
+    },
+    {
+      "hip": 27989,
+      "name": "Betelgeuse",
+      "raDeg": 88.792935,
+      "decDeg": 7.407063,
+      "magnitude": 0.45
+    },
+    {
+      "hip": 28011,
+      "name": "HIP 28011",
+      "raDeg": 88.87572,
+      "decDeg": -4.616546,
+      "magnitude": 5.87
+    },
+    {
+      "hip": 28019,
+      "name": "HIP 28019",
+      "raDeg": 88.89736500000001,
+      "decDeg": -4.788587,
+      "magnitude": 6.28
+    },
+    {
+      "hip": 28110,
+      "name": "HIP 28110",
+      "raDeg": 89.116815,
+      "decDeg": 9.509396,
+      "magnitude": 5.97
+    },
+    {
+      "hip": 28139,
+      "name": "HIP 28139",
+      "raDeg": 89.206035,
+      "decDeg": 11.521058,
+      "magnitude": 5.89
+    },
+    {
+      "hip": 28232,
+      "name": "HIP 28232",
+      "raDeg": 89.47705500000001,
+      "decDeg": 1.22431,
+      "magnitude": 6.22
+    },
+    {
+      "hip": 28252,
+      "name": "HIP 28252",
+      "raDeg": 89.5488,
+      "decDeg": -0.994018,
+      "magnitude": 6.21
+    },
+    {
+      "hip": 28271,
+      "name": "HIP 28271",
+      "raDeg": 89.60184,
+      "decDeg": 1.837108,
+      "magnitude": 5.89
+    },
+    {
+      "hip": 28296,
+      "name": "HIP 28296",
+      "raDeg": 89.70655500000001,
+      "decDeg": 0.552979,
+      "magnitude": 5.21
+    },
+    {
+      "hip": 28302,
+      "name": "HIP 28302",
+      "raDeg": 89.72182500000001,
+      "decDeg": 12.808264,
+      "magnitude": 5.7
+    },
+    {
+      "hip": 28413,
+      "name": "HIP 28413",
+      "raDeg": 90.01395000000001,
+      "decDeg": -3.074253,
+      "magnitude": 4.53
+    },
+    {
+      "hip": 28614,
+      "name": "Mu",
+      "raDeg": 90.59583,
+      "decDeg": 9.647276,
+      "magnitude": 4.12
+    },
+    {
+      "hip": 28686,
+      "name": "HIP 28686",
+      "raDeg": 90.85319999999999,
+      "decDeg": 11.681065,
+      "magnitude": 6.09
+    },
+    {
+      "hip": 28691,
+      "name": "HIP 28691",
+      "raDeg": 90.86403,
+      "decDeg": 19.690561,
+      "magnitude": 5.14
+    },
+    {
+      "hip": 28716,
+      "name": "Chi-2",
+      "raDeg": 90.979935,
+      "decDeg": 20.138452,
+      "magnitude": 4.64
+    },
+    {
+      "hip": 28812,
+      "name": "HIP 28812",
+      "raDeg": 91.242435,
+      "decDeg": 5.41997,
+      "magnitude": 5.67
+    },
+    {
+      "hip": 28814,
+      "name": "HIP 28814",
+      "raDeg": 91.24317,
+      "decDeg": 4.158671,
+      "magnitude": 5.63
+    },
+    {
+      "hip": 29038,
+      "name": "Nu",
+      "raDeg": 91.893015,
+      "decDeg": 14.768472,
+      "magnitude": 4.42
+    },
+    {
+      "hip": 29151,
+      "name": "HIP 29151",
+      "raDeg": 92.24127,
+      "decDeg": 2.499692,
+      "magnitude": 5.7
+    },
+    {
+      "hip": 29326,
+      "name": "HIP 29326",
+      "raDeg": 92.757375,
+      "decDeg": 18.130465,
+      "magnitude": 6.37
+    },
+    {
+      "hip": 29371,
+      "name": "HIP 29371",
+      "raDeg": 92.86629,
+      "decDeg": 13.638561,
+      "magnitude": 6.04
+    },
+    {
+      "hip": 29426,
+      "name": "Xi",
+      "raDeg": 92.984985,
+      "decDeg": 14.208765,
+      "magnitude": 4.45
+    },
+    {
+      "hip": 29433,
+      "name": "HIP 29433",
+      "raDeg": 93.00558,
+      "decDeg": 19.790543,
+      "magnitude": 5.76
+    },
+    {
+      "hip": 29434,
+      "name": "HIP 29434",
+      "raDeg": 93.01366499999999,
+      "decDeg": 16.130406,
+      "magnitude": 4.95
+    },
+    {
+      "hip": 29509,
+      "name": "HIP 29509",
+      "raDeg": 93.24822,
+      "decDeg": 6.016258,
+      "magnitude": 6.45
+    },
+    {
+      "hip": 29525,
+      "name": "HIP 29525",
+      "raDeg": 93.30208499999999,
+      "decDeg": 10.627144,
+      "magnitude": 6.43
+    },
+    {
+      "hip": 29575,
+      "name": "HIP 29575",
+      "raDeg": 93.47598,
+      "decDeg": -3.741374,
+      "magnitude": 5.83
+    },
+    {
+      "hip": 29616,
+      "name": "HIP 29616",
+      "raDeg": 93.61909499999999,
+      "decDeg": 17.906353,
+      "magnitude": 5.86
+    },
+    {
+      "hip": 29650,
+      "name": "HIP 29650",
+      "raDeg": 93.712005,
+      "decDeg": 19.156448,
+      "magnitude": 5.2
+    },
+    {
+      "hip": 29678,
+      "name": "HIP 29678",
+      "raDeg": 93.785295,
+      "decDeg": 13.851098,
+      "magnitude": 5.91
+    },
+    {
+      "hip": 29704,
+      "name": "HIP 29704",
+      "raDeg": 93.85470000000001,
+      "decDeg": 16.143175,
+      "magnitude": 5.34
+    },
+    {
+      "hip": 29716,
+      "name": "HIP 29716",
+      "raDeg": 93.89277,
+      "decDeg": -0.512189,
+      "magnitude": 5.62
+    },
+    {
+      "hip": 29728,
+      "name": "HIP 29728",
+      "raDeg": 93.9174,
+      "decDeg": 6.066166,
+      "magnitude": 6.07
+    },
+    {
+      "hip": 29736,
+      "name": "HIP 29736",
+      "raDeg": 93.93735,
+      "decDeg": 12.551067,
+      "magnitude": 5.44
+    },
+    {
+      "hip": 29746,
+      "name": "HIP 29746",
+      "raDeg": 93.97488,
+      "decDeg": 1.169078,
+      "magnitude": 6.37
+    },
+    {
+      "hip": 29798,
+      "name": "HIP 29798",
+      "raDeg": 94.09914,
+      "decDeg": 17.181607,
+      "magnitude": 6.39
+    },
+    {
+      "hip": 29800,
+      "name": "HIP 29800",
+      "raDeg": 94.11091499999999,
+      "decDeg": 12.272163,
+      "magnitude": 5.04
+    },
+    {
+      "hip": 29850,
+      "name": "HIP 29850",
+      "raDeg": 94.27758,
+      "decDeg": 9.94239,
+      "magnitude": 5.39
+    },
+    {
+      "hip": 29860,
+      "name": "HIP 29860",
+      "raDeg": 94.31724,
+      "decDeg": 5.100112,
+      "magnitude": 5.7
+    },
+    {
+      "hip": 29931,
+      "name": "HIP 29931",
+      "raDeg": 94.52337,
+      "decDeg": 14.382859,
+      "magnitude": 6.12
+    },
+    {
+      "hip": 29982,
+      "name": "HIP 29982",
+      "raDeg": 94.66813499999999,
+      "decDeg": 9.047183,
+      "magnitude": 6.24
+    },
+    {
+      "hip": 30019,
+      "name": "HIP 30019",
+      "raDeg": 94.75767,
+      "decDeg": 17.325259,
+      "magnitude": 6.27
+    },
+    {
+      "hip": 30093,
+      "name": "HIP 30093",
+      "raDeg": 94.99833,
+      "decDeg": -2.944493,
+      "magnitude": 4.91
+    },
+    {
+      "hip": 30099,
+      "name": "HIP 30099",
+      "raDeg": 95.017605,
+      "decDeg": 14.651127,
+      "magnitude": 5.67
+    },
+    {
+      "hip": 30318,
+      "name": "HIP 30318",
+      "raDeg": 95.65164,
+      "decDeg": 12.570237,
+      "magnitude": 6.0
+    },
+    {
+      "hip": 30517,
+      "name": "HIP 30517",
+      "raDeg": 96.21987,
+      "decDeg": 16.05713,
+      "magnitude": 6.35
+    },
+    {
+      "hip": 30564,
+      "name": "HIP 30564",
+      "raDeg": 96.367395,
+      "decDeg": 14.721992,
+      "magnitude": 6.3
+    }
+  ]
+}

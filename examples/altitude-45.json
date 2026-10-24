@@ -1,0 +1,13 @@
+{
+  "schemaVersion": "2.1",
+  "language": "en",
+  "preset": "DarkAtlas",
+  "illustrationType": "ScientificDiagram",
+  "scientificDiagram": {
+    "diagramType": "StarAltitude",
+    "mode": "Schematic",
+    "parameters": {
+      "altitudeDegrees": 45
+    }
+  }
+}

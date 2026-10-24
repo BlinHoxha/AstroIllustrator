@@ -1,0 +1,9 @@
+.vs/
+.tools/
+.venv/
+**/bin/
+**/obj/
+**/__pycache__/
+.pytest_cache/
+data/
+artifacts/

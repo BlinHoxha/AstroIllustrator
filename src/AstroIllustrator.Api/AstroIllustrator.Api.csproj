@@ -1,0 +1,6 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <ItemGroup>
+    <ProjectReference Include="../AstroIllustrator.Core/AstroIllustrator.Core.csproj" />
+    <ProjectReference Include="../AstroIllustrator.Infrastructure/AstroIllustrator.Infrastructure.csproj" />
+  </ItemGroup>
+</Project>

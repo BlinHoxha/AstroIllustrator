@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "2.1",
+  "illustrationType": "SkyChart",
+  "language": "en",
+  "preset": "DarkAtlas",
+  "skyChart": {
+    "sceneType": "SingleConstellation",
+    "constellationCode": "ORI",
+    "projection": "Gnomonic",
+    "magnitudeLimit": 6
+  }
+}

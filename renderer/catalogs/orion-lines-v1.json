@@ -1,0 +1,6 @@
+{
+  "name": "AstroIllustrator Orion hourglass v1",
+  "source": "Original minimal hourglass guide authored for this project; not an IAU boundary or universal line convention.",
+  "version": "1",
+  "edges": [[27989,25336],[27989,26727],[25336,25930],[26727,26311],[26311,25930],[26727,27366],[25930,24436],[27366,24436]]
+}

@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "2.1",
+  "language": "en",
+  "preset": "DarkAtlas",
+  "illustrationType": "SkyChart",
+  "skyChart": {
+    "sceneType": "MultipleConstellations",
+    "constellationCodes": [
+      "LYR",
+      "CYG",
+      "AQL"
+    ],
+    "asterismCode": "SummerTriangle",
+    "projection": "Gnomonic",
+    "magnitudeLimit": 6
+  }
+}

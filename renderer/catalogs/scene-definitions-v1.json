@@ -1,0 +1,12 @@
+{
+  "version": "1",
+  "source": "Original minimal line conventions for AstroIllustrator, using HYG HIP identities. These guides are not IAU boundaries or a universal line set.",
+  "constellations": [
+    {"code":"ORI","name":"Orion","edges":[[27989,25336],[27989,26727],[25336,25930],[26727,26311],[26311,25930],[26727,27366],[25930,24436],[27366,24436]]},
+    {"code":"UMI","name":"Ursa Minor","edges":[[11767,85822],[85822,82080],[82080,77055],[77055,79822],[79822,75097],[75097,72607],[72607,77055]]},
+    {"code":"LYR","name":"Lyra","edges":[[91262,91971],[91971,92420],[92420,93194],[93194,92791],[92791,91971]]},
+    {"code":"CYG","name":"Cygnus","edges":[[102098,100453],[100453,95947],[100453,97165],[100453,104732]]},
+    {"code":"AQL","name":"Aquila","edges":[[97649,97278],[97649,98036],[97649,95501],[95501,93747],[95501,97804]]}
+  ],
+  "asterisms": [{"code":"SummerTriangle","name":"Summer Triangle","constellationCodes":["LYR","CYG","AQL"],"starHipIds":[91262,102098,97649],"edges":[[91262,102098],[102098,97649],[97649,91262]]}]
+}

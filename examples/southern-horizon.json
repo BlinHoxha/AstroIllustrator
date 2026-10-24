@@ -1,0 +1,25 @@
+{
+  "schemaVersion": "2.1",
+  "language": "en",
+  "preset": "DarkAtlas",
+  "illustrationType": "SkyChart",
+  "skyChart": {
+    "sceneType": "HorizonView",
+    "projection": "AltitudeAzimuth",
+    "magnitudeLimit": 5,
+    "observer": {
+      "latitude": 42.6629,
+      "longitude": 21.1655,
+      "elevationMeters": 600,
+      "timeZoneId": "Europe/Belgrade"
+    },
+    "timeReference": {
+      "type": "LocalClock",
+      "localDateTime": "2026-07-15T23:00:00",
+      "timeZoneId": "Europe/Belgrade",
+      "ambiguityPolicy": "Reject"
+    },
+    "azimuthCenterDegrees": 180,
+    "fieldOfViewDegrees": 100
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "schemaVersion": "2.1",
+  "language": "en",
+  "preset": "DarkAtlas",
+  "illustrationType": "ScientificDiagram",
+  "scientificDiagram": {
+    "diagramType": "AltitudeAzimuth",
+    "mode": "Schematic",
+    "parameters": {
+      "altitudeDegrees": 45,
+      "azimuthDegrees": 180
+    }
+  }
+}

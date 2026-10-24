@@ -1,0 +1,19 @@
+{
+  "schemaVersion": "2.1",
+  "language": "en",
+  "preset": "DarkAtlas",
+  "illustrationType": "ScientificDiagram",
+  "scientificDiagram": {
+    "diagramType": "PolarisLatitude",
+    "mode": "Computed",
+    "observer": {
+      "latitude": 42.6629,
+      "longitude": 21.1655,
+      "elevationMeters": 600
+    },
+    "timeUtc": "2026-07-15T21:00:00Z",
+    "parameters": {
+      "starId": "Polaris"
+    }
+  }
+}
