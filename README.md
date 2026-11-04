@@ -2,7 +2,8 @@
 
 Local-first astronomy illustration backend using .NET 10, Python/Astropy and SQLite.
 The backend renders constellation/asterism charts, observer-dependent horizon views and
-scientific diagrams as SVG/PNG with reproducibility manifests. Frontend work has not begun.
+scientific diagrams as SVG/PNG with reproducibility manifests. The sibling
+AstroIllustrator.Frontend repository contains the functional web client and native scaffold.
 
 Current coverage:
 
@@ -15,6 +16,9 @@ Current coverage:
 
 See [backend capabilities and requests](docs/backend-capabilities.md) for endpoints,
 examples, scientific assumptions and remaining milestones.
+
+See [the API contract](docs/api-contract.md) for `/openapi/v1.json`, generated client types,
+field-specific errors, readiness, actual observation coverage and history scene metadata.
 
 ## Architecture
 

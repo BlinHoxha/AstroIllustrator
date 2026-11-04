@@ -38,7 +38,8 @@ public sealed class AstroDbContext(DbContextOptions<AstroDbContext> options) : D
             SELECT * FROM "RenderJobs" WHERE ({state} IS NULL OR "Status" = {state})
             ORDER BY "CreatedAtUtc" DESC, "Id" DESC LIMIT {pageSize} OFFSET {(page - 1) * pageSize}
             """).AsNoTracking().ToListAsync(cancellationToken);
-        return new(rows.Select(x => new RenderJobSummary(x.Id, x.Status, x.CreatedAtUtc, x.CompletedAtUtc, x.ErrorCode, x.ErrorMessage)).ToArray(), page, pageSize, count);
+        return new(rows.Select(x => new RenderJobSummary(x.Id, x.Status, x.CreatedAtUtc, x.CompletedAtUtc,
+            x.ErrorCode, x.ErrorMessage, RenderSceneMetadata.FromRequestJson(x.RequestJson))).ToArray(), page, pageSize, count);
     }
 }
 

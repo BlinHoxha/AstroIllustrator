@@ -56,7 +56,7 @@ public sealed record DiagramParameters
 
 public sealed record ValidationIssue(string Field, string Message);
 public sealed record RenderJobSummary(Guid Id, RenderStatus Status, DateTimeOffset CreatedAtUtc,
-    DateTimeOffset? CompletedAtUtc, string? ErrorCode, string? ErrorMessage = null);
+    DateTimeOffset? CompletedAtUtc, string? ErrorCode, string? ErrorMessage = null, RenderSceneMetadata? Scene = null);
 public sealed record RenderJobPage(IReadOnlyList<RenderJobSummary> Items, int Page, int PageSize, int TotalCount);
 public sealed class ObserverPreset
 {

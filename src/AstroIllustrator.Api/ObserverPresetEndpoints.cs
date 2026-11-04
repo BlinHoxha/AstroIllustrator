@@ -7,9 +7,11 @@ public static class ObserverPresetEndpoints
     public static void MapObserverPresets(this WebApplication app)
     {
         app.MapGet("/api/observer-presets", async (AstroDbContext db, CancellationToken token) => Results.Ok(
-            await db.ObserverPresets.AsNoTracking().OrderBy(x => x.Name).ToListAsync(token)));
+            await db.ObserverPresets.AsNoTracking().OrderBy(x => x.Name).ToListAsync(token)))
+            .WithName("GetObservers").Produces<ObserverPreset[]>();
         app.MapGet("/api/observer-presets/{id:guid}", async (Guid id, AstroDbContext db, CancellationToken token) =>
-            await db.ObserverPresets.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id, token) is { } preset ? Results.Ok(preset) : Results.NotFound());
+            await db.ObserverPresets.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id, token) is { } preset ? Results.Ok(preset) : Results.NotFound())
+            .WithName("GetObserver").Produces<ObserverPreset>().ProducesProblem(404);
         app.MapPost("/api/observer-presets", async (ObserverPresetRequest request, AstroDbContext db, CancellationToken token) =>
         {
             var errors = Validate(request);
@@ -18,7 +20,7 @@ public static class ObserverPresetEndpoints
             Apply(preset, request);
             db.ObserverPresets.Add(preset);
             return await Save(db, token) ? Results.Created($"/api/observer-presets/{preset.Id}", preset) : Results.Problem(statusCode: 409, title: "An observer preset with this name already exists.");
-        });
+        }).WithName("CreateObserver").Produces<ObserverPreset>(201).ProducesValidationProblem().ProducesProblem(409);
         app.MapPut("/api/observer-presets/{id:guid}", async (Guid id, ObserverPresetRequest request, AstroDbContext db, CancellationToken token) =>
         {
             var errors = Validate(request);
@@ -27,7 +29,7 @@ public static class ObserverPresetEndpoints
             if (preset is null) return Results.NotFound();
             Apply(preset, request);
             return await Save(db, token) ? Results.Ok(preset) : Results.Problem(statusCode: 409, title: "An observer preset with this name already exists.");
-        });
+        }).WithName("UpdateObserver").Produces<ObserverPreset>().ProducesValidationProblem().ProducesProblem(404).ProducesProblem(409);
         app.MapDelete("/api/observer-presets/{id:guid}", async (Guid id, AstroDbContext db, CancellationToken token) =>
         {
             var preset = await db.ObserverPresets.FindAsync([id], token);
@@ -35,7 +37,7 @@ public static class ObserverPresetEndpoints
             db.ObserverPresets.Remove(preset);
             await db.SaveChangesAsync(token);
             return Results.NoContent();
-        });
+        }).WithName("DeleteObserver").Produces(204).ProducesProblem(404);
     }
     private static Dictionary<string, string[]> Validate(ObserverPresetRequest request)
     {

@@ -41,6 +41,26 @@ public sealed class ExpandedContractTests
         Assert.NotEmpty(IllustrationValidator.ValidateObserver(new(lat, lon)));
 
     [Fact]
+    public void Coordinate_errors_identify_every_failed_field_without_blaming_valid_fields()
+    {
+        Assert.Equal("observer.longitude", Assert.Single(IllustrationValidator.ValidateObserver(new(47, 181))).Field);
+        Assert.Equal("observer.latitude", Assert.Single(IllustrationValidator.ValidateObserver(new(-91, 19))).Field);
+        Assert.Equal("observer.elevationMeters", Assert.Single(IllustrationValidator.ValidateObserver(new(47, 19, 10001))).Field);
+        Assert.Equal(3, IllustrationValidator.ValidateObserver(new(double.NaN, double.PositiveInfinity, -501)).Count);
+        Assert.Equal("observer", Assert.Single(IllustrationValidator.ValidateObserver(null)).Field);
+    }
+
+    [Fact]
+    public void Historical_or_invalid_request_metadata_does_not_break_history()
+    {
+        Assert.Null(RenderSceneMetadata.FromRequestJson("{}"));
+        Assert.Null(RenderSceneMetadata.FromRequestJson("not JSON"));
+        Assert.Null(RenderSceneMetadata.FromRequestJson("null"));
+        Assert.Equal("ORI", RenderSceneMetadata.FromRequestJson("""{"skyChart":{}}""")!.ConstellationCodes[0]);
+        Assert.Empty(RenderSceneMetadata.FromRequestJson("""{"skyChart":{"sceneType":"HorizonView"}}""")!.ConstellationCodes);
+    }
+
+    [Fact]
     public void Diagram_and_sky_payloads_cannot_be_combined_or_forge_computed_angles()
     {
         Assert.NotEmpty(IllustrationValidator.Validate(new() { SkyChart = new(), ScientificDiagram = new() }));

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 public sealed class RenderApiTests
 {
-    private sealed class Factory : WebApplicationFactory<Program>
+    public sealed class Factory : WebApplicationFactory<Program>
     {
         public string Root { get; } = Path.Combine(Path.GetTempPath(), "astro-tests-" + Guid.NewGuid().ToString("N"));
         protected override void ConfigureWebHost(IWebHostBuilder builder)

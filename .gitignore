@@ -7,3 +7,10 @@
 .pytest_cache/
 data/
 artifacts/
+.env
+.env.*
+!.env.example
+TestResults/
+*.db
+*.db-shm
+*.db-wal

@@ -2,29 +2,31 @@
 
 The three-production-project modular monolith is preserved. Core has no project or NuGet
 references. Python owns scientific calculations. Neither shared framework is modified.
-No frontend, extra service, broker, generic repository or Unit of Work has been added.
+The sibling frontend now contains a functional web app. No extra service, broker, generic
+repository or Unit of Work was added. The 27 October [API contract](api-contract.md) covers
+published OpenAPI, generated types, readiness/coverage, precise errors and summary metadata.
 
 ## Discovery and management API
 
-| Method and path | Behavior |
-| --- | --- |
-| `GET /health/live` | Host liveness |
-| `GET /api/constellations` | ORI, UMI, LYR, CYG, AQL and their line conventions |
-| `GET /api/asterisms` | SummerTriangle, its three HIP identities and edges |
-| `GET /api/diagram-templates` | Supported diagram codes and modes |
-| `GET /api/catalogs` | Catalog provenance, license, star count and snapshot checksum |
-| `GET /api/presets` | DarkAtlas and PrintMonochrome |
-| `GET /api/observer-presets` | Saved observers, ordered by name |
-| `GET /api/observer-presets/{id}` | One saved observer |
-| `POST /api/observer-presets` | Save validated name and WGS84 observer; duplicate name returns 409 |
-| `PUT /api/observer-presets/{id}` | Update saved observer |
-| `DELETE /api/observer-presets/{id}` | Delete preset; existing job requests are unchanged |
-| `POST /api/astronomy/resolve-time` | Resolve AbsoluteUtc or LocalClock to a concrete UTC instant |
-| `POST /api/illustrations/render` | Validate, render synchronously, persist job, return 201 |
-| `GET /api/render-jobs?page=1&pageSize=20&status=Completed` | Newest first; optional named status filter; page size 1–100 |
-| `GET /api/render-jobs/{id}` | Request, result, status and failure details |
-| `GET /api/render-jobs/{id}/outputs` | Output hashes, formats and download URLs |
-| `GET /api/render-jobs/{id}/outputs/{svg\|png\|manifest}` | Download completed artifacts |
+| Method and path                                            | Behavior                                                           |
+| ---------------------------------------------------------- | ------------------------------------------------------------------ |
+| `GET /health/live`                                         | Host liveness                                                      |
+| `GET /api/constellations`                                  | ORI, UMI, LYR, CYG, AQL and their line conventions                 |
+| `GET /api/asterisms`                                       | SummerTriangle, its three HIP identities and edges                 |
+| `GET /api/diagram-templates`                               | Supported diagram codes and modes                                  |
+| `GET /api/catalogs`                                        | Catalog provenance, license, star count and snapshot checksum      |
+| `GET /api/presets`                                         | DarkAtlas and PrintMonochrome                                      |
+| `GET /api/observer-presets`                                | Saved observers, ordered by name                                   |
+| `GET /api/observer-presets/{id}`                           | One saved observer                                                 |
+| `POST /api/observer-presets`                               | Save validated name and WGS84 observer; duplicate name returns 409 |
+| `PUT /api/observer-presets/{id}`                           | Update saved observer                                              |
+| `DELETE /api/observer-presets/{id}`                        | Delete preset; existing job requests are unchanged                 |
+| `POST /api/astronomy/resolve-time`                         | Resolve AbsoluteUtc or LocalClock to a concrete UTC instant        |
+| `POST /api/illustrations/render`                           | Validate, render synchronously, persist job, return 201            |
+| `GET /api/render-jobs?page=1&pageSize=20&status=Completed` | Newest first; optional named status filter; page size 1–100        |
+| `GET /api/render-jobs/{id}`                                | Request, result, status and failure details                        |
+| `GET /api/render-jobs/{id}/outputs`                        | Output hashes, formats and download URLs                           |
+| `GET /api/render-jobs/{id}/outputs/{svg\|png\|manifest}`   | Download completed artifacts                                       |
 
 History pages contain summaries rather than full request/result JSON. Detail rows retain the
 original request. Rendered manifests retain computed geometry, resolved UTC and scientific
@@ -36,17 +38,17 @@ cancels its job. Run one host against a metadata database. This is a local singl
 Keep `schemaVersion="2.1"`, `language="en"|"sq"` and `preset="DarkAtlas"|"PrintMonochrome"`.
 Supply exactly one payload matching `illustrationType`. Unknown fields are rejected.
 
-| Family / scene | Inputs | Runnable example |
-| --- | --- | --- |
-| SkyChart / SingleConstellation | One `constellationCode`; omitted selector preserves Orion default | `examples/orion.json`, `examples/ursa-minor.json` |
-| SkyChart / MultipleConstellations | Two to five distinct `constellationCodes`; optional SummerTriangle overlay | `examples/multiple-constellations.json` |
-| SkyChart / Asterism | `asterismCode=SummerTriangle`; omit constellation selectors | `examples/summer-triangle.json` |
-| SkyChart / HorizonView | Observer, time, AltitudeAzimuth projection, azimuth center and field of view | `examples/southern-horizon.json` |
-| ScientificDiagram / StarAltitude / Schematic | `parameters.altitudeDegrees` | `examples/altitude-45.json` |
-| ScientificDiagram / AltitudeAzimuth / Schematic | Altitude and clockwise-from-north azimuth | `examples/altitude-azimuth.json` |
-| ScientificDiagram / PolarisLatitude / Schematic | Observer latitude; ray represents the ideal NCP, not exact Polaris | `examples/polaris-latitude.json` |
-| ScientificDiagram / StarAltitude or PolarisLatitude / Computed | `starId=Polaris`, observer and time; supplied angles rejected | `examples/polaris-computed.json` |
-| ScientificDiagram / AngularSeparation / Computed | Two distinct bundled `starHipIds`; static J2000 separation | `examples/angular-separation.json` |
+| Family / scene                                                 | Inputs                                                                       | Runnable example                                  |
+| -------------------------------------------------------------- | ---------------------------------------------------------------------------- | ------------------------------------------------- |
+| SkyChart / SingleConstellation                                 | One `constellationCode`; omitted selector preserves Orion default            | `examples/orion.json`, `examples/ursa-minor.json` |
+| SkyChart / MultipleConstellations                              | Two to five distinct `constellationCodes`; optional SummerTriangle overlay   | `examples/multiple-constellations.json`           |
+| SkyChart / Asterism                                            | `asterismCode=SummerTriangle`; omit constellation selectors                  | `examples/summer-triangle.json`                   |
+| SkyChart / HorizonView                                         | Observer, time, AltitudeAzimuth projection, azimuth center and field of view | `examples/southern-horizon.json`                  |
+| ScientificDiagram / StarAltitude / Schematic                   | `parameters.altitudeDegrees`                                                 | `examples/altitude-45.json`                       |
+| ScientificDiagram / AltitudeAzimuth / Schematic                | Altitude and clockwise-from-north azimuth                                    | `examples/altitude-azimuth.json`                  |
+| ScientificDiagram / PolarisLatitude / Schematic                | Observer latitude; ray represents the ideal NCP, not exact Polaris           | `examples/polaris-latitude.json`                  |
+| ScientificDiagram / StarAltitude or PolarisLatitude / Computed | `starId=Polaris`, observer and time; supplied angles rejected                | `examples/polaris-computed.json`                  |
+| ScientificDiagram / AngularSeparation / Computed               | Two distinct bundled `starHipIds`; static J2000 separation                   | `examples/angular-separation.json`                |
 
 Static charts require `projection=Gnomonic`, have automatic spherical centering/framing and
 cannot accept observer/time fields. Very distant constellation combinations that cannot fit a
@@ -70,12 +72,23 @@ Supply exactly one of:
 ```
 
 ```json
-{ "timeReference": { "type": "AbsoluteUtc", "instantUtc": "2026-07-15T21:00:00Z" } }
+{
+  "timeReference": {
+    "type": "AbsoluteUtc",
+    "instantUtc": "2026-07-15T21:00:00Z"
+  }
+}
 ```
 
 ```json
-{ "timeReference": { "type": "LocalClock", "localDateTime": "2026-07-15T23:00:00",
-  "timeZoneId": "Europe/Belgrade", "ambiguityPolicy": "Reject" } }
+{
+  "timeReference": {
+    "type": "LocalClock",
+    "localDateTime": "2026-07-15T23:00:00",
+    "timeZoneId": "Europe/Belgrade",
+    "ambiguityPolicy": "Reject"
+  }
+}
 ```
 
 Absolute instants require Z or an explicit offset. LocalClock must omit an offset. DST gaps
@@ -123,5 +136,5 @@ bounded request/output size and concurrency; no OS memory quota is implemented.
 4. Atlas figure/chapter management, configurable export profiles, vector PDF and batch publishing.
 5. Optional schema-constrained AI interpretation, then scenery/caption retrieval.
 
-The current backend can support an initial manual-authoring client, but no frontend work was
-performed in this increment. See the v2.1 PDFs for the complete eventual product scope.
+The current backend supports the sibling manual-authoring web client. See the v2.1 PDFs for
+the complete eventual product scope and docs/context for current implementation evidence.

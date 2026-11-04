@@ -1,0 +1,4089 @@
+{
+  "openapi": "3.0.4",
+  "info": {
+    "title": "AstroIllustrator API",
+    "description": "Schema 2.1 deterministic astronomy API. Rendering is synchronous; job requestJson/resultJson remain serialized JSON strings. Local-first host; authentication is not implemented.",
+    "version": "1"
+  },
+  "servers": [
+    {
+      "url": "/"
+    }
+  ],
+  "paths": {
+    "/api/capabilities": {
+      "get": {
+        "tags": [
+          "AstroIllustrator.Api"
+        ],
+        "description": "Actual installed renderer capabilities and conservative offline IERS observation coverage. Cached for up to 30 seconds; not a guarantee of every scientific request.",
+        "operationId": "GetCapabilities",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RendererCapabilities"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "application/problem\u002Bjson": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "format": "int32",
+                      "nullable": true
+                    },
+                    "detail": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "instance": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "traceId": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "code": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "jobId": {
+                      "type": "string",
+                      "format": "uuid",
+                      "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "nullable": true
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server error (ProblemDetails with traceId).",
+            "content": {
+              "application/problem\u002Bjson": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "format": "int32",
+                      "nullable": true
+                    },
+                    "detail": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "instance": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "traceId": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "code": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "jobId": {
+                      "type": "string",
+                      "format": "uuid",
+                      "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "nullable": true
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/health/ready": {
+      "get": {
+        "tags": [
+          "AstroIllustrator.Api"
+        ],
+        "description": "Checks database connectivity, Python imports, catalogs, bundled IERS and writable artifact/cache storage. Does not create a render or guarantee future requests; renderer checks cached up to 30 seconds.",
+        "operationId": "GetReadiness",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReadinessResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReadinessResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server error (ProblemDetails with traceId).",
+            "content": {
+              "application/problem\u002Bjson": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "format": "int32",
+                      "nullable": true
+                    },
+                    "detail": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "instance": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "traceId": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "code": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "jobId": {
+                      "type": "string",
+                      "format": "uuid",
+                      "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "nullable": true
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/health/live": {
+      "get": {
+        "tags": [
+          "AstroIllustrator.Api"
+        ],
+        "operationId": "GetLiveness",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server error (ProblemDetails with traceId).",
+            "content": {
+              "application/problem\u002Bjson": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "format": "int32",
+                      "nullable": true
+                    },
+                    "detail": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "instance": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "traceId": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "code": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "jobId": {
+                      "type": "string",
+                      "format": "uuid",
+                      "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "nullable": true
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/constellations": {
+      "get": {
+        "tags": [
+          "AstroIllustrator.Api"
+        ],
+        "operationId": "GetConstellations",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ConstellationResponse"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server error (ProblemDetails with traceId).",
+            "content": {
+              "application/problem\u002Bjson": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "format": "int32",
+                      "nullable": true
+                    },
+                    "detail": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "instance": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "traceId": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "code": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "jobId": {
+                      "type": "string",
+                      "format": "uuid",
+                      "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "nullable": true
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/asterisms": {
+      "get": {
+        "tags": [
+          "AstroIllustrator.Api"
+        ],
+        "operationId": "GetAsterisms",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AsterismResponse"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server error (ProblemDetails with traceId).",
+            "content": {
+              "application/problem\u002Bjson": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "format": "int32",
+                      "nullable": true
+                    },
+                    "detail": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "instance": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "traceId": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "code": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "jobId": {
+                      "type": "string",
+                      "format": "uuid",
+                      "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "nullable": true
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/diagram-templates": {
+      "get": {
+        "tags": [
+          "AstroIllustrator.Api"
+        ],
+        "operationId": "GetDiagramTemplates",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DiagramCapability"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server error (ProblemDetails with traceId).",
+            "content": {
+              "application/problem\u002Bjson": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "format": "int32",
+                      "nullable": true
+                    },
+                    "detail": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "instance": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "traceId": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "code": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "jobId": {
+                      "type": "string",
+                      "format": "uuid",
+                      "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "nullable": true
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/catalogs": {
+      "get": {
+        "tags": [
+          "AstroIllustrator.Api"
+        ],
+        "operationId": "GetCatalog",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CatalogResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server error (ProblemDetails with traceId).",
+            "content": {
+              "application/problem\u002Bjson": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "format": "int32",
+                      "nullable": true
+                    },
+                    "detail": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "instance": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "traceId": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "code": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "jobId": {
+                      "type": "string",
+                      "format": "uuid",
+                      "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "nullable": true
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/presets": {
+      "get": {
+        "tags": [
+          "AstroIllustrator.Api"
+        ],
+        "operationId": "GetPresets",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server error (ProblemDetails with traceId).",
+            "content": {
+              "application/problem\u002Bjson": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "format": "int32",
+                      "nullable": true
+                    },
+                    "detail": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "instance": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "traceId": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "code": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "jobId": {
+                      "type": "string",
+                      "format": "uuid",
+                      "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "nullable": true
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/illustrations/render": {
+      "post": {
+        "tags": [
+          "AstroIllustrator.Api"
+        ],
+        "description": "Synchronous render, returning a completed job with 201 and Location. Validation failures create no job. Scientific/renderer failures can include jobId/code. Disconnecting does not guarantee no persisted job; no automatic POST retries.",
+        "operationId": "RenderIllustration",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IllustrationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "headers": {
+              "Location": {
+                "description": "Relative URL of the created resource",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RenderJob"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem\u002Bjson": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "format": "int32",
+                      "nullable": true
+                    },
+                    "detail": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "instance": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "traceId": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "code": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "jobId": {
+                      "type": "string",
+                      "format": "uuid",
+                      "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "nullable": true
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/problem\u002Bjson": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "format": "int32",
+                      "nullable": true
+                    },
+                    "detail": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "instance": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "traceId": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "code": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "jobId": {
+                      "type": "string",
+                      "format": "uuid",
+                      "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "nullable": true
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/problem\u002Bjson": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "format": "int32",
+                      "nullable": true
+                    },
+                    "detail": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "instance": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "traceId": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "code": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "jobId": {
+                      "type": "string",
+                      "format": "uuid",
+                      "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "nullable": true
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "application/problem\u002Bjson": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "format": "int32",
+                      "nullable": true
+                    },
+                    "detail": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "instance": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "traceId": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "code": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "jobId": {
+                      "type": "string",
+                      "format": "uuid",
+                      "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "nullable": true
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "Gateway Timeout",
+            "content": {
+              "application/problem\u002Bjson": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "format": "int32",
+                      "nullable": true
+                    },
+                    "detail": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "instance": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "traceId": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "code": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "jobId": {
+                      "type": "string",
+                      "format": "uuid",
+                      "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "nullable": true
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server error (ProblemDetails with traceId).",
+            "content": {
+              "application/problem\u002Bjson": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "format": "int32",
+                      "nullable": true
+                    },
+                    "detail": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "instance": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "traceId": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "code": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "jobId": {
+                      "type": "string",
+                      "format": "uuid",
+                      "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "nullable": true
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/render-jobs": {
+      "get": {
+        "tags": [
+          "AstroIllustrator.Api"
+        ],
+        "operationId": "GetRenderJobs",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RenderJobPage"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem\u002Bjson": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "format": "int32",
+                      "nullable": true
+                    },
+                    "detail": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "instance": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "traceId": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "code": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "jobId": {
+                      "type": "string",
+                      "format": "uuid",
+                      "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "nullable": true
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server error (ProblemDetails with traceId).",
+            "content": {
+              "application/problem\u002Bjson": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "format": "int32",
+                      "nullable": true
+                    },
+                    "detail": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "instance": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "traceId": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "code": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "jobId": {
+                      "type": "string",
+                      "format": "uuid",
+                      "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "nullable": true
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/astronomy/resolve-time": {
+      "post": {
+        "tags": [
+          "AstroIllustrator.Api"
+        ],
+        "description": "Resolves civil time and nominal year bounds only. Consult capabilities and render validation for actual IERS support.",
+        "operationId": "ResolveTime",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TimeReference"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResolvedTimeResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem\u002Bjson": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "format": "int32",
+                      "nullable": true
+                    },
+                    "detail": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "instance": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "traceId": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "code": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "jobId": {
+                      "type": "string",
+                      "format": "uuid",
+                      "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "nullable": true
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server error (ProblemDetails with traceId).",
+            "content": {
+              "application/problem\u002Bjson": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "format": "int32",
+                      "nullable": true
+                    },
+                    "detail": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "instance": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "traceId": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "code": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "jobId": {
+                      "type": "string",
+                      "format": "uuid",
+                      "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "nullable": true
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/observer-presets": {
+      "get": {
+        "tags": [
+          "AstroIllustrator.Api"
+        ],
+        "operationId": "GetObservers",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ObserverPreset"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server error (ProblemDetails with traceId).",
+            "content": {
+              "application/problem\u002Bjson": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "format": "int32",
+                      "nullable": true
+                    },
+                    "detail": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "instance": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "traceId": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "code": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "jobId": {
+                      "type": "string",
+                      "format": "uuid",
+                      "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "nullable": true
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "AstroIllustrator.Api"
+        ],
+        "operationId": "CreateObserver",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ObserverPresetRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "headers": {
+              "Location": {
+                "description": "Relative URL of the created resource",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObserverPreset"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem\u002Bjson": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "format": "int32",
+                      "nullable": true
+                    },
+                    "detail": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "instance": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "traceId": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "code": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "jobId": {
+                      "type": "string",
+                      "format": "uuid",
+                      "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "nullable": true
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/problem\u002Bjson": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "format": "int32",
+                      "nullable": true
+                    },
+                    "detail": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "instance": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "traceId": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "code": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "jobId": {
+                      "type": "string",
+                      "format": "uuid",
+                      "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "nullable": true
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server error (ProblemDetails with traceId).",
+            "content": {
+              "application/problem\u002Bjson": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "format": "int32",
+                      "nullable": true
+                    },
+                    "detail": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "instance": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "traceId": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "code": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "jobId": {
+                      "type": "string",
+                      "format": "uuid",
+                      "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "nullable": true
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/observer-presets/{id}": {
+      "get": {
+        "tags": [
+          "AstroIllustrator.Api"
+        ],
+        "operationId": "GetObserver",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObserverPreset"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/problem\u002Bjson": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "format": "int32",
+                      "nullable": true
+                    },
+                    "detail": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "instance": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "traceId": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "code": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "jobId": {
+                      "type": "string",
+                      "format": "uuid",
+                      "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "nullable": true
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server error (ProblemDetails with traceId).",
+            "content": {
+              "application/problem\u002Bjson": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "format": "int32",
+                      "nullable": true
+                    },
+                    "detail": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "instance": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "traceId": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "code": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "jobId": {
+                      "type": "string",
+                      "format": "uuid",
+                      "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "nullable": true
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "AstroIllustrator.Api"
+        ],
+        "operationId": "UpdateObserver",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ObserverPresetRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObserverPreset"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem\u002Bjson": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "format": "int32",
+                      "nullable": true
+                    },
+                    "detail": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "instance": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "traceId": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "code": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "jobId": {
+                      "type": "string",
+                      "format": "uuid",
+                      "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "nullable": true
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/problem\u002Bjson": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "format": "int32",
+                      "nullable": true
+                    },
+                    "detail": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "instance": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "traceId": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "code": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "jobId": {
+                      "type": "string",
+                      "format": "uuid",
+                      "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "nullable": true
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/problem\u002Bjson": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "format": "int32",
+                      "nullable": true
+                    },
+                    "detail": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "instance": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "traceId": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "code": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "jobId": {
+                      "type": "string",
+                      "format": "uuid",
+                      "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "nullable": true
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server error (ProblemDetails with traceId).",
+            "content": {
+              "application/problem\u002Bjson": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "format": "int32",
+                      "nullable": true
+                    },
+                    "detail": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "instance": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "traceId": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "code": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "jobId": {
+                      "type": "string",
+                      "format": "uuid",
+                      "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "nullable": true
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "AstroIllustrator.Api"
+        ],
+        "operationId": "DeleteObserver",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/problem\u002Bjson": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "format": "int32",
+                      "nullable": true
+                    },
+                    "detail": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "instance": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "traceId": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "code": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "jobId": {
+                      "type": "string",
+                      "format": "uuid",
+                      "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "nullable": true
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server error (ProblemDetails with traceId).",
+            "content": {
+              "application/problem\u002Bjson": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "format": "int32",
+                      "nullable": true
+                    },
+                    "detail": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "instance": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "traceId": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "code": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "jobId": {
+                      "type": "string",
+                      "format": "uuid",
+                      "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "nullable": true
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/render-jobs/{id}": {
+      "get": {
+        "tags": [
+          "AstroIllustrator.Api"
+        ],
+        "operationId": "GetRenderJob",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RenderJob"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/problem\u002Bjson": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "format": "int32",
+                      "nullable": true
+                    },
+                    "detail": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "instance": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "traceId": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "code": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "jobId": {
+                      "type": "string",
+                      "format": "uuid",
+                      "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "nullable": true
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server error (ProblemDetails with traceId).",
+            "content": {
+              "application/problem\u002Bjson": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "format": "int32",
+                      "nullable": true
+                    },
+                    "detail": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "instance": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "traceId": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "code": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "jobId": {
+                      "type": "string",
+                      "format": "uuid",
+                      "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "nullable": true
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/render-jobs/{id}/outputs": {
+      "get": {
+        "tags": [
+          "AstroIllustrator.Api"
+        ],
+        "operationId": "GetRenderOutputs",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OutputResponse"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/problem\u002Bjson": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "format": "int32",
+                      "nullable": true
+                    },
+                    "detail": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "instance": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "traceId": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "code": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "jobId": {
+                      "type": "string",
+                      "format": "uuid",
+                      "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "nullable": true
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server error (ProblemDetails with traceId).",
+            "content": {
+              "application/problem\u002Bjson": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "format": "int32",
+                      "nullable": true
+                    },
+                    "detail": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "instance": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "traceId": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "code": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "jobId": {
+                      "type": "string",
+                      "format": "uuid",
+                      "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "nullable": true
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/render-jobs/{id}/outputs/{format}": {
+      "get": {
+        "tags": [
+          "AstroIllustrator.Api"
+        ],
+        "description": "Completed-job SVG, PNG or manifest attachment. File SHA-256 is in output metadata. Manifest has independent scientific provenance and is not recursively self-hashed.",
+        "operationId": "DownloadRenderOutput",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "format",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RenderManifestResponse"
+                }
+              },
+              "image/svg\u002Bxml": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "image/png": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/problem\u002Bjson": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "format": "int32",
+                      "nullable": true
+                    },
+                    "detail": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "instance": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "traceId": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "code": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "jobId": {
+                      "type": "string",
+                      "format": "uuid",
+                      "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "nullable": true
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server error (ProblemDetails with traceId).",
+            "content": {
+              "application/problem\u002Bjson": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "format": "int32",
+                      "nullable": true
+                    },
+                    "detail": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "instance": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "traceId": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "code": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "jobId": {
+                      "type": "string",
+                      "format": "uuid",
+                      "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "nullable": true
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AsterismResponse": {
+        "required": [
+          "code",
+          "name",
+          "constellationCodes",
+          "starHipIds",
+          "edges"
+        ],
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "constellationCodes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "starHipIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          "edges": {
+            "type": "array",
+            "items": {
+              "maxItems": 2,
+              "minItems": 2,
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "CatalogResponse": {
+        "required": [
+          "metadata",
+          "starCount",
+          "sha256"
+        ],
+        "type": "object",
+        "properties": {
+          "metadata": {
+            "type": "object",
+            "additionalProperties": {}
+          },
+          "starCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "sha256": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ConstellationResponse": {
+        "required": [
+          "code",
+          "name",
+          "edges"
+        ],
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "edges": {
+            "type": "array",
+            "items": {
+              "maxItems": 2,
+              "minItems": 2,
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "DiagramCapability": {
+        "required": [
+          "code",
+          "modes"
+        ],
+        "type": "object",
+        "properties": {
+          "code": {
+            "enum": [
+              "StarAltitude",
+              "PolarisLatitude",
+              "AltitudeAzimuth",
+              "AngularSeparation"
+            ],
+            "type": "string"
+          },
+          "modes": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "Schematic",
+                "Computed"
+              ],
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "DiagramParameters": {
+        "type": "object",
+        "properties": {
+          "altitudeDegrees": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "azimuthDegrees": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "starId": {
+            "enum": [
+              "Polaris"
+            ],
+            "type": "string",
+            "nullable": true
+          },
+          "starHipIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "HealthResponse": {
+        "required": [
+          "status"
+        ],
+        "type": "object",
+        "properties": {
+          "status": {
+            "enum": [
+              "Healthy"
+            ],
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "HttpValidationProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          },
+          "errors": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "IllustrationRequest": {
+        "type": "object",
+        "oneOf": [
+          {
+            "required": [
+              "skyChart"
+            ],
+            "type": "object",
+            "not": {
+              "required": [
+                "scientificDiagram"
+              ],
+              "properties": {
+                "scientificDiagram": {
+                  "type": "object",
+                  "properties": {
+                    "diagramType": {
+                      "enum": [
+                        "StarAltitude",
+                        "PolarisLatitude",
+                        "AltitudeAzimuth",
+                        "AngularSeparation"
+                      ],
+                      "type": "string"
+                    },
+                    "mode": {
+                      "enum": [
+                        "Schematic",
+                        "Computed"
+                      ],
+                      "type": "string"
+                    },
+                    "observer": {
+                      "oneOf": [
+                        {
+                          "enum": [
+                            null
+                          ],
+                          "nullable": true
+                        },
+                        {
+                          "$ref": "#/components/schemas/ObserverLocation"
+                        }
+                      ]
+                    },
+                    "timeUtc": {
+                      "type": "string",
+                      "format": "date-time",
+                      "nullable": true
+                    },
+                    "timeReference": {
+                      "oneOf": [
+                        {
+                          "enum": [
+                            null
+                          ],
+                          "nullable": true
+                        },
+                        {
+                          "$ref": "#/components/schemas/TimeReference"
+                        }
+                      ]
+                    },
+                    "parameters": {
+                      "$ref": "#/components/schemas/DiagramParameters"
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            },
+            "properties": {
+              "illustrationType": {
+                "enum": [
+                  "SkyChart"
+                ],
+                "type": "string"
+              },
+              "skyChart": {
+                "type": "object",
+                "properties": {
+                  "sceneType": {
+                    "enum": [
+                      "SingleConstellation",
+                      "MultipleConstellations",
+                      "Asterism",
+                      "HorizonView"
+                    ],
+                    "type": "string"
+                  },
+                  "constellationCode": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "constellationCodes": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "nullable": true
+                  },
+                  "asterismCode": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "projection": {
+                    "enum": [
+                      "Gnomonic",
+                      "AltitudeAzimuth"
+                    ],
+                    "type": "string"
+                  },
+                  "magnitudeLimit": {
+                    "maximum": 6.5,
+                    "exclusiveMaximum": false,
+                    "minimum": 2,
+                    "type": "number",
+                    "format": "double"
+                  },
+                  "observer": {
+                    "oneOf": [
+                      {
+                        "enum": [
+                          null
+                        ],
+                        "nullable": true
+                      },
+                      {
+                        "$ref": "#/components/schemas/ObserverLocation"
+                      }
+                    ]
+                  },
+                  "timeUtc": {
+                    "type": "string",
+                    "format": "date-time",
+                    "nullable": true
+                  },
+                  "timeReference": {
+                    "oneOf": [
+                      {
+                        "enum": [
+                          null
+                        ],
+                        "nullable": true
+                      },
+                      {
+                        "$ref": "#/components/schemas/TimeReference"
+                      }
+                    ]
+                  },
+                  "azimuthCenterDegrees": {
+                    "maximum": 360,
+                    "exclusiveMaximum": true,
+                    "minimum": 0,
+                    "type": "number",
+                    "format": "double"
+                  },
+                  "fieldOfViewDegrees": {
+                    "maximum": 180,
+                    "exclusiveMaximum": false,
+                    "minimum": 10,
+                    "type": "number",
+                    "format": "double"
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          },
+          {
+            "required": [
+              "scientificDiagram",
+              "illustrationType"
+            ],
+            "type": "object",
+            "not": {
+              "required": [
+                "skyChart"
+              ],
+              "properties": {
+                "skyChart": {
+                  "type": "object",
+                  "properties": {
+                    "sceneType": {
+                      "enum": [
+                        "SingleConstellation",
+                        "MultipleConstellations",
+                        "Asterism",
+                        "HorizonView"
+                      ],
+                      "type": "string"
+                    },
+                    "constellationCode": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "constellationCodes": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "nullable": true
+                    },
+                    "asterismCode": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "projection": {
+                      "enum": [
+                        "Gnomonic",
+                        "AltitudeAzimuth"
+                      ],
+                      "type": "string"
+                    },
+                    "magnitudeLimit": {
+                      "maximum": 6.5,
+                      "exclusiveMaximum": false,
+                      "minimum": 2,
+                      "type": "number",
+                      "format": "double"
+                    },
+                    "observer": {
+                      "oneOf": [
+                        {
+                          "enum": [
+                            null
+                          ],
+                          "nullable": true
+                        },
+                        {
+                          "$ref": "#/components/schemas/ObserverLocation"
+                        }
+                      ]
+                    },
+                    "timeUtc": {
+                      "type": "string",
+                      "format": "date-time",
+                      "nullable": true
+                    },
+                    "timeReference": {
+                      "oneOf": [
+                        {
+                          "enum": [
+                            null
+                          ],
+                          "nullable": true
+                        },
+                        {
+                          "$ref": "#/components/schemas/TimeReference"
+                        }
+                      ]
+                    },
+                    "azimuthCenterDegrees": {
+                      "maximum": 360,
+                      "exclusiveMaximum": true,
+                      "minimum": 0,
+                      "type": "number",
+                      "format": "double"
+                    },
+                    "fieldOfViewDegrees": {
+                      "maximum": 180,
+                      "exclusiveMaximum": false,
+                      "minimum": 10,
+                      "type": "number",
+                      "format": "double"
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            },
+            "properties": {
+              "illustrationType": {
+                "enum": [
+                  "ScientificDiagram"
+                ],
+                "type": "string"
+              },
+              "scientificDiagram": {
+                "type": "object",
+                "properties": {
+                  "diagramType": {
+                    "enum": [
+                      "StarAltitude",
+                      "PolarisLatitude",
+                      "AltitudeAzimuth",
+                      "AngularSeparation"
+                    ],
+                    "type": "string"
+                  },
+                  "mode": {
+                    "enum": [
+                      "Schematic",
+                      "Computed"
+                    ],
+                    "type": "string"
+                  },
+                  "observer": {
+                    "oneOf": [
+                      {
+                        "enum": [
+                          null
+                        ],
+                        "nullable": true
+                      },
+                      {
+                        "$ref": "#/components/schemas/ObserverLocation"
+                      }
+                    ]
+                  },
+                  "timeUtc": {
+                    "type": "string",
+                    "format": "date-time",
+                    "nullable": true
+                  },
+                  "timeReference": {
+                    "oneOf": [
+                      {
+                        "enum": [
+                          null
+                        ],
+                        "nullable": true
+                      },
+                      {
+                        "$ref": "#/components/schemas/TimeReference"
+                      }
+                    ]
+                  },
+                  "parameters": {
+                    "$ref": "#/components/schemas/DiagramParameters"
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        ],
+        "properties": {
+          "schemaVersion": {
+            "enum": [
+              "2.1"
+            ],
+            "type": "string"
+          },
+          "illustrationType": {
+            "enum": [
+              "SkyChart",
+              "ScientificDiagram"
+            ],
+            "type": "string"
+          },
+          "language": {
+            "enum": [
+              "en",
+              "sq"
+            ],
+            "type": "string"
+          },
+          "preset": {
+            "enum": [
+              "DarkAtlas",
+              "PrintMonochrome"
+            ],
+            "type": "string"
+          },
+          "skyChart": {
+            "oneOf": [
+              {
+                "enum": [
+                  null
+                ],
+                "nullable": true
+              },
+              {
+                "$ref": "#/components/schemas/SkyChartRequest"
+              }
+            ]
+          },
+          "scientificDiagram": {
+            "oneOf": [
+              {
+                "enum": [
+                  null
+                ],
+                "nullable": true
+              },
+              {
+                "$ref": "#/components/schemas/ScientificDiagramRequest"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "description": "Exactly one non-null matching scientific payload. Omitted scalar properties retain schema 2.1 defaults; unknown members are rejected. Further scene-dependent rules are enforced by the backend validator."
+      },
+      "ObservationCoverage": {
+        "required": [
+          "nominalStartYear",
+          "nominalEndYear",
+          "startUtcInclusive",
+          "endUtcExclusive",
+          "iersVersion",
+          "iersSha256",
+          "timeZoneDataVersion",
+          "predictionsIncluded",
+          "note"
+        ],
+        "type": "object",
+        "properties": {
+          "nominalStartYear": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nominalEndYear": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "startUtcInclusive": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endUtcExclusive": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "iersVersion": {
+            "type": "string"
+          },
+          "iersSha256": {
+            "type": "string"
+          },
+          "timeZoneDataVersion": {
+            "type": "string"
+          },
+          "predictionsIncluded": {
+            "type": "boolean"
+          },
+          "note": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ObserverLocation": {
+        "required": [
+          "latitude",
+          "longitude"
+        ],
+        "type": "object",
+        "properties": {
+          "latitude": {
+            "maximum": 90,
+            "exclusiveMaximum": false,
+            "minimum": -90,
+            "type": "number",
+            "format": "double"
+          },
+          "longitude": {
+            "maximum": 180,
+            "exclusiveMaximum": false,
+            "minimum": -180,
+            "type": "number",
+            "format": "double"
+          },
+          "elevationMeters": {
+            "maximum": 10000,
+            "exclusiveMaximum": false,
+            "minimum": -500,
+            "type": "number",
+            "format": "double",
+            "default": 0
+          },
+          "timeZoneId": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ObserverPreset": {
+        "required": [
+          "id",
+          "name",
+          "latitude",
+          "longitude",
+          "elevationMeters",
+          "timeZoneId"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "latitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "longitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "elevationMeters": {
+            "type": "number",
+            "format": "double"
+          },
+          "timeZoneId": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ObserverPresetRequest": {
+        "required": [
+          "name",
+          "observer"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "observer": {
+            "$ref": "#/components/schemas/ObserverLocation"
+          }
+        },
+        "additionalProperties": false
+      },
+      "OutputResponse": {
+        "required": [
+          "format",
+          "fileName",
+          "sha256",
+          "downloadUrl"
+        ],
+        "type": "object",
+        "properties": {
+          "format": {
+            "enum": [
+              "svg",
+              "png",
+              "manifest"
+            ],
+            "type": "string"
+          },
+          "fileName": {
+            "type": "string"
+          },
+          "sha256": {
+            "type": "string"
+          },
+          "downloadUrl": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ReadinessResponse": {
+        "required": [
+          "status",
+          "rendererReady",
+          "databaseReady",
+          "code"
+        ],
+        "type": "object",
+        "properties": {
+          "status": {
+            "enum": [
+              "Ready",
+              "NotReady"
+            ],
+            "type": "string"
+          },
+          "rendererReady": {
+            "type": "boolean"
+          },
+          "databaseReady": {
+            "type": "boolean"
+          },
+          "code": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RendererCapabilities": {
+        "required": [
+          "schemaVersion",
+          "rendererVersion",
+          "sceneTypes",
+          "constellationCodes",
+          "asterismCodes",
+          "diagramTemplates",
+          "languages",
+          "presets",
+          "outputFormats",
+          "observationCoverage"
+        ],
+        "type": "object",
+        "properties": {
+          "schemaVersion": {
+            "enum": [
+              "2.1"
+            ],
+            "type": "string"
+          },
+          "rendererVersion": {
+            "type": "string"
+          },
+          "sceneTypes": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "SingleConstellation",
+                "MultipleConstellations",
+                "Asterism",
+                "HorizonView"
+              ],
+              "type": "string"
+            }
+          },
+          "constellationCodes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "asterismCodes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "diagramTemplates": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DiagramCapability"
+            }
+          },
+          "languages": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "en",
+                "sq"
+              ],
+              "type": "string"
+            }
+          },
+          "presets": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "DarkAtlas",
+                "PrintMonochrome"
+              ],
+              "type": "string"
+            }
+          },
+          "outputFormats": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "svg",
+                "png",
+                "manifest"
+              ],
+              "type": "string"
+            }
+          },
+          "observationCoverage": {
+            "$ref": "#/components/schemas/ObservationCoverage"
+          }
+        },
+        "additionalProperties": false
+      },
+      "RenderJob": {
+        "required": [
+          "id",
+          "status",
+          "createdAtUtc",
+          "completedAtUtc",
+          "requestJson",
+          "requestHash",
+          "resultJson",
+          "errorCode",
+          "errorMessage"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "$ref": "#/components/schemas/RenderStatus"
+          },
+          "createdAtUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "completedAtUtc": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "requestJson": {
+            "type": "string"
+          },
+          "requestHash": {
+            "type": "string"
+          },
+          "resultJson": {
+            "type": "string",
+            "nullable": true
+          },
+          "errorCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "errorMessage": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RenderJobPage": {
+        "required": [
+          "items",
+          "page",
+          "pageSize",
+          "totalCount"
+        ],
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RenderJobSummary"
+            }
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "RenderJobSummary": {
+        "required": [
+          "id",
+          "status",
+          "createdAtUtc",
+          "completedAtUtc",
+          "errorCode",
+          "errorMessage",
+          "scene"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "$ref": "#/components/schemas/RenderStatus"
+          },
+          "createdAtUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "completedAtUtc": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "errorCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "errorMessage": {
+            "type": "string",
+            "nullable": true
+          },
+          "scene": {
+            "oneOf": [
+              {
+                "enum": [
+                  null
+                ],
+                "nullable": true
+              },
+              {
+                "$ref": "#/components/schemas/RenderSceneMetadata"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false
+      },
+      "RenderManifestResponse": {
+        "required": [
+          "schemaVersion",
+          "rendererVersion",
+          "request",
+          "geometryHash",
+          "geometry",
+          "scientificResults",
+          "scientificAssumptions",
+          "catalog",
+          "catalogSha256",
+          "lineSet",
+          "lineSetSha256",
+          "libraries",
+          "outputs"
+        ],
+        "type": "object",
+        "properties": {
+          "schemaVersion": {
+            "type": "string"
+          },
+          "rendererVersion": {
+            "type": "string"
+          },
+          "request": {
+            "$ref": "#/components/schemas/IllustrationRequest"
+          },
+          "geometryHash": {
+            "type": "string"
+          },
+          "geometry": {},
+          "scientificResults": {
+            "type": "object",
+            "additionalProperties": {}
+          },
+          "scientificAssumptions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "catalog": {
+            "type": "object",
+            "additionalProperties": {}
+          },
+          "catalogSha256": {
+            "type": "string"
+          },
+          "lineSet": {},
+          "lineSetSha256": {
+            "type": "string"
+          },
+          "libraries": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "outputs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RenderOutput"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "RenderOutput": {
+        "required": [
+          "format",
+          "fileName",
+          "sha256"
+        ],
+        "type": "object",
+        "properties": {
+          "format": {
+            "enum": [
+              "svg",
+              "png",
+              "manifest"
+            ],
+            "type": "string"
+          },
+          "fileName": {
+            "type": "string"
+          },
+          "sha256": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "RenderSceneMetadata": {
+        "required": [
+          "illustrationType",
+          "sceneType",
+          "diagramType",
+          "mode",
+          "constellationCodes",
+          "asterismCode",
+          "language",
+          "preset"
+        ],
+        "type": "object",
+        "properties": {
+          "illustrationType": {
+            "type": "string"
+          },
+          "sceneType": {
+            "type": "string"
+          },
+          "diagramType": {
+            "type": "string",
+            "nullable": true
+          },
+          "mode": {
+            "type": "string",
+            "nullable": true
+          },
+          "constellationCodes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "asterismCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "language": {
+            "type": "string"
+          },
+          "preset": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "RenderStatus": {
+        "enum": [
+          "Queued",
+          "Running",
+          "Completed",
+          "Failed",
+          "Cancelled"
+        ]
+      },
+      "ResolvedTimeResponse": {
+        "required": [
+          "instantUtc"
+        ],
+        "type": "object",
+        "properties": {
+          "instantUtc": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ScientificDiagramRequest": {
+        "type": "object",
+        "properties": {
+          "diagramType": {
+            "enum": [
+              "StarAltitude",
+              "PolarisLatitude",
+              "AltitudeAzimuth",
+              "AngularSeparation"
+            ],
+            "type": "string"
+          },
+          "mode": {
+            "enum": [
+              "Schematic",
+              "Computed"
+            ],
+            "type": "string"
+          },
+          "observer": {
+            "oneOf": [
+              {
+                "enum": [
+                  null
+                ],
+                "nullable": true
+              },
+              {
+                "$ref": "#/components/schemas/ObserverLocation"
+              }
+            ]
+          },
+          "timeUtc": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "timeReference": {
+            "oneOf": [
+              {
+                "enum": [
+                  null
+                ],
+                "nullable": true
+              },
+              {
+                "$ref": "#/components/schemas/TimeReference"
+              }
+            ]
+          },
+          "parameters": {
+            "$ref": "#/components/schemas/DiagramParameters"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SkyChartRequest": {
+        "type": "object",
+        "properties": {
+          "sceneType": {
+            "enum": [
+              "SingleConstellation",
+              "MultipleConstellations",
+              "Asterism",
+              "HorizonView"
+            ],
+            "type": "string"
+          },
+          "constellationCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "constellationCodes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "asterismCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "projection": {
+            "enum": [
+              "Gnomonic",
+              "AltitudeAzimuth"
+            ],
+            "type": "string"
+          },
+          "magnitudeLimit": {
+            "maximum": 6.5,
+            "exclusiveMaximum": false,
+            "minimum": 2,
+            "type": "number",
+            "format": "double"
+          },
+          "observer": {
+            "oneOf": [
+              {
+                "enum": [
+                  null
+                ],
+                "nullable": true
+              },
+              {
+                "$ref": "#/components/schemas/ObserverLocation"
+              }
+            ]
+          },
+          "timeUtc": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "timeReference": {
+            "oneOf": [
+              {
+                "enum": [
+                  null
+                ],
+                "nullable": true
+              },
+              {
+                "$ref": "#/components/schemas/TimeReference"
+              }
+            ]
+          },
+          "azimuthCenterDegrees": {
+            "maximum": 360,
+            "exclusiveMaximum": true,
+            "minimum": 0,
+            "type": "number",
+            "format": "double"
+          },
+          "fieldOfViewDegrees": {
+            "maximum": 180,
+            "exclusiveMaximum": false,
+            "minimum": 10,
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TimeReference": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "enum": [
+              "AbsoluteUtc",
+              "LocalClock"
+            ],
+            "type": "string"
+          },
+          "instantUtc": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "localDateTime": {
+            "type": "string",
+            "description": "Local civil timestamp without UTC offset. Requires IANA timeZoneId; Reject/Earlier/Later resolves DST overlaps. Gaps are rejected.",
+            "nullable": true
+          },
+          "timeZoneId": {
+            "type": "string",
+            "nullable": true
+          },
+          "ambiguityPolicy": {
+            "enum": [
+              "Reject",
+              "Earlier",
+              "Later"
+            ],
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "AstroIllustrator.Api"
+    }
+  ]
+}

@@ -3,6 +3,9 @@
 ###############################################################################
 * text=auto
 
+# Keep exported contract bytes stable across Windows and Linux checkouts.
+docs/openapi/*.json text eol=lf
+
 ###############################################################################
 # Set default behavior for command prompt diff.
 #

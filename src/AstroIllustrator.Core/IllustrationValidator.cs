@@ -101,8 +101,12 @@ public static class IllustrationValidator
     {
         List<ValidationIssue> issues = [];
         if (observer is null) { issues.Add(new("observer", "Observer coordinates are required.")); return issues; }
-        if (!FiniteRange(observer.Latitude, -90, 90) || !FiniteRange(observer.Longitude, -180, 180) || !FiniteRange(observer.ElevationMeters, -500, 10000))
-            issues.Add(new("observer", "Invalid WGS84 latitude, longitude or elevation (-500 to 10000 metres)."));
+        if (!FiniteRange(observer.Latitude, -90, 90))
+            issues.Add(new("observer.latitude", "Latitude must be a finite number between -90 and 90 degrees."));
+        if (!FiniteRange(observer.Longitude, -180, 180))
+            issues.Add(new("observer.longitude", "Longitude must be a finite number between -180 and 180 degrees."));
+        if (!FiniteRange(observer.ElevationMeters, -500, 10000))
+            issues.Add(new("observer.elevationMeters", "Elevation must be a finite number between -500 and 10000 metres."));
         if (observer.TimeZoneId is not null)
         {
             try

@@ -105,7 +105,7 @@ public sealed class PythonRendererClient(IOptions<RendererOptions> options, ILog
         finally { gate.Release(); }
     }
 
-    private static async Task<string> ReadBoundedAsync(StreamReader reader, int limit, CancellationToken token)
+    internal static async Task<string> ReadBoundedAsync(StreamReader reader, int limit, CancellationToken token)
     {
         var result = new System.Text.StringBuilder();
         char[] buffer = new char[2048];
