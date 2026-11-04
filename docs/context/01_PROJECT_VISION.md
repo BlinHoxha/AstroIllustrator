@@ -32,6 +32,11 @@ has been implemented.
 The actual current clients are a functional web MVP and a native navigation scaffold.
 The native scaffold is not a mobile implementation of these workflows.
 
+Update, **4 November 2026**: optional Describe your chart proposals now populate the existing
+form after review/confirmation. Azure OpenAI is the first adapter and remains disabled until
+configured. Live semantic evaluation remains open; no AI geometry, captions or scenery was
+added. See [AI proposals](../ai-chart-proposals.md) for the implemented boundary.
+
 ## Product and engineering requirements
 
 - Scientific positions and angles must come from deterministic backend/Python calculations.
@@ -70,7 +75,7 @@ recomputing stars in the browser.
 ## Future capabilities: discussed, not delivered
 
 - Sun/Moon/planet ephemerides, solar-time calculations, conjunctions and other event discovery.
-- Natural-language interpretation into a typed, supported request for user review.
+- Broader natural-language coverage after live evaluation of the first proposal feature.
 - Grounded educational captions, with evidence and review controls.
 - Optional artistic scenery kept separate from authoritative scientific overlays.
 - A usable mobile client, explicit location/share permissions and real-device verification.
@@ -78,7 +83,7 @@ recomputing stars in the browser.
 - Broader catalog coverage and a secured shared test environment. OpenAPI-generated client
   types and drift checks were subsequently delivered on 27 October 2026.
 
-AI/AR/planets/events/PDF/batch are not hidden completed features. Their mention in requirements
+AR/planets/events/PDF/batch and later AI features are not hidden completed features. Their mention in requirements
 does not authorize implementing them during the present documentation task. Earlier approval
 covered frontend scaffold/web MVP, the temporary adapter and local proxy; backend changes,
 native feature delivery and deployment are later scope.
@@ -92,7 +97,8 @@ Ephemerides/events and limited AI interpretation follow explicit product decisio
 AI slice can be brought forward after web/API/scientific foundations; mobile and planets are
 not technical prerequisites for interpreting already-supported scenes.
 
-The user requested priorities and substeps, not immediate AI implementation. The immediate
+The earlier user request concerned priorities and substeps; AI proposal implementation was
+subsequently explicitly approved on 4 November 2026. The immediate
 discussed startup improvement, frontend `scripts/pnpm.cmd`, is now implemented. The six-area
 local web stabilization review passed on 27 October; see the implementation status for
 current evidence and remaining independent human/scientific acceptance requirements.

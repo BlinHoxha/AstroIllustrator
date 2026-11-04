@@ -5,6 +5,49 @@ Recorded **26 October 2026**, Europe/Budapest. Canonical cross-repository entry 
 
 ## Current objective and stopping point
 
+Publication checkpoint, **4 November 2026**: the user explicitly requested Conventional
+Commits and origin pushes for AI-Framework, backend and frontend, in dependency order.
+The matching AI-Framework revision is `1918f0e49d360869e72e3714f4acace07c21f25b`
+(`feat(generation): support strict Azure structured outputs`). Restore that revision or
+a compatible descendant alongside this backend. Frontend records its matching backend
+revision in its handoff. This is a source checkpoint, not package/deployment publication.
+
+Latest update, **4 November 2026 — AI proposals**: after the repository checkpoint, the user
+approved implementing the proposed structured-generation approach. They selected Azure
+OpenAI now and asked to allow Bedrock later. AI-Framework now has a separate structured model
+interface, schema subset validation, bounded Azure adapter and provider tests. Astro source-
+references Core/Azure and owns proposal settings, validation, quotas/timeouts and additive
+status/interpretation endpoints. Studio reviews/confirms proposals before applying to the form;
+it never auto-renders. Coordinates/time are deliberately entered manually; applying an
+observation proposal clears inherited examples. Empty numeric drafts survive reload.
+
+See [AI setup/design](../ai-chart-proposals.md), its evaluation cases and the updated shared
+integration/scientific-boundary documents. AI stays disabled by default; no live Azure call
+or semantic model evaluation was performed. Current generated OpenAPI/types include the
+proposal routes. General Framework, native delivery, Python geometry and SQLite migrations
+are unchanged. A sibling updated AI-Framework checkout is now required for backend builds.
+
+Final verification: **58 Astro .NET tests** (29 Core, 29 API/process), **36 AI-Framework tests**
+(22 unit/provider, two contract, six architecture, six integration), **42 frontend tests**,
+and **58 browser checks** (50 mock-backed, including ten new AI checks, plus eight real API
+checks across desktop/narrow). Contract generation/drift, full workspace typecheck, lint,
+formatting and web build passed. The final schema-only follow-up verified nullable proposal
+enums and description bounds before exporting/regenerating contracts. Shared net9 tests ran
+with the local SDK and `DOTNET_ROLL_FORWARD=Major`; Astro hosts the libraries on net10.
+Native typechecking passed; native exports/device tests and standalone Python tests were not
+rerun for this feature. Scientific Python source is unchanged. Browser report is retained in
+frontend `playwright-report/`; mocked review screenshots are under `docs/qa/2026-11-04`.
+Isolated verification servers were stopped after testing. This feature spans all three
+repositories; the publication checkpoint above records the matching dependency revision.
+No new package/deployment was published. Live Azure remains unconfigured.
+
+Initial NuGet restore
+was denied in the sandbox and succeeded on approved external retry. One initial existing
+missing-star real-Python test returned 503; its focused and subsequent full runs passed.
+Its assertion now includes the actual error body to aid future diagnostics; no speculative
+renderer/scientific change was made. Frontend strict typing and formatting findings were
+corrected before the final checks. Do not claim live/provider/device acceptance from mocks.
+
 Update, **4 November 2026**: the user explicitly requested checking, committing and pushing
 both backend and frontend to origin. Frontend Git was initialized on `main` and connected
 to the existing empty `https://github.com/BlinHoxha/AstroIllustrator.Frontend.git`; backend

@@ -1,4 +1,4 @@
-# Deterministic astronomy, scientific accuracy and proposed AI
+# Deterministic astronomy, scientific accuracy and optional AI proposals
 
 Checkpoint: 26 October 2026. Source evidence:
 [contracts](../../renderer/astro_renderer/contracts.py),
@@ -13,9 +13,13 @@ Checkpoint: 26 October 2026. Source evidence:
 
 All current chart geometry is deterministic Python/backend work. Astropy transforms and
 Matplotlib drawing are scientific software and visualization, not learned AI inference.
-AstroIllustrator currently consumes no LLM, embedding model, image generation service,
-RAG pipeline, provider credentials or AI-Framework library. No natural-language prompt
-or chat endpoint is implemented. Palette/language changes do not make an output AI-generated.
+On 4 November 2026 the first optional natural-language chart proposal feature was implemented
+using AI-Framework Core/Azure structured generation. It is disabled by default and requires
+explicit Azure configuration. Proposals are reviewed and applied to the form before ordinary
+rendering; coordinates/time are entered explicitly and never resolved by AI in this version.
+No embedding model, image generation or RAG pipeline is integrated. Live model quality is
+not established by simulated provider tests. See [AI proposals](../ai-chart-proposals.md).
+Palette/language changes do not make scientific geometry AI-generated.
 
 The frontend selects inputs and displays artifacts. It must not invent positions, infer
 unsupported bodies, copy decorative prototype stars or compute alternative astronomy.
@@ -140,7 +144,7 @@ are absent. A future conjunction needs defined bodies, observer/frame, time scal
 criterion, search interval/refinement and reference tolerances; “near each other” text is
 not an implemented event algorithm.
 
-## Proposed AI boundary
+## AI boundary and later extensions
 
 1. Natural language may propose a typed request limited to real supported scenes.
 2. Show the interpretation for user review, preserve ambiguity and reject unsupported asks.
@@ -151,5 +155,7 @@ not an implemented event algorithm.
 5. Optional scenery can be a separate artistic layer, labeled and isolated from the scientific
    overlay. No image-generation integration or provider is currently selected.
 
-Provider choice, structured-output contract, language support, privacy, cost limits, provenance
-and evaluation are unresolved. See [framework integration](05_SHARED_FRAMEWORK_INTEGRATION.md).
+The first proposal contract, Azure selection, en/sq interface, review, privacy notice and
+bounded requests are implemented as described above. Live deployment compatibility and
+semantic evaluation remain open, along with durable/distributed cost controls and later
+caption/scenery capabilities. See [framework integration](05_SHARED_FRAMEWORK_INTEGRATION.md).

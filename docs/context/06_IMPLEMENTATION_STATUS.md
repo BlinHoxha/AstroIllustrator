@@ -2,6 +2,22 @@
 
 Checkpoint: **27 October 2026**. This is an evidence inventory, not a release certificate.
 
+## AI chart proposals — 4 November 2026
+
+Implemented the approved first AI feature across AI-Framework, backend and web. The shared
+interface/Azure adapter are separate from retrieval; Astro owns proposal validation and
+limits; Studio provides explicit review/apply without automatic rendering. Coordinates/time
+remain explicit form inputs. AI is disabled by default; enabling requires a compatible Azure
+deployment and credentials. Bedrock structured support, captions, RAG and image generation
+remain future work. General Framework and scientific Python geometry are unchanged.
+Read [setup, limits and evaluation scope](../ai-chart-proposals.md).
+
+Verification passed: 58 Astro .NET tests, 36 AI-Framework tests, 42 frontend tests and 58
+browser checks (50 mocked/eight real API), plus contract/static/format/build checks. Provider
+responses are simulated; actual science rendering is exercised separately. Review screenshots
+are explicitly fixture-backed. Details are recorded in the session handoff. Live Azure/model quality,
+independent scientific/human acceptance and deployment remain separate outstanding checks.
+
 ## Repository checkpoint preparation — 4 November 2026
 
 The user requested review, commit and push of both repositories. Fresh checks passed:

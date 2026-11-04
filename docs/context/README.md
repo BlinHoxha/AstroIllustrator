@@ -4,6 +4,11 @@ Canonical cross-repository context, recorded on **26 October 2026**. Start here 
 resuming work without the earlier conversation. These documents preserve inspected
 implementation and accessible conversation context; they are not a new feature authorization.
 
+Latest, **4 November 2026**: the explicitly approved first AI proposal workflow is implemented
+locally across AI-Framework/Astro/web, disabled until Azure configuration. See
+[AI chart proposals](../ai-chart-proposals.md) and the newest handoff for current verification.
+The October entries below preserve earlier milestones.
+
 Latest update, **27 October 2026**: web stabilization and the subsequent API-contract milestone
 are implemented and verified. Read [the API contract](../api-contract.md), current status/
 handoff and frontend review for fresh checks, screenshots and remaining human/scientific gates.

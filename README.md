@@ -5,6 +5,11 @@ The backend renders constellation/asterism charts, observer-dependent horizon vi
 scientific diagrams as SVG/PNG with reproducibility manifests. The sibling
 AstroIllustrator.Frontend repository contains the functional web client and native scaffold.
 
+Optional **Describe your chart** interpretation uses the sibling AI-Framework structured
+generation interface and Azure adapter. It is disabled by default and requires explicit
+provider setup; see [AI chart proposals](docs/ai-chart-proposals.md). Keep the updated
+AI-Framework checkout beside this repository for backend restore/build.
+
 Current coverage:
 
 - Orion, Ursa Minor, Lyra, Cygnus and Aquila; multiple constellations and Summer Triangle.

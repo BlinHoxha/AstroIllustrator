@@ -1,8 +1,12 @@
 # Framework and AI-Framework integration boundaries
 
 Checkpoint: 26 October 2026. All four repositories were accessible and inspected.
-**AstroIllustrator currently references neither Framework nor AI-Framework.** No existing
-capability in those libraries should be described as an AstroIllustrator integration.
+Update, **4 November 2026**: Astro Infrastructure now source-references AI-Framework Azure
+(and transitively Core) for the explicitly approved structured-generation integration.
+General Framework remains unreferenced. The net9.0 AI libraries compile into the net10.0
+host without adopting a shared EF stack. AI stays disabled until configured. See
+[AI chart proposals](../ai-chart-proposals.md); the remaining October inventory is historical
+except where explicitly updated below.
 
 ## Framework: actual library capabilities
 
@@ -46,7 +50,8 @@ Sharing code is useful when it removes real duplication with compatible semantic
 
 Evidence: sibling [README](../../../AI-Framework/README.md), architecture/getting-started
 documents, `src/` Core/Application/Local/Azure/Aws implementations and DI registration.
-Its libraries target .NET 9/version 0.1.0 and are not dependencies of Astro today.
+Its libraries target .NET 9/version 0.1.0. Core/Azure are now Astro dependencies; other AI
+modules are not imported for the chart-description workflow.
 
 - **Core contracts**: `ITextChunker`, `IKnowledgeIndex`, `IKnowledgeRetriever`, `IChatModel`,
   `ITextEmbeddingModel`, `IDocumentProfileCatalog`, `IDocumentTextExtractor` plus knowledge,
@@ -76,11 +81,11 @@ Grounded educational captions are a plausible first reuse of AI-Framework retrie
 with curated astronomy material, product-specific profiles, citations and review. Choose and
 verify a provider deliberately; neither a cloud provider nor model is selected for Astro.
 
-Natural-language-to-render-request is a separate structured interpretation problem. The current
-grounded-answer API does not already provide a typed astronomy command parser. Design a narrow
-proposal contract and evaluation; extract a reusable structured-generation abstraction only if
-multiple products need it. Do not force every prompt through document Q&A or introduce RAG when
-the task merely selects an already-known scene and parameters.
+Natural-language-to-render-request remains separate from document Q&A. The new
+`IStructuredGenerationModel` and Azure adapter supply generic schema-constrained generation;
+Astro owns its proposal schema, validation, missing-input handling and review. Existing grounded
+answer services are unchanged. RAG is not used to select known scene parameters. Bedrock can
+later implement the same new interface; its existing answer adapter is not structured extraction.
 
 Scientific geometry remains in the product's Python pipeline. No shared AI contract should
 accept invented coordinates as authoritative. The web/native client consumes reviewed typed
@@ -98,9 +103,10 @@ Do not add a shared platform service, message bus, durable queue, generic CRUD h
 multi-agent orchestrator or cross-product database merely because it might be useful later.
 Do not create duplicate AI/provider plumbing if an existing suitable adapter can be reused.
 
-The frontend repository's existing instructions prohibit modifying Framework/AI-Framework
-within its current scope. The present documentation task inspected them read-only. Framework's
-pre-existing `docs/documentation.code-workspace` change belongs to the user and must remain intact.
+The original documentation scope was read-only. The user explicitly approved the narrow
+AI-Framework extension and Astro integration on 4 November; frontend instructions now record
+that exception. General Framework remains unchanged. Its pre-existing
+`docs/documentation.code-workspace` change belongs to the user and must remain intact.
 
 ## Decisions still required before adoption
 

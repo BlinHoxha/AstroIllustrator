@@ -234,6 +234,399 @@
         }
       }
     },
+    "/api/chart-proposals/status": {
+      "get": {
+        "tags": [
+          "AstroIllustrator.Api"
+        ],
+        "operationId": "GetChartAiStatus",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChartAiStatus"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server error (ProblemDetails with traceId).",
+            "content": {
+              "application/problem\u002Bjson": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "format": "int32",
+                      "nullable": true
+                    },
+                    "detail": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "instance": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "traceId": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "code": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "jobId": {
+                      "type": "string",
+                      "format": "uuid",
+                      "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "nullable": true
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/chart-proposals": {
+      "post": {
+        "tags": [
+          "AstroIllustrator.Api"
+        ],
+        "description": "Optional AI proposal only; never creates a render job. User reviews and applies fields, then submits through normal scientific validation. No automatic retries; coordinates and observation time must be entered explicitly.",
+        "operationId": "InterpretChartDescription",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChartDescriptionRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChartProposalResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem\u002Bjson": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "format": "int32",
+                      "nullable": true
+                    },
+                    "detail": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "instance": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "traceId": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "code": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "jobId": {
+                      "type": "string",
+                      "format": "uuid",
+                      "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "nullable": true
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/problem\u002Bjson": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "format": "int32",
+                      "nullable": true
+                    },
+                    "detail": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "instance": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "traceId": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "code": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "jobId": {
+                      "type": "string",
+                      "format": "uuid",
+                      "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "nullable": true
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "application/problem\u002Bjson": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "format": "int32",
+                      "nullable": true
+                    },
+                    "detail": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "instance": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "traceId": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "code": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "jobId": {
+                      "type": "string",
+                      "format": "uuid",
+                      "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "nullable": true
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "Gateway Timeout",
+            "content": {
+              "application/problem\u002Bjson": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "format": "int32",
+                      "nullable": true
+                    },
+                    "detail": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "instance": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "traceId": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "code": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "jobId": {
+                      "type": "string",
+                      "format": "uuid",
+                      "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "nullable": true
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server error (ProblemDetails with traceId).",
+            "content": {
+              "application/problem\u002Bjson": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "title": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "status": {
+                      "type": "integer",
+                      "format": "int32",
+                      "nullable": true
+                    },
+                    "detail": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "instance": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "traceId": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "code": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "jobId": {
+                      "type": "string",
+                      "format": "uuid",
+                      "nullable": true
+                    },
+                    "errors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "nullable": true
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/health/live": {
       "get": {
         "tags": [
@@ -2758,6 +3151,186 @@
         },
         "additionalProperties": false
       },
+      "ChartAiStatus": {
+        "required": [
+          "enabled",
+          "provider",
+          "maxDescriptionLength"
+        ],
+        "type": "object",
+        "properties": {
+          "enabled": {
+            "type": "boolean"
+          },
+          "provider": {
+            "type": "string",
+            "nullable": true
+          },
+          "maxDescriptionLength": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ChartDescriptionRequest": {
+        "required": [
+          "description"
+        ],
+        "type": "object",
+        "properties": {
+          "description": {
+            "maxLength": 2000,
+            "minLength": 1,
+            "type": "string"
+          },
+          "language": {
+            "enum": [
+              "en",
+              "sq"
+            ],
+            "type": "string",
+            "default": "en"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ChartProposalParameters": {
+        "type": "object",
+        "properties": {
+          "scene": {
+            "enum": [
+              "SingleConstellation",
+              "MultipleConstellations",
+              "Asterism",
+              "HorizonView",
+              "ScientificDiagram",
+              null
+            ],
+            "type": "string",
+            "nullable": true
+          },
+          "constellationCodes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "diagramType": {
+            "enum": [
+              "StarAltitude",
+              "PolarisLatitude",
+              "AltitudeAzimuth",
+              "AngularSeparation",
+              null
+            ],
+            "type": "string",
+            "nullable": true
+          },
+          "mode": {
+            "enum": [
+              "Schematic",
+              "Computed",
+              null
+            ],
+            "type": "string",
+            "nullable": true
+          },
+          "language": {
+            "enum": [
+              "en",
+              "sq",
+              null
+            ],
+            "type": "string",
+            "nullable": true
+          },
+          "preset": {
+            "enum": [
+              "DarkAtlas",
+              "PrintMonochrome",
+              null
+            ],
+            "type": "string",
+            "nullable": true
+          },
+          "magnitudeLimit": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "altitudeDegrees": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "azimuthDegrees": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "starHipIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ChartProposalResponse": {
+        "required": [
+          "status",
+          "parameters",
+          "requiredFields",
+          "issues",
+          "provider"
+        ],
+        "type": "object",
+        "properties": {
+          "status": {
+            "enum": [
+              "Ready",
+              "NeedsInput",
+              "Unsupported",
+              "Invalid"
+            ],
+            "type": "string"
+          },
+          "parameters": {
+            "oneOf": [
+              {
+                "enum": [
+                  null
+                ],
+                "nullable": true
+              },
+              {
+                "$ref": "#/components/schemas/ChartProposalParameters"
+              }
+            ]
+          },
+          "requiredFields": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "issues": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ValidationIssue"
+            }
+          },
+          "provider": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
       "ConstellationResponse": {
         "required": [
           "code",
@@ -2831,7 +3404,8 @@
           },
           "starId": {
             "enum": [
-              "Polaris"
+              "Polaris",
+              null
             ],
             "type": "string",
             "nullable": true
@@ -4074,6 +4648,22 @@
               "Earlier",
               "Later"
             ],
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ValidationIssue": {
+        "required": [
+          "field",
+          "message"
+        ],
+        "type": "object",
+        "properties": {
+          "field": {
+            "type": "string"
+          },
+          "message": {
             "type": "string"
           }
         },

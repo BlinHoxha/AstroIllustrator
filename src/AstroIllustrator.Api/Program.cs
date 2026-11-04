@@ -50,6 +50,12 @@ builder.Services.Configure<Microsoft.AspNetCore.Routing.RouteHandlerOptions>(o =
 builder.WebHost.ConfigureKestrel(o => o.Limits.MaxRequestBodySize = 64_000);
 builder.Services.AddRateLimiter(o =>
 {
+    o.AddFixedWindowLimiter("chart-ai", limiter =>
+    {
+        limiter.PermitLimit = 5;
+        limiter.Window = TimeSpan.FromMinutes(1);
+        limiter.QueueLimit = 0;
+    });
     o.RejectionStatusCode = 429;
     o.AddConcurrencyLimiter("render", limiter =>
     {
@@ -83,6 +89,7 @@ builder.Services.AddDbContext<AstroDbContext>(o => o.UseSqlite(new Microsoft.Dat
     { DataSource = Path.Combine(root, "data", "astroillustrator.db") }.ToString()));
 builder.Services.AddScoped<IRenderJobStore>(p => p.GetRequiredService<AstroDbContext>());
 builder.Services.AddScoped<RenderJobService>();
+builder.Services.AddChartProposals(builder.Configuration);
 var app = builder.Build();
 app.UseExceptionHandler();
 app.UseStatusCodePages(async status => await Results.Problem(statusCode: status.HttpContext.Response.StatusCode,
@@ -91,6 +98,7 @@ app.UseStatusCodePages(async status => await Results.Problem(statusCode: status.
 app.UseRateLimiter();
 app.MapOpenApi();
 app.MapRendererCapabilities();
+app.MapChartProposals();
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AstroDbContext>();

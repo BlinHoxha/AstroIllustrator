@@ -11,8 +11,9 @@
   and regenerate frontend contracts, and run snapshot/drift checks. Preserve JSON-string job
   fields and distinguish liveness, dependency readiness and per-request scientific support.
 - Check Framework and AI-Framework for suitable existing abstractions before duplicating
-  reusable functionality. Neither is currently consumed by Astro; avoid incidental adoption,
-  unnecessary abstractions or unrelated changes to those repositories.
+  reusable functionality. The approved chart-proposal feature consumes AI-Framework Core/Azure;
+  general Framework remains unreferenced. Avoid incidental adoption, unnecessary abstractions
+  or unrelated changes to those repositories.
 - Keep implemented, historically tested, source-inspected and proposed capabilities distinct.
   Record actual checks and limitations; do not claim unexecuted tests or native/cloud readiness.
 - After meaningful changes, update `docs/context/06_IMPLEMENTATION_STATUS.md`; record new or

@@ -111,7 +111,23 @@ public sealed class ContractSchemaTransformer : IOpenApiSchemaTransformer
             ArrayValues(schema, "presets", "DarkAtlas", "PrintMonochrome");
             ArrayValues(schema, "outputFormats", "svg", "png", "manifest");
         }
-        if (type == typeof(RenderJob) || type == typeof(RenderJobSummary) || type == typeof(ObserverPreset))
+        if (type == typeof(ChartDescriptionRequest))
+        {
+            Values(schema, "language", "en", "sq");
+            if (schema.Properties?["description"] is OpenApiSchema description)
+            { description.MinLength = 1; description.MaxLength = 2000; }
+        }
+        if (type == typeof(ChartProposalResponse)) Values(schema, "status", "Ready", "NeedsInput", "Unsupported", "Invalid");
+        if (type == typeof(ChartProposalParameters))
+        {
+            Values(schema, "scene", "SingleConstellation", "MultipleConstellations", "Asterism", "HorizonView", "ScientificDiagram");
+            Values(schema, "diagramType", "StarAltitude", "PolarisLatitude", "AltitudeAzimuth", "AngularSeparation");
+            Values(schema, "mode", "Schematic", "Computed");
+            Values(schema, "language", "en", "sq");
+            Values(schema, "preset", "DarkAtlas", "PrintMonochrome");
+        }
+        if (type == typeof(RenderJob) || type == typeof(RenderJobSummary) || type == typeof(ObserverPreset) ||
+            type == typeof(ChartProposalResponse) || type == typeof(ChartAiStatus))
             schema.Required = new HashSet<string>(schema.Properties?.Keys ?? []);
         return Task.CompletedTask;
     }
@@ -124,7 +140,10 @@ public sealed class ContractSchemaTransformer : IOpenApiSchemaTransformer
     private static void Values(OpenApiSchema schema, string property, params string[] values)
     {
         if (schema.Properties?.TryGetValue(property, out var value) == true && value is OpenApiSchema field)
+        {
             field.Enum = StringEnum(values).Enum;
+            if (field.Type?.HasFlag(JsonSchemaType.Null) == true) field.Enum!.Add(null!);
+        }
     }
     private static void ArrayValues(OpenApiSchema schema, string property, params string[] values)
     {

@@ -1,5 +1,10 @@
 # API contract — schema 2.1, OpenAPI v1
 
+Additive update, 4 November 2026: optional chart-description status/interpretation endpoints
+are included in OpenAPI and generated clients. They return reviewed proposal data, not jobs,
+and do not alter schema 2.1 rendering. See [AI proposals](ai-chart-proposals.md) for exact
+request/response behavior, limits, disabled defaults and provider setup.
+
 Updated 27 October 2026. The user explicitly approved strengthening the backend API and
 updating its frontend integration. These changes are additive; no database migration is
 needed. Scientific geometry and synchronous rendering behavior are preserved.

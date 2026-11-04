@@ -3,6 +3,15 @@
 Checkpoint: 26 October 2026. This captures accessible discussion and inspected decisions;
 it does not invent dates or approval for the original backend build.
 
+Decision, **4 November 2026**: the user approved the structured-generation approach and chose
+Azure OpenAI first, with possible Bedrock support later. Add a provider-neutral structured
+interface to AI-Framework, separate from grounded answers; keep all astronomy/proposal rules
+in Astro and human review in Studio. Use source references to the sibling Core/Azure modules,
+preserving net9 consumers while hosting Astro on net10. Do not reference general Framework.
+AI is disabled by default, has bounded calls/no retries, and cannot invent observation settings
+or submit renders. Shared tests use simulated providers; live quality remains an acceptance
+task. See [the design and setup](../ai-chart-proposals.md). The table below is the October baseline.
+
 | Decision                                           | Rationale and trade-off                                                                                                                                   | Status                                             |
 | -------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------- |
 | Backend/Python owns scientific geometry            | One authoritative tested implementation; clients display artifacts rather than divergent calculations                                                     | Implemented                                        |
@@ -54,14 +63,17 @@ prototype's decorative star field never became authoritative production geometry
 4. **Security/hosting**: intended audience and access model determine auth, TLS, CORS, storage
    isolation, limits, deployment and device networking. Do not expose the current unauthenticated
    host publicly by changing only `--urls`.
-5. **Version control/release**: decide frontend repository initialization/remote/CI ownership.
-   Local files and a workflow YAML do not imply a pushed repository or published deployment.
+5. **Version control/release**: both Astro repositories were initialized/committed/pushed at
+   the preceding checkpoint. Publish AI changes as a coordinated checkpoint including
+   AI-Framework; the session handoffs record matching dependency commits. A workflow YAML
+   is not evidence of hosted CI or deployment.
 6. **Native sequencing**: choose platform/device availability and implement a real vertical
    slice before claiming mobile MVP. iOS runtime work needs suitable Apple tooling/device setup.
 7. **Ephemerides/events**: choose body data/frame/time-scale/event definitions and validation;
    do not infer planetary support from stellar AltAz.
-8. **AI contract/provider**: define typed proposal/review, unsupported prompts, multilingual
-   behavior, privacy/cost, evidence and evaluation before selecting shared adapters.
+8. **AI acceptance/extensions**: the initial typed proposal/review and Azure adapter are
+   implemented. Complete live multilingual/unsupported/injection evaluations, then scope
+   Bedrock structured support or grounded captions separately.
 9. **Framework adoption**: prove reuse, preserve product contracts and review net9/net10/EF
    compatibility. Do not change Framework/AI-Framework incidentally during frontend work.
 10. **Long-running work**: introduce durable jobs/idempotency/progress only when actual batch,

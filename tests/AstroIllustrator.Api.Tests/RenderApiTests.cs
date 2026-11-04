@@ -134,7 +134,7 @@ public sealed class RenderApiTests
             DiagramType = "AngularSeparation", Mode = "Computed", Parameters = new() { StarHipIds = [91262, int.MaxValue] }
         } };
         var response = await client.PostAsJsonAsync("/api/illustrations/render", request);
-        Assert.Equal(HttpStatusCode.UnprocessableEntity, response.StatusCode);
+        Assert.True(response.StatusCode == HttpStatusCode.UnprocessableEntity, await response.Content.ReadAsStringAsync());
         using var problem = JsonDocument.Parse(await response.Content.ReadAsStringAsync());
         Assert.Contains("HIP pair", problem.RootElement.GetProperty("detail").GetString());
         string id = problem.RootElement.GetProperty("jobId").GetString()!;

@@ -31,6 +31,8 @@ public sealed class ApiContractTests
         Assert.NotNull(live["paths"]!["/api/observer-presets"]!["post"]!["responses"]!["409"]);
         Assert.NotNull(live["paths"]!["/health/ready"]!["get"]!["responses"]!["503"]);
         Assert.NotNull(schemas["RenderJobSummary"]!["properties"]!["scene"]);
+        Assert.Contains(schemas["ChartProposalParameters"]!["properties"]!["language"]!["enum"]!.AsArray(), value => value is null);
+        Assert.Equal(2000, schemas["ChartDescriptionRequest"]!["properties"]!["description"]!["maxLength"]!.GetValue<int>());
         var media = live["paths"]!["/api/render-jobs/{id}/outputs/{format}"]!["get"]!["responses"]!["200"]!["content"]!;
         Assert.NotNull(media["image/svg+xml"]);
         Assert.NotNull(media["image/png"]);
