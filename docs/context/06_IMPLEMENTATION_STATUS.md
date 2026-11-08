@@ -1,6 +1,7 @@
 # Implementation status and prioritized remaining work
 
-Checkpoint: **27 October 2026**. This is an evidence inventory, not a release certificate.
+Original checkpoint: **27 October 2026**, with later updates from 4 November 2026 in the
+sections immediately below. This is an evidence inventory, not a release certificate.
 
 ## AI chart proposals — 4 November 2026
 
@@ -30,7 +31,7 @@ Frontend Git is initialized on `main` against the existing frontend origin; back
 `master`. Ignore rules and explicit contract line endings support safe, reproducible
 checkpoints. The October sections below retain their original historical evidence.
 
-## Latest: API-contract milestone — 27 October 2026
+## API-contract milestone — 27 October 2026 (latest at the original checkpoint)
 
 The user approved and the implementation now delivers all five API priorities: published
 OpenAPI, generated frontend types, coordinate-specific errors, dependency readiness/runtime
@@ -178,16 +179,25 @@ backend validation documents remain records of their own earlier checks.
 | --------------------- | ------------------------------------------------------------------------ | ------------------------------------------------------------------------------------- |
 | Native app            | Expo tabs/shared wrapper/tokens, compatible packages, bundle exports     | Forms/API/history/drafts/localization/share/location permission and device acceptance |
 | Scientific acceptance | Deterministic pipeline, reference-oriented tests, assumptions and hashes | Broad independent external review and declared end-to-end accuracy acceptance         |
-| Release automation    | Local checks and frontend CI workflow definition                         | Frontend Git commit/remote and evidence of hosted CI/release/deployment               |
+| Release automation    | Local checks, frontend CI workflow file; 4 Nov push recorded (see note)  | Backend CI workflow, evidence of hosted CI runs, release/deployment                   |
 | Reproducibility       | Pinned snapshots, request/geometry/output hashes, library provenance     | Cross-environment guarantees and accepted publication/print workflow                  |
+
+Note: the 4 November push of both repositories is a historical record from the session
+handoff. On 7 November 2026 the local remote-tracking refs `origin/master` (`1b11142`) and
+`origin/main` (`4640c56`) pointed at those checkpoint commits as of their last fetch; the
+remote itself was not freshly queried.
 
 ## Planned but not implemented
 
 - Authentication/authorization, public/test hosting controls, deliberate TLS/CORS/device access.
 - Functional mobile MVP, permissions, native share and platform runtime testing.
 - Sun/Moon/planet ephemerides, solar time, conjunctions and event discovery.
-- AI interpretation/review, grounded captions, scenery generation and any provider integration.
-- Framework/AI-Framework references or runtime integration.
+- Broader AI astronomical interpretation, grounded explanations/captions, scenery generation
+  and Bedrock structured support. Only the narrower chart-description proposal/review
+  capability, with an Azure OpenAI provider, is implemented locally (4 November, disabled by
+  default, not live-verified; see above).
+- General Framework references or runtime integration. AI-Framework Core/Azure is
+  source-referenced by the chart-proposal feature since 4 November.
 - Projects/collections/accounts, atlas/PDF/batch, durable workers/progress/server cancellation.
 - AR and other speculative capabilities from the broader vision.
 
@@ -200,9 +210,12 @@ These are unresolved choices, not excuses to stop ordinary authorized web work:
   projects remain a future product decision.
 - Which scientific tolerances/independent reviewer and print acceptance define “ready”?
 - Which test hosting/authentication model and intended audience precede external sharing?
-- When to initialize/version/publish the frontend repository; no remote is assumed.
+- Frontend versioning/publication policy. Its Git repository exists on `main` with `origin`
+  (4 November); no package or deployment has been published.
 - Native delivery priority and available Android/iOS device/tooling ownership.
-- AI first use case, provider/model, privacy/cost/evaluation and shared abstraction needs.
+- Further AI use cases, the live Azure deployment/model, operator budgets/monitoring and
+  recorded live evaluations. The first use case (chart proposals) and first provider (Azure
+  OpenAI) were decided on 4 November.
 - Ephemeris source and event definitions before planet/conjunction implementation.
 
 Do not label any of these as approved implementation merely because a roadmap was discussed.
@@ -237,7 +250,8 @@ acceptance remain open; do not equate local checks with a production release gat
 4. Secured reachable test environment with deliberate access/TLS/CORS/device networking.
 5. Functional native MVP and real-device verification on the stable contract.
 6. Backend ephemerides/solar-time foundation, then rigorously defined event discovery.
-7. Narrow AI request proposal/review, then grounded explanations, with evaluations.
+7. **Implemented locally (4 November), not live-verified:** narrow chart-description
+   proposal/review. Grounded explanations, with evaluations, remain.
 8. Optional artistic layers and larger atlas/project/PDF/batch/durable-job features as needed.
 
 This is a product recommendation, not a rigid technical dependency graph. AI for supported
