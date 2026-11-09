@@ -1,6 +1,33 @@
 # AstroIllustrator session handoff
 
-Recorded **26 October 2026**, Europe/Budapest. Canonical cross-repository entry point:
+## Current state — 9 November 2026
+
+Backend `master` is at `3a1a0ce238e12735171e104cc6a0e74cfb9c04e6` (`docs: reconcile
+AstroIllustrator implementation status`). That docs-only change to
+`06_IMPLEMENTATION_STATUS.md` was committed locally on **8 November 2026** and merged locally
+on **9 November 2026**. It has not been pushed: local `origin/master` remains at
+`1b11142a85a05cdab940f5fe960caec5f186b24e`. Frontend `main` and local `origin/main`
+are both at `4640c561566e1527af3d242a4ee8cdfb05615120`; AI-Framework `master` is at
+`1918f0e49d360869e72e3714f4acace07c21f25b`. Application code is unchanged since
+**4 November 2026**.
+
+Verification run by Claude on **9 November 2026** for EngineeringCoordination task
+`AST-PILOT-002`: backend `dotnet test` passed 58/58 (29 Core, 29 API/process, including the
+OpenAPI snapshot); Python `unittest` from `renderer` passed 25/25. Frontend
+`contracts:check`, lint, `format:check`, typecheck, 42/42 unit/component tests and web build
+passed. Browser checks using installed Google Chrome through
+`PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH` passed 50 mock-backed checks; eight real-API checks
+were skipped (`ASTRO_REAL_API` unset). See the frontend handoff for local browser setup.
+AI-Framework tests, real-API browser checks, native exports and live Azure were not run on
+**9 November 2026**.
+
+Cross-repository tasks are now planned, approved and reviewed through
+`C:\Users\blinh\source\repos\EngineeringCoordination` (`tasks/AstroIllustrator/`). This
+repository's AGENTS.md and documents remain authoritative for repository work. Older
+sections below are historical checkpoints.
+
+First recorded **26 October 2026**; last refreshed **9 November 2026**, Europe/Budapest.
+Canonical cross-repository entry point:
 [README](README.md). This file is intended for a new session without conversation history.
 
 ## Current objective and stopping point
@@ -78,7 +105,8 @@ documentation files passed local-link checks. The final browser report remains i
 `playwright-report/` (ignored).
 The test workspace is frontend `.tools/prepush-20261104`, with API 5299 and built SPA 5291;
 normal application data is not used. Scientific/human acceptance and production readiness
-remain open; passing these checks does not certify them. No AI feature was added.
+remain open; passing these checks does not certify them. At that publication checkpoint, no
+AI feature had been added; the later 4 November AI proposal update above supersedes this.
 
 Newest checkpoint, **27 October 2026**: the user approved "Strengthen the API contract" and
 later asked about checks/next steps while work continued. The five priorities are implemented:
@@ -310,8 +338,9 @@ Key explanations preserved:
 - The user's unsigned-script error was a local PowerShell execution-policy issue. The existing
   toolchain `.cmd` workaround avoids changing that policy. The user then said “nice”; this is
   not evidence that every acceptance workflow was manually completed.
-- There is currently no AI integration: supported astronomy is deterministic. Prioritize
-  usable correct workflows/contracts before introducing AI.
+- At this October checkpoint there was no AI integration: supported astronomy was deterministic.
+  The later 4 November chart-proposal workflow is described above; scientific geometry remains
+  deterministic in the backend.
 
 ### 6. Roadmap and launcher location
 
@@ -372,21 +401,26 @@ automatically inherit the dev proxy. Credentials are not needed for current loca
 - Polaris computed altitude differs from ideal NCP latitude teaching geometry.
 - Locked tzdata/IERS, no science auto-download, nominal 2000–2030 still limited by IERS coverage.
 - Web displays backend artifacts; native has no working render/data flows.
-- Neither shared framework is referenced by Astro. AI-Framework has reusable retrieval/generation
-  adapters, not an already integrated astronomy prompt interpreter. Its local chat is extractive.
-- No auth, deployment, OpenAPI, planets/events, AI, PDF/batch/projects or functional mobile MVP.
+- At this October checkpoint neither shared framework was referenced by Astro. The later
+  chart-proposal feature source-references AI-Framework Core/Azure; general Framework remains
+  unreferenced.
+- At this October checkpoint there was no auth, deployment, OpenAPI, planets/events, AI,
+  PDF/batch/projects or functional mobile MVP. The later API contract and chart-proposal
+  milestones above added OpenAPI and a narrow, disabled-by-default AI workflow.
 
 ## Immediate recommended continuation
 
-1. Read both AGENTS.md files, this handoff and [status](06_IMPLEMENTATION_STATUS.md).
-2. Recheck current files/servers/Git status. Do not treat these checkpoint hashes or the absence
-   of a wrapper as permanent facts after new work.
-3. The `scripts/pnpm.cmd` wrapper is implemented; do not add it again. Use it for normal
-   PowerShell startup, then select the next web stabilization task.
-4. Read the latest stabilization review before repeating completed checks. Select API
-   contract/capability readiness or independent acceptance next; keep backend changes explicit
-   and native/AI/deployment scoped separately.
-5. Record exactly which checks ran; update implementation/decision/handoff documents.
+1. Read the 9 November current-state section first, both AGENTS.md files, this handoff and
+   [status](06_IMPLEMENTATION_STATUS.md); recheck current files, servers and Git state.
+2. Work only on tasks approved through EngineeringCoordination. The `scripts/pnpm.cmd` wrapper
+   and API-contract milestone are implemented; consult their dated reviews before repeating
+   checks.
+3. The narrow AI chart-proposal workflow exists but is disabled by default. Framework or
+   AI-Framework changes require their own approved task.
+4. Independent science/print/accessibility/editorial acceptance and secured shared testing
+   remain documented candidates; select work only after its task is approved.
+5. Record exactly which checks ran; update the handoff and other documents as the approved
+   task requires.
 
 ## Unrecoverable or uncertain information
 
@@ -399,7 +433,8 @@ budget, release date, credentials or production hosting decision is assumed.
 
 The fresh documentation inspection did not re-extract/review every PDF visually or rerun
 historical tests. Earlier extraction/review and verification are recorded as historical evidence.
-The frontend has no Git commit to recover/version its checkpoint. There is no demonstrated
+The frontend has been a Git repository on `main` with `origin` since **4 November 2026**;
+its current checkpoint can be recovered from Git. There is no demonstrated
 hosted CI run, native hardware acceptance, independent full scientific sign-off or complete
 user manual acceptance. All four repositories were accessible; missing access is not an issue.
 
@@ -408,14 +443,16 @@ user manual acceptance. All four repositories were accessible; missing access is
 ```text
 Resume AstroIllustrator. Read both repositories' AGENTS.md and the backend
 docs/context/README.md, SESSION_HANDOFF.md and 06_IMPLEMENTATION_STATUS.md.
-Verify them against current files. The frontend scripts/pnpm.cmd launcher is now
-implemented. API-contract strengthening is also complete: read docs/api-contract.md
-and frontend docs/07-api-contract.md for generated types and current checks.
-Choose independent science/print/accessibility/editorial acceptance next, then
-secured shared testing when explicitly scoped. Use normal non-admin startup.
-Keep scientific calculations in the backend, preserve schema 2.1 contracts, and do
-not modify Framework/AI-Framework or add AI/native/deployment work. Report actual
-checks and refresh status/handoff after the change.
+Read the 9 November current-state section first and verify it against Git and source.
+The frontend scripts/pnpm.cmd launcher and API-contract strengthening are complete;
+read docs/api-contract.md and frontend docs/07-api-contract.md for the contract.
+Work only on a task approved through EngineeringCoordination. Independent
+science/print/accessibility/editorial acceptance and secured shared testing remain
+candidates, not approved work. Use normal non-admin startup.
+Keep scientific calculations in the backend and preserve schema 2.1 contracts.
+The narrow AI chart-proposal workflow exists but is disabled by default;
+Framework/AI-Framework changes need their own approved task. Report actual checks
+and refresh status/handoff as the approved task requires.
 ```
 
 The prompt is provided for the user to start the next implementation session; it does not
