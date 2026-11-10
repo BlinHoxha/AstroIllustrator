@@ -12,6 +12,14 @@ AI is disabled by default, has bounded calls/no retries, and cannot invent obser
 or submit renders. Shared tests use simulated providers; live quality remains an acceptance
 task. See [the design and setup](../ai-chart-proposals.md). The table below is the October baseline.
 
+Decision, **11 November 2026**: chart-proposal metering uses AI-Framework's storage-free
+generation wrapper and a product-owned SQLite ledger in the same database as render jobs.
+Reservations serialize through immediate SQLite transactions and count in their reservation
+month; a completed call records token-based estimated cost. This keeps the budget durable on
+one host without introducing an EF entity or a shared-library storage dependency. Invalid
+enabled configuration fails startup; disabled AI has no metering registration. The monthly
+target is not a provider billing cap. See [budget setup](../ai-chart-proposals.md).
+
 | Decision                                           | Rationale and trade-off                                                                                                                                   | Status                                             |
 | -------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------- |
 | Backend/Python owns scientific geometry            | One authoritative tested implementation; clients display artifacts rather than divergent calculations                                                     | Implemented                                        |

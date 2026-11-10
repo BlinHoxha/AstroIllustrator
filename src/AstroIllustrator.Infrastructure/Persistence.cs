@@ -44,6 +44,29 @@ public sealed class AstroDbContext(DbContextOptions<AstroDbContext> options) : D
 }
 
 [DbContext(typeof(AstroDbContext))]
+[Migration("20261110000300_AiUsageLedger")]
+public sealed class AddAiUsageLedger : Migration
+{
+    protected override void BuildTargetModel(ModelBuilder modelBuilder) => ObserverPresetSchemaModel.Configure(modelBuilder);
+    protected override void Up(MigrationBuilder migrationBuilder) => migrationBuilder.Sql("""
+        CREATE TABLE "AiUsageEntries" (
+          "ReservationId" TEXT NOT NULL PRIMARY KEY,
+          "RequestKey" TEXT NOT NULL UNIQUE,
+          "Product" TEXT NOT NULL, "Environment" TEXT NOT NULL, "TenantKey" TEXT NOT NULL,
+          "Feature" TEXT NOT NULL, "Provider" TEXT NOT NULL, "Model" TEXT NOT NULL,
+          "ResponseModel" TEXT NULL, "Period" TEXT NOT NULL, "State" TEXT NOT NULL,
+          "ReservedAmount" TEXT NOT NULL, "Amount" TEXT NOT NULL,
+          "Currency" TEXT NOT NULL, "PriceVersion" TEXT NOT NULL,
+          "Outcome" TEXT NULL, "InputTokens" INTEGER NULL, "OutputTokens" INTEGER NULL,
+          "UsageReported" INTEGER NULL, "ReservedAtUtc" TEXT NOT NULL,
+          "StartedAtUtc" TEXT NULL, "CompletedAtUtc" TEXT NULL);
+        CREATE INDEX "IX_AiUsageEntries_Product_Environment_Period"
+          ON "AiUsageEntries" ("Product", "Environment", "Period");
+        """);
+    protected override void Down(MigrationBuilder migrationBuilder) => migrationBuilder.DropTable("AiUsageEntries");
+}
+
+[DbContext(typeof(AstroDbContext))]
 [Migration("20261022000200_ObserverPresets")]
 public sealed class AddObserverPresets : Migration
 {

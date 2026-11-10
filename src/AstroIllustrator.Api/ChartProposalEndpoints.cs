@@ -1,10 +1,15 @@
 using AIFramework.Azure;
+using AIFramework.Application.Metering;
+using AIFramework.Core.Metering;
 using AstroIllustrator.Core;
 using AstroIllustrator.Infrastructure;
+using System.Globalization;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 public static class ChartProposalEndpoints
 {
-    public static void AddChartProposals(this IServiceCollection services, IConfiguration configuration)
+    public static void AddChartProposals(this IServiceCollection services, IConfiguration configuration,
+        string connectionString, string environment)
     {
         var settings = new ChartAiSettings(configuration.GetValue("ChartAI:Enabled", false),
             configuration.GetValue("ChartAI:TimeoutSeconds", 25), configuration.GetValue("ChartAI:MaxRequestsPerDay", 100),
@@ -18,6 +23,33 @@ public static class ChartProposalEndpoints
         if (!Uri.TryCreate(configuration["ChartAI:Azure:Endpoint"], UriKind.Absolute, out var endpoint) ||
             string.IsNullOrWhiteSpace(configuration["ChartAI:Azure:Deployment"]))
             throw new InvalidOperationException("Enabling ChartAI requires an explicit Azure endpoint and deployment.");
+        string? amountText = configuration["ChartAI:Budget:MonthlyAmount"];
+        string? currency = configuration["ChartAI:Budget:Currency"];
+        string? model = configuration["ChartAI:Pricing:Model"];
+        string? inputText = configuration["ChartAI:Pricing:InputPerMillionTokens"];
+        string? outputText = configuration["ChartAI:Pricing:OutputPerMillionTokens"];
+        string? version = configuration["ChartAI:Pricing:PriceVersion"];
+        if (!decimal.TryParse(amountText, NumberStyles.Number, CultureInfo.InvariantCulture, out var amount) || amount <= 0 ||
+            !decimal.TryParse(inputText, NumberStyles.Number, CultureInfo.InvariantCulture, out var inputPrice) || inputPrice < 0 ||
+            !decimal.TryParse(outputText, NumberStyles.Number, CultureInfo.InvariantCulture, out var outputPrice) || outputPrice < 0 ||
+            string.IsNullOrWhiteSpace(currency) || string.IsNullOrWhiteSpace(model) || string.IsNullOrWhiteSpace(version))
+            throw new InvalidOperationException("Enabling ChartAI requires a positive budget and explicit model prices, currency and price version.");
+        string tenant = configuration["ChartAI:Budget:TenantKey"] ?? "local";
+        var scope = new AiUsageScope("astroillustrator", environment, tenant, "chart-proposal");
+        var key = new AiModelKey("azure-openai", model);
+        AiPriceCatalog catalog;
+        try
+        {
+            scope.Validate();
+            catalog = new([new AiPrice(key, inputPrice, outputPrice, currency, version)]);
+            _ = new SqliteAiBudgetLedger(connectionString, scope.Product, scope.Environment, amount, currency, TimeProvider.System);
+        }
+        catch (ArgumentException e) { throw new InvalidOperationException("Invalid ChartAI budget, scope or price configuration.", e); }
+        services.AddSingleton(scope);
+        services.AddAiMetering(catalog, o => o.StructuredModel = key);
+        services.RemoveAll<MeteredTextGeneration>(); // This host has no text-generation adapter.
+        services.AddSingleton<IAiBudgetLedger>(provider => new SqliteAiBudgetLedger(connectionString,
+            scope.Product, scope.Environment, amount, currency, provider.GetRequiredService<TimeProvider>()));
         services.AddAzureStructuredGeneration(new(endpoint, configuration["ChartAI:Azure:Deployment"]!));
         services.AddSingleton<IChartProposalInterpreter, ChartProposalInterpreter>();
     }
@@ -35,7 +67,7 @@ public static class ChartProposalEndpoints
             if (!settings.Enabled) return Failure(503, "ai_disabled");
             try { return Results.Ok(await services.GetRequiredService<IChartProposalInterpreter>().InterpretAsync(request.Description, request.Language, token)); }
             catch (ChartProposalException e)
-            { return Failure(e.Code is "ai_busy" or "ai_daily_limit" ? 429 : e.Code == "ai_timeout" ? 504 : 503, e.Code); }
+            { return Failure(e.Code is "ai_busy" or "ai_daily_limit" or "ai_budget_exhausted" ? 429 : e.Code == "ai_timeout" ? 504 : 503, e.Code); }
         }).RequireRateLimiting("chart-ai").WithName("InterpretChartDescription")
           .Produces<ChartProposalResponse>().ProducesValidationProblem().ProducesProblem(429).ProducesProblem(503).ProducesProblem(504)
           .WithDescription("Optional AI proposal only; never creates a render job. User reviews and applies fields, then submits through normal scientific validation. No automatic retries; coordinates and observation time must be entered explicitly.");

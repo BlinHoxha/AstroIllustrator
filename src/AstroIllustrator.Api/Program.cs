@@ -85,11 +85,12 @@ builder.Services.AddOptions<RendererOptions>().Configure(o =>
     "Configure an existing Python executable and a timeout between 1 and 300 seconds.").ValidateOnStart();
 builder.Services.AddSingleton<IRendererAdapter, PythonRendererClient>();
 builder.Services.AddSingleton<IRendererDiagnostics, RendererDiagnostics>();
-builder.Services.AddDbContext<AstroDbContext>(o => o.UseSqlite(new Microsoft.Data.Sqlite.SqliteConnectionStringBuilder
-    { DataSource = Path.Combine(root, "data", "astroillustrator.db") }.ToString()));
+string databaseConnection = new Microsoft.Data.Sqlite.SqliteConnectionStringBuilder
+    { DataSource = Path.Combine(root, "data", "astroillustrator.db") }.ToString();
+builder.Services.AddDbContext<AstroDbContext>(o => o.UseSqlite(databaseConnection));
 builder.Services.AddScoped<IRenderJobStore>(p => p.GetRequiredService<AstroDbContext>());
 builder.Services.AddScoped<RenderJobService>();
-builder.Services.AddChartProposals(builder.Configuration);
+builder.Services.AddChartProposals(builder.Configuration, databaseConnection, builder.Environment.EnvironmentName);
 var app = builder.Build();
 app.UseExceptionHandler();
 app.UseStatusCodePages(async status => await Results.Problem(statusCode: status.HttpContext.Response.StatusCode,

@@ -3,6 +3,8 @@ using System.Text.Json.Serialization;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using AIFramework.Core.Abstractions;
+using AIFramework.Application.Metering;
+using AIFramework.Core.Metering;
 using AIFramework.Core.Models;
 using AstroIllustrator.Core;
 using Microsoft.Extensions.Logging;
@@ -12,7 +14,7 @@ namespace AstroIllustrator.Infrastructure;
 public sealed record ChartAiSettings(bool Enabled = false, int TimeoutSeconds = 25,
     int MaxRequestsPerDay = 100, int MaxOutputTokens = 1024);
 
-public sealed class ChartProposalInterpreter(IStructuredGenerationModel model, ChartAiSettings settings,
+public sealed class ChartProposalInterpreter(MeteredStructuredGeneration model, AiUsageScope scope, ChartAiSettings settings,
     ILogger<ChartProposalInterpreter> logger) : IChartProposalInterpreter, IDisposable
 {
     private readonly SemaphoreSlim gate = new(1, 1);
@@ -74,8 +76,10 @@ public sealed class ChartProposalInterpreter(IStructuredGenerationModel model, C
                 enter and confirm them in the form. Never claim a location or observation time has been resolved.
                 """;
             StructuredGenerationResult result;
-            try { result = await model.GenerateStructuredAsync(new("astro_chart_proposal", instructions, description, OutputSchema, settings.MaxOutputTokens), deadline.Token); }
+            try { result = await model.GenerateStructuredAsync(scope, "chart:" + Guid.NewGuid().ToString("N"),
+                new("astro_chart_proposal", instructions, description, OutputSchema, settings.MaxOutputTokens), deadline.Token); }
             catch (OperationCanceledException) when (!token.IsCancellationRequested) { throw new ChartProposalException("ai_timeout"); }
+            catch (AiMeteringException e) { throw new ChartProposalException(e.Code == "budget_exhausted" ? "ai_budget_exhausted" : "ai_metering_unavailable"); }
             catch (Exception e) when (e is HttpRequestException or StructuredGenerationException or JsonException or Azure.Identity.AuthenticationFailedException)
             { logger.LogWarning("Chart interpretation provider failed ({FailureType}); no description logged", e.GetType().Name); throw new ChartProposalException("ai_provider_unavailable"); }
             logger.LogInformation("Chart interpretation {Status}; provider {Provider}; input tokens {InputTokens}; output tokens {OutputTokens}",

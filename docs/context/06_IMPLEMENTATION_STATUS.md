@@ -3,6 +3,15 @@
 Original checkpoint: **27 October 2026**, with later updates from 4 November 2026 in the
 sections immediately below. This is an evidence inventory, not a release certificate.
 
+## AI budget ledger — 11 November 2026
+
+AST-AI-001 adds a product-owned SQLite reservation ledger and routes chart proposals through
+AI-Framework metering. Enabled AI now requires a positive monthly budget and configured model
+prices; disabled AI requires none. Budget denial is 429 and other metering denial is 503.
+Costs are estimates from reported tokens and operator prices, not a provider billing cap.
+The work is uncommitted on its task branch pending independent R2 review. Verification and
+remaining limits are recorded in the dated session handoff and coordination task record.
+
 ## AI chart proposals — 4 November 2026
 
 Implemented the approved first AI feature across AI-Framework, backend and web. The shared

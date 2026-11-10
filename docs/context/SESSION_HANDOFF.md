@@ -1,5 +1,24 @@
 # AstroIllustrator session handoff
 
+## AI budget pilot — 11 November 2026
+
+AST-AI-001 is implemented as uncommitted work on `task/AST-AI-001-budget-ledger` at
+`16537b58179ba5bc04b23487d3b1136c7564a8f3`, awaiting independent R2 review. The
+Infrastructure project now references AI-Framework Application. Chart proposals use its
+metered structured-generation wrapper and a new product-owned SQLite budget ledger. A
+hand-written migration creates `AiUsageEntries`; the EF entity model and OpenAPI snapshot
+are unchanged. AI remains disabled by default. Enabled AI fails startup without a positive
+monthly budget and explicit model prices. Budget exhaustion returns 429; other metering
+denials return 503. The daily request limit, timeout, rate limiter and no-retry policy remain.
+
+Builds use `UseArtifactsOutput=true` and an `ArtifactsPath` under Astro's ignored `.tools`.
+Offline restore, both Release test-project builds (zero warnings/errors), focused ledger,
+chart and migration tests (20/20), Python renderer tests (25/25), and a full .NET run
+(29 Core and 34 API) passed in the executor sandbox. The final post-edit .NET rerun and
+repeated concurrency checks are recorded in the coordination task handoff. The owner must
+apply the migration to the normal workspace database; the API was never started against it.
+No live Azure call, real price or provider-billing reconciliation was performed.
+
 ## Current state — 9 November 2026
 
 Backend `master` is at `3a1a0ce238e12735171e104cc6a0e74cfb9c04e6` (`docs: reconcile

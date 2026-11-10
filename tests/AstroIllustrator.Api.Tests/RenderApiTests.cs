@@ -182,21 +182,24 @@ public sealed class RenderApiTests
         {
             await using var db = new AstroDbContext(new DbContextOptionsBuilder<AstroDbContext>()
                 .UseSqlite(new Microsoft.Data.Sqlite.SqliteConnectionStringBuilder { DataSource = Path.Combine(root,"test.db") }.ToString()).Options);
-            // Preserve the already shipped initial identifier; resolve its tooling name
-            // through EF rather than changing an identifier present in existing databases.
-            string baseline = db.GetService<IMigrationsIdGenerator>().GetName(db.Database.GetMigrations().First());
+            string baseline = db.Database.GetMigrations().Single(m => m.EndsWith("_ObserverPresets", StringComparison.Ordinal));
             await db.GetService<IMigrator>().MigrateAsync(baseline);
             Guid id = Guid.NewGuid();
+            Guid presetId = Guid.NewGuid();
             await db.Database.ExecuteSqlInterpolatedAsync($"""
                 INSERT INTO "RenderJobs" ("Id","Status","CreatedAtUtc","RequestJson","RequestHash")
                 VALUES ({id},{"Completed"},{DateTimeOffset.UtcNow},{"{}"},{"old-hash"})
+                """);
+            await db.Database.ExecuteSqlInterpolatedAsync($"""
+                INSERT INTO "ObserverPresets" ("Id", "Name", "Latitude", "Longitude", "ElevationMeters")
+                VALUES ({presetId}, {"Existing place"}, {42.0}, {21.0}, {100.0})
                 """);
             await db.Database.MigrateAsync();
             var old = await db.RenderJobs.SingleAsync();
             Assert.Equal(id, old.Id);
             Assert.Equal("old-hash", old.RequestHash);
             Assert.Null(old.ErrorMessage);
-            Assert.Empty(await db.ObserverPresets.ToListAsync());
+            Assert.Equal(presetId, Assert.Single(await db.ObserverPresets.ToListAsync()).Id);
             Assert.False(db.Database.HasPendingModelChanges());
             await db.Database.MigrateAsync(); // Repeat startup must remain safe.
         }

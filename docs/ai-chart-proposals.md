@@ -10,9 +10,10 @@ transport, refusal/incomplete handling and token-usage metadata. Existing docume
 retrieval and Bedrock chat behavior are preserved. General Framework is not referenced.
 
 Astro owns the proposal schema, supported astronomy options, product validation, request
-limits and the review workflow. AI never renders, resolves a location/time or computes
+limits, the SQLite budget ledger and the review workflow. AI never renders, resolves a location/time or computes
 scientific geometry. Applying settings changes the editor only; Generate uses the existing
-schema 2.1 renderer and its scientific validation. No migration is needed.
+schema 2.1 renderer and its scientific validation. The budget ledger has its own SQL migration
+and is outside the EF entity model.
 
 Current supported proposals cover existing sky scenes and diagram templates. Unsupported
 scenes, planets/events/art requests, refusals, incomplete output and invalid settings cannot
@@ -55,6 +56,13 @@ $env:ChartAI__Azure__Deployment = 'YOUR-STRUCTURED-OUTPUT-DEPLOYMENT'
 $env:ChartAI__TimeoutSeconds = '25'
 $env:ChartAI__MaxRequestsPerDay = '20'
 $env:ChartAI__MaxOutputTokens = '1024'
+$env:ChartAI__Budget__MonthlyAmount = '<positive monthly operating target>'
+$env:ChartAI__Budget__Currency = '<three-letter uppercase currency>'
+$env:ChartAI__Budget__TenantKey = 'local'
+$env:ChartAI__Pricing__Model = '<deployed model identifier>'
+$env:ChartAI__Pricing__InputPerMillionTokens = '<configured input price>'
+$env:ChartAI__Pricing__OutputPerMillionTokens = '<configured output price>'
+$env:ChartAI__Pricing__PriceVersion = '<operator price version>'
 
 .\.tools\dotnet\dotnet.exe run --project .\src\AstroIllustrator.Api --no-launch-profile --urls "http://127.0.0.1:5188"
 ```
@@ -62,6 +70,10 @@ $env:ChartAI__MaxOutputTokens = '1024'
 The endpoint is an HTTPS resource root, without credentials/query/path. No model is silently
 selected. The adapter uses the existing Azure token transport and stable `2024-10-21` API;
 an incompatible deployment fails explicitly, without falling back to unconstrained text.
+When AI is enabled, all budget and pricing fields shown above except `TenantKey` are required.
+The monthly amount must be positive; prices must be nonnegative. Invalid or missing values
+fail startup. The price currency is the budget currency, and the tenant key defaults to `local`.
+When AI is disabled, none of these values is required or registered.
 See [Microsoft's structured-output documentation](https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/structured-outputs).
 
 Setting `ChartAI__Enabled` back to `false` and restarting disables interpretation. The
@@ -76,6 +88,7 @@ frontend can recheck configuration using Check AI availability again, or reload.
 - Description length is 1–2000 characters. Interface language is en/sq; model output has a
   closed schema and is independently validated. OpenAPI and generated clients include these routes.
 - Errors preserve ProblemDetails trace IDs and codes: `ai_disabled`, `ai_busy`, `ai_daily_limit`,
+  `ai_budget_exhausted` (429), `ai_metering_unavailable` (503),
   `ai_timeout`, `ai_provider_unavailable`, `ai_refused`, `ai_incomplete`, `ai_invalid_response`.
   HTTP 429 also covers the fixed-window limiter. No automatic interpretation/render POST retry.
 
@@ -91,7 +104,13 @@ The local host allows five interpretation submissions per minute, one active pro
 25 seconds by default and 100 attempts per UTC day by default (configurable). Attempts,
 including provider failures, count against the daily cap. The daily counter is in memory;
 restart resets it and multiple host instances have independent counters. It is not a durable
-account budget. Output is capped at 4096 tokens (default 1024) and provider JSON at 128 KiB.
+account budget. A separate durable SQLite ledger enforces the configured monthly
+product/environment budget for chart proposals. It reserves an upper bound before calling
+the provider and records an estimated cost from reported token usage and configured prices
+afterward. A provider failure keeps the reservation as the estimated cost. The budget is an
+operating target, not a provider billing cap; pricing or usage reports can differ from invoices.
+The SQLite ledger is intended for a single host using this database, not distributed hosts.
+Output is capped at 4096 tokens (default 1024) and provider JSON at 128 KiB.
 Logs include result/provider and token counts, not descriptions or generated payloads.
 Token counts are not monetary billing; resource-side budgets/monitoring remain an operator task.
 
