@@ -1,9 +1,18 @@
 # AstroIllustrator session handoff
 
+## Ollama chart-proposal pilot — 13 November 2026
+
+AST-AI-002 is implemented on `task/AST-AI-002-ollama-pilot` as uncommitted Mode B work,
+awaiting independent R2 review. The Development-only Ollama path uses AI-Framework's
+registered loopback adapter, zero-price metering and existing proposal validation. The
+live Qwen3 1.7B evaluation and complete verification results are in the QA record and
+EngineeringCoordination task handoff. Azure behavior and the OpenAPI contract remain
+unchanged. Frontend privacy wording needs AST-AI-003 before user-facing release.
+
 ## AI budget pilot — 11 November 2026
 
-AST-AI-001 is implemented as uncommitted work on `task/AST-AI-001-budget-ledger` at
-`16537b58179ba5bc04b23487d3b1136c7564a8f3`, awaiting independent R2 review. The
+AST-AI-001 was committed as `f8f5f88`, fast-forwarded into `master` and pushed on
+11 November 2026. The
 Infrastructure project now references AI-Framework Application. Chart proposals use its
 metered structured-generation wrapper and a new product-owned SQLite budget ledger. A
 hand-written migration creates `AiUsageEntries`; the EF entity model and OpenAPI snapshot

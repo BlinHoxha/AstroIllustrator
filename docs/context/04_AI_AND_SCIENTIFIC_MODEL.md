@@ -19,6 +19,7 @@ explicit Azure configuration. Proposals are reviewed and applied to the form bef
 rendering; coordinates/time are entered explicitly and never resolved by AI in this version.
 No embedding model, image generation or RAG pipeline is integrated. Live model quality is
 not established by simulated provider tests. See [AI proposals](../ai-chart-proposals.md).
+Update, **13 November 2026**: a Development-only local Ollama adapter (AI-Framework `AIFramework.Ollama`) can be configured instead; the description then stays on the server host, and the same schema, grounding, validation and review apply. See [AI proposals](../ai-chart-proposals.md).
 Palette/language changes do not make scientific geometry AI-generated.
 
 The frontend selects inputs and displays artifacts. It must not invent positions, infer

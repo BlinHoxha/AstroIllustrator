@@ -36,6 +36,7 @@ Update, **4 November 2026**: optional Describe your chart proposals now populate
 form after review/confirmation. Azure OpenAI is the first adapter and remains disabled until
 configured. Live semantic evaluation remains open; no AI geometry, captions or scenery was
 added. See [AI proposals](../ai-chart-proposals.md) for the implemented boundary.
+Update, **13 November 2026**: a Development-only local Ollama adapter can be selected instead of Azure; live results for Qwen3 1.7B are recorded in the QA record, without a quality claim.
 
 ## Product and engineering requirements
 

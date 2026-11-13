@@ -20,8 +20,17 @@ one host without introducing an EF entity or a shared-library storage dependency
 enabled configuration fails startup; disabled AI has no metering registration. The monthly
 target is not a provider billing cap. See [budget setup](../ai-chart-proposals.md).
 
+Decision, **13 November 2026** (AST-AI-002): permit local Ollama chart interpretation only
+in Development with a loopback endpoint and the AI-Framework registered transport. Keep
+the product's existing metering and validation, using a zero-price catalog entry and an
+explicit budget; fail startup when the maximum description could exceed the configured
+context or the adapter timeout could precede the application deadline. Azure behavior
+remains unchanged. The pilot measures safety and quality separately, and needs independent
+R2 review and a later product-readiness decision.
+
 | Decision                                           | Rationale and trade-off                                                                                                                                   | Status                                             |
 | -------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------- |
+| Development-only local Ollama chart proposals (13 November 2026) | Reuse AI-Framework's loopback transport and product validation; zero-price metering preserves usage records while poor model quality requires review | Implemented on AST-AI-002 branch; R2 review pending |
 | Backend/Python owns scientific geometry            | One authoritative tested implementation; clients display artifacts rather than divergent calculations                                                     | Implemented                                        |
 | .NET Core/Infrastructure/Api plus Python process   | Typed orchestration/persistence with mature scientific libraries; process startup/serialization require bounds and timeout handling                       | Implemented                                        |
 | SQLite and product-owned job store                 | Simple local deployment and persistent provenance; one-host development and future scaling need deliberate review                                         | Implemented                                        |

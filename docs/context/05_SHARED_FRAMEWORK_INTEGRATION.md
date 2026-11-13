@@ -7,6 +7,7 @@ General Framework remains unreferenced. The net9.0 AI libraries compile into the
 host without adopting a shared EF stack. AI stays disabled until configured. See
 [AI chart proposals](../ai-chart-proposals.md); the remaining October inventory is historical
 except where explicitly updated below.
+Update, **13 November 2026**: Infrastructure also references AI-Framework Application (metering, AST-AI-001) and Ollama (Development-only chart proposals, AST-AI-002).
 
 ## Framework: actual library capabilities
 
@@ -50,7 +51,7 @@ Sharing code is useful when it removes real duplication with compatible semantic
 
 Evidence: sibling [README](../../../AI-Framework/README.md), architecture/getting-started
 documents, `src/` Core/Application/Local/Azure/Aws implementations and DI registration.
-Its libraries target .NET 9/version 0.1.0. Core/Azure are now Astro dependencies; other AI
+Its libraries target .NET 9/version 0.1.0. Core, Application, Azure and Ollama are now Astro dependencies (Ollama Development-only); other AI
 modules are not imported for the chart-description workflow.
 
 - **Core contracts**: `ITextChunker`, `IKnowledgeIndex`, `IKnowledgeRetriever`, `IChatModel`,
@@ -82,7 +83,7 @@ with curated astronomy material, product-specific profiles, citations and review
 verify a provider deliberately; neither a cloud provider nor model is selected for Astro.
 
 Natural-language-to-render-request remains separate from document Q&A. The new
-`IStructuredGenerationModel` and Azure adapter supply generic schema-constrained generation;
+`IStructuredGenerationModel` and its Azure and Ollama adapters supply generic schema-constrained generation;
 Astro owns its proposal schema, validation, missing-input handling and review. Existing grounded
 answer services are unchanged. RAG is not used to select known scene parameters. Bedrock can
 later implement the same new interface; its existing answer adapter is not structured extraction.

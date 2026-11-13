@@ -3,13 +3,26 @@
 Original checkpoint: **27 October 2026**, with later updates from 4 November 2026 in the
 sections immediately below. This is an evidence inventory, not a release certificate.
 
+## Local Ollama chart-proposal pilot — 13 November 2026
+
+AST-AI-002 adds an opt-in Development-only Ollama provider through the sibling AI-Framework
+adapter. It uses the same chart schema, grounding, validation, review, budget ledger and
+error semantics as Azure, with zero-price usage entries. Startup rejects non-loopback
+endpoints, insufficient context and an Ollama timeout no longer than the application
+deadline. Azure remains the only configured provider for other environments. The live
+Qwen3 1.7B safety evaluation is recorded in the [QA result](../qa/ollama-qwen3-1.7b-chart-evaluation-2026-11-13.md).
+Frontend privacy text remains Azure-specific and needs AST-AI-003 before user-facing release.
+This branch is awaiting independent R2 review; no integration or product-readiness decision
+has been made.
+
 ## AI budget ledger — 11 November 2026
 
 AST-AI-001 adds a product-owned SQLite reservation ledger and routes chart proposals through
 AI-Framework metering. Enabled AI now requires a positive monthly budget and configured model
 prices; disabled AI requires none. Budget denial is 429 and other metering denial is 503.
 Costs are estimates from reported tokens and operator prices, not a provider billing cap.
-The work is uncommitted on its task branch pending independent R2 review. Verification and
+The work was committed as `f8f5f88`, fast-forwarded into `master` and pushed on
+11 November 2026. Verification and
 remaining limits are recorded in the dated session handoff and coordination task record.
 
 ## AI chart proposals — 4 November 2026

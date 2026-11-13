@@ -31,7 +31,7 @@ is implemented. Existing form language/style/magnitude remain when unspecified.
 ## Dependencies and provider setup
 
 Checkout the updated `AI-Framework` repository as a sibling of `AstroIllustrator`. Infrastructure
-currently references its Azure project by source; that transitively supplies Core. A backend
+now references Application, Azure and Ollama by source; these supply Core. A backend
 checkout/CI therefore needs both repositories, even when AI is disabled. No shared package
 has been published. The net9.0 libraries compile into the net10.0 Astro host; no general
 Framework/EF provider stack is imported.
@@ -78,6 +78,43 @@ See [Microsoft's structured-output documentation](https://learn.microsoft.com/en
 
 Setting `ChartAI__Enabled` back to `false` and restarting disables interpretation. The
 frontend can recheck configuration using Check AI availability again, or reload.
+
+## Local Ollama (Development pilot)
+
+For a Development host only, set `ChartAI__Enabled=true` and `ChartAI__Provider=Ollama`.
+Set `ChartAI__Ollama__Model` to an installed model (the pilot uses `qwen3:1.7b`).
+`ChartAI__Ollama__Endpoint` defaults to `http://127.0.0.1:11434/`,
+`ChartAI__Ollama__ContextTokens` to 8192 and `ChartAI__Ollama__TimeoutSeconds` to 120.
+The endpoint must be a loopback HTTP root. The backend uses only `/api/chat`, never pulls
+models and does not probe availability at startup. Install the model manually and record
+its digest with the local Ollama tags API before evaluating it.
+
+Keep Ollama bound to `127.0.0.1`; never set `OLLAMA_HOST=0.0.0.0`, and keep `OLLAMA_DEBUG`
+off. Ollama has no authentication. The chart description stays on the server host on this
+path. Configure a positive `ChartAI__Budget__MonthlyAmount` and uppercase
+`ChartAI__Budget__Currency` as for Azure; `TenantKey` defaults to `local`. Metering writes
+zero-price ledger entries (`local-zero`); Azure `ChartAI__Pricing__*` values are ignored.
+For the CPU pilot, use `ChartAI__TimeoutSeconds=60` and `ChartAI__MaxOutputTokens=512`.
+There is no streaming, retry, paid fallback or provider routing.
+
+Startup checks that the largest accepted description fits the adapter's conservative
+context estimate: `EstimateInputTokensUpperBound(instructions, "") + 3 * 2000 +
+MaxOutputTokens <= ContextTokens`. The estimator counts UTF-8 bytes plus 32 tokens per
+message. This is a heuristic upper bound, not a tokenizer count: it assumes byte-level
+tokenization and sufficient chat-template overhead, and excludes the schema because Ollama
+applies it as a decoding grammar. It can reject a prompt that would fit. This check matters
+because Ollama can silently truncate an oversized prompt. Raise context or lower output
+tokens if startup rejects the configuration.
+
+The application's `ChartAI__TimeoutSeconds` deadline must be shorter than the Ollama
+HTTP timeout; startup rejects equality or a shorter Ollama timeout. The application deadline
+then maps to HTTP 504 `ai_timeout`. Cancellation at the HTTP boundary may not immediately
+stop local model generation; a subsequent request may wait. Single CPU planning samples
+for Qwen3 1.7B took 7.1–23.2 seconds per case and showed poor raw semantic quality.
+The [live evaluation](qa/ollama-qwen3-1.7b-chart-evaluation-2026-11-13.md) records what
+grounding and validation retained. This is a safety pilot, with product readiness a separate
+owner decision. The frontend privacy text still names Azure; AST-AI-003 must make it
+provider-aware before a user-facing release.
 
 ## HTTP and review workflow
 
@@ -135,6 +172,7 @@ user review and authoritative rendering remain required.
 
 Add a Bedrock adapter implementing the same structured-generation interface, with equivalent
 schema/refusal/incomplete/usage guarantees and contract tests. Extend the host's provider
-configuration selector. Both adapters can coexist, with one selected for each operation.
+configuration selector. Azure and Development-only Ollama are currently selectable; a
+Bedrock adapter would be selected for an operation after its own approval.
 The existing Bedrock document-answer adapter is not yet a structured chart interpreter;
 there is no silent cross-provider fallback or automatic second paid call.

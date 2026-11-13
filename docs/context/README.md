@@ -7,6 +7,7 @@ implementation and accessible conversation context; they are not a new feature a
 Latest, **4 November 2026**: the explicitly approved first AI proposal workflow is implemented
 locally across AI-Framework/Astro/web, disabled until Azure configuration. See
 [AI chart proposals](../ai-chart-proposals.md) and the newest handoff for current verification.
+Update, **13 November 2026**: chart proposals can use a Development-only local Ollama provider (AST-AI-002); Azure OpenAI remains the only provider for other environments. See [AI chart proposals](../ai-chart-proposals.md).
 The October entries below preserve earlier milestones.
 
 Latest update, **27 October 2026**: web stabilization and the subsequent API-contract milestone

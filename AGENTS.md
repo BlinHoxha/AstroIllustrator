@@ -11,7 +11,7 @@
   and regenerate frontend contracts, and run snapshot/drift checks. Preserve JSON-string job
   fields and distinguish liveness, dependency readiness and per-request scientific support.
 - Check Framework and AI-Framework for suitable existing abstractions before duplicating
-  reusable functionality. The approved chart-proposal feature consumes AI-Framework Core/Azure;
+  reusable functionality. The approved chart-proposal feature consumes AI-Framework Core, Application (metering), Azure and, for Development only, Ollama;
   general Framework remains unreferenced. Avoid incidental adoption, unnecessary abstractions
   or unrelated changes to those repositories.
 - Keep implemented, historically tested, source-inspected and proposed capabilities distinct.
