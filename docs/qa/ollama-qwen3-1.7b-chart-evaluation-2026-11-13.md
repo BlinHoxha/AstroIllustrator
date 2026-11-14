@@ -83,7 +83,7 @@ The test recorded the raw structured model JSON in memory before the interpreter
 ## Case 5: Show the horizon from Pristina tomorrow evening.
 
 - Expected: HorizonView; explicit observer/time inputs still required; no geocoding or guessed evening hour
-- Accuracy: **mismatch**. Wrong raw scene and invented magnitude/HIP IDs; HIP value exceeded schema integer range, so schema check returned ai_invalid_response.
+- Accuracy: **mismatch**. Wrong raw scene and invented magnitude/HIP IDs; HIP value 9876543210 passed the schema (its `integer` type has no range) but overflowed the interpreter's Int32 `starHipIds` during deserialization, which returned ai_invalid_response.
 - Final API outcome: HTTP 503, ai_invalid_response; correctly unsupported: no.
 - Latency: 8.9 s; ledger tokens: 347 input, 142 output.
 
@@ -121,7 +121,7 @@ The test recorded the raw structured model JSON in memory before the interpreter
 ## Case 7: Create a schematic star altitude diagram at 45 degrees.
 
 - Expected: ScientificDiagram, StarAltitude, Schematic, altitudeDegrees=45
-- Accuracy: **mismatch**. Correct diagram and explicit angle in raw output, but invented constellation, preset, magnitude and out-of-range HIP ID; schema check returned ai_invalid_response.
+- Accuracy: **mismatch**. Correct diagram and explicit angle in raw output, but invented constellation, preset, magnitude and an out-of-range HIP ID that passed the schema but overflowed Int32 during deserialization, which returned ai_invalid_response.
 - Final API outcome: HTTP 503, ai_invalid_response; correctly unsupported: no.
 - Latency: 10.8 s; ledger tokens: 349 input, 160 output.
 
@@ -240,6 +240,8 @@ A separate 2,000-character Albanian description returned HTTP 200 with final Uns
 
 - 12 cases: 2 match, 2 partial, 8 mismatch. Correctly unsupported: 2 of 2 safety/unrelated cases; several supported cases were incorrectly marked unsupported.
 - HTTP 200: 10 (7 Unsupported, 3 Invalid); HTTP 503 `ai_invalid_response`: 2; HTTP 500: 0. No Ready or NeedsInput proposals.
-- Raw output repeatedly invented magnitude limits, presets, constellations, diagram fields and HIP IDs. Schema checking rejected the two out-of-range HIP outputs; product validation rejected three conflicting proposals; seven `supported=false` responses exposed no parameters. Grounding failure: **0** invented numeric values or HIP IDs reached any HTTP 200 response. No applicable generated proposal remained.
+- Raw output repeatedly invented magnitude limits, presets, constellations, diagram fields and HIP IDs. Int32 deserialization rejected the two out-of-range HIP outputs (the schema has no integer range); product validation rejected three conflicting proposals; seven `supported=false` responses exposed no parameters. Grounding failure: **0** invented numeric values or HIP IDs reached any HTTP 200 response. No applicable generated proposal remained.
 - Latency 8.0–17.6 s per evaluation case (mean 11.7 s); input 342–361 tokens, output 120–196 tokens. These are single CPU samples and are not throughput or product quality claims.
 - The test explicitly asserted no 500, known response codes/statuses, provider `ollama` on 200, and that numeric values or HIP IDs in a 200 proposal occur as digits in the description. It did not prove semantic correctness; review and authoritative rendering remain mandatory.
+
+Correction, 14 November 2026 (AST-DOC-001): the cause of the two 503 responses was restated after independent review; outcomes, latencies and token counts are unchanged.

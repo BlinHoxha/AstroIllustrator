@@ -11,9 +11,9 @@ error semantics as Azure, with zero-price usage entries. Startup rejects non-loo
 endpoints, insufficient context and an Ollama timeout no longer than the application
 deadline. Azure remains the only configured provider for other environments. The live
 Qwen3 1.7B safety evaluation is recorded in the [QA result](../qa/ollama-qwen3-1.7b-chart-evaluation-2026-11-13.md).
-Frontend privacy text remains Azure-specific and needs AST-AI-003 before user-facing release.
-This branch is awaiting independent R2 review; no integration or product-readiness decision
-has been made.
+AST-AI-002 was committed as `ad530e4`, fast-forwarded into `master` and pushed on
+13 November 2026 after independent R2 review (APPROVE WITH MINOR NOTES). AST-AI-003
+(14 November 2026, frontend `a4278933f9ba798b2badaa6a4622664ea8977a98`) made the Studio privacy notice provider-neutral. No product-readiness decision has been made.
 
 ## AI budget ledger — 11 November 2026
 

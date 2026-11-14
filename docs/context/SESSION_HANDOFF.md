@@ -1,13 +1,19 @@
 # AstroIllustrator session handoff
 
+## AI documentation sync — 14 November 2026
+
+AST-DOC-001 corrects the backend's AI integration and review status, records the
+frontend's provider-neutral notice, and clarifies the two out-of-range HIP results
+in the Ollama evaluation without changing their outcomes.
+
 ## Ollama chart-proposal pilot — 13 November 2026
 
-AST-AI-002 is implemented on `task/AST-AI-002-ollama-pilot` as uncommitted Mode B work,
-awaiting independent R2 review. The Development-only Ollama path uses AI-Framework's
+AST-AI-002 was committed as `ad530e4`, fast-forwarded into `master` and pushed on
+13 November 2026 after independent R2 review. The Development-only Ollama path uses AI-Framework's
 registered loopback adapter, zero-price metering and existing proposal validation. The
 live Qwen3 1.7B evaluation and complete verification results are in the QA record and
 EngineeringCoordination task handoff. Azure behavior and the OpenAPI contract remain
-unchanged. Frontend privacy wording needs AST-AI-003 before user-facing release.
+unchanged. AST-AI-003 (14 November 2026) made the frontend privacy notice provider-neutral.
 
 ## AI budget pilot — 11 November 2026
 

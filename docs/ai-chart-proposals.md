@@ -113,8 +113,8 @@ stop local model generation; a subsequent request may wait. Single CPU planning 
 for Qwen3 1.7B took 7.1–23.2 seconds per case and showed poor raw semantic quality.
 The [live evaluation](qa/ollama-qwen3-1.7b-chart-evaluation-2026-11-13.md) records what
 grounding and validation retained. This is a safety pilot, with product readiness a separate
-owner decision. The frontend privacy text still names Azure; AST-AI-003 must make it
-provider-aware before a user-facing release.
+owner decision. Since AST-AI-003 (14 November 2026), the Studio privacy notice is
+provider-neutral and names the configured provider.
 
 ## HTTP and review workflow
 
@@ -130,7 +130,7 @@ provider-aware before a user-facing release.
   HTTP 429 also covers the fixed-window limiter. No automatic interpretation/render POST retry.
 
 In Studio, type a description and select Suggest chart settings. The privacy notice explains
-that the description leaves the machine for Azure. Inspect the proposed fields and missing
+that the configured AI provider processes the description, on the server's own computer or at an external service depending on the deployment, and names that provider. Inspect the proposed fields and missing
 inputs, confirm Apply settings to form, complete observation/diagram inputs, then Generate.
 Unsupported/invalid responses have no applicable parameters. Cancellation and failures retain
 both description and chart draft. Model text is never inserted as HTML or executed.
