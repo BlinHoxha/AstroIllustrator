@@ -1,5 +1,11 @@
 # Implementation status and prioritized remaining work
 
+## Model comparison and atlas evaluation — 17 November 2026
+
+The completed [Qwen3 model comparison](../qa/ollama-qwen3-model-comparison-2026-11-17.md)
+and [atlas chart evaluation](../qa/atlas-chart-evaluation-2026-11-17.md) are recorded as QA
+evidence. No product code changed. qwen3:4b is a research candidate only.
+
 Original checkpoint: **27 October 2026**, with later updates from 4 November 2026 in the
 sections immediately below. This is an evidence inventory, not a release certificate.
 

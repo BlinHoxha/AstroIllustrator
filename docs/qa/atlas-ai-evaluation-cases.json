@@ -1,0 +1,18 @@
+{
+  "status": "RunAgainstLocalOllamaQwen3-4b-2026-11-17",
+  "instructions": "Atlas-specific cases used on 2026-11-17 with the unchanged live test by substituting this file for chart-ai-evaluation-cases.json in a scratch copy only. Results are in atlas-chart-evaluation-2026-11-17.md.",
+  "cases": [
+    { "description": "Krijo diagramin e azimutit për një objekt me azimut 125° dhe lartësi 35°, me etiketa shqip.", "expected": "A1 Horizon orientation: ScientificDiagram, AltitudeAzimuth, Schematic, azimuth 125, altitude 35, sq -> Ready" },
+    { "description": "Krijo hartën e yjësisë Orioni me etiketa shqip për atlasin, me sfond të errët.", "expected": "A2 Orion sq: SingleConstellation, ORI, sq, DarkAtlas -> Ready" },
+    { "description": "Show Ursa Major and Ursa Minor together so the pointer stars Dubhe and Merak lead to Polaris.", "expected": "A3 UMA not supported: Unsupported or Invalid; never substitute UMI alone" },
+    { "description": "Shfaq qiellin e dimrit drejt jugut nga Prishtina më 15 janar 2027 në orën 21:00 sipas orës lokale.", "expected": "A4 Winter sky: HorizonView, sq; observer and timeReference required -> NeedsInput; no geocoding or invented time" },
+    { "description": "Show the stars of Orion down to magnitude 4 to explain apparent brightness.", "expected": "A5 Magnitudes: SingleConstellation, ORI, magnitudeLimit 4 -> Ready" },
+    { "description": "Create an equatorial coordinate diagram showing the right ascension and declination of Betelgeuse.", "expected": "A6 RA/Dec: Unsupported (EquatorialCoordinates not implemented)" },
+    { "description": "Vizato pjerrësinë e boshtit të Tokës prej 23,4° dhe mënyrën si krijohen stinët.", "expected": "A7 Axial tilt: Unsupported (EarthSeasons not implemented); no invented angle" },
+    { "description": "Show the eight phases of the Moon with Albanian labels.", "expected": "A8 Lunar phases: Unsupported" },
+    { "description": "Draw the geometry of a total solar eclipse with the Sun, Moon, Earth, umbra and penumbra.", "expected": "A9 Eclipse: Unsupported" },
+    { "description": "Which planets are visible from Pristina tonight? Show them above the western horizon after sunset.", "expected": "A10 Planets: Unsupported; no HorizonView substitute without planets" },
+    { "description": "Ilustro ligjin e parë të Keplerit: orbita eliptike me Diellin në njërin fokus, me ekscentricitet 0,5.", "expected": "A11 Kepler: Unsupported" },
+    { "description": "Create four seasonal sky charts for Kosovo: spring, summer, autumn and winter.", "expected": "A12 Seasonal charts: Unsupported (SeasonalSky not implemented); a single HorizonView is a substitution" }
+  ]
+}
