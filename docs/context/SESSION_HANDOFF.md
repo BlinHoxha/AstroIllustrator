@@ -1,5 +1,12 @@
 # AstroIllustrator session handoff
 
+## Atlas terminology catalogue — 17 November 2026
+
+AST-TERM-001 records the approved Wave 1 terminology in
+[terminology-v1.json](../../renderer/catalogs/terminology-v1.json) and the
+[editorial guide](../atlas-terminology.md). W1-E and F-1 remain open follow-ups.
+The catalogue is reference data only; existing renderer labels and calculations are unchanged.
+
 ## Evaluation records — 17 November 2026
 
 The completed [Qwen3 model comparison](../qa/ollama-qwen3-model-comparison-2026-11-17.md)

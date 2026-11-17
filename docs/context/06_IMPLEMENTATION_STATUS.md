@@ -1,5 +1,12 @@
 # Implementation status and prioritized remaining work
 
+## Controlled atlas terminology catalogue — 17 November 2026
+
+AST-TERM-001 adds the [terminology catalogue](../../renderer/catalogs/terminology-v1.json)
+and [editorial guide](../atlas-terminology.md) as reference data. Wave 1 entries carry
+the owner's recorded approvals; unresolved wording and implementation details remain open.
+No renderer or scientific catalogue code changed, and no code reads the new catalogue yet.
+
 ## Model comparison and atlas evaluation — 17 November 2026
 
 The completed [Qwen3 model comparison](../qa/ollama-qwen3-model-comparison-2026-11-17.md)
