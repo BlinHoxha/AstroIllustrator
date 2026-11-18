@@ -6,7 +6,7 @@ from astropy.coordinates import SkyCoord
 
 from .astronomy import observer_positions
 from .contracts import ScientificError
-from .localization import labels
+from .localization import labels, catalogue, angle, coordinate_note, time_note, attribution
 
 def diagram_scene(request, catalog):
     diagram=request["scientificDiagram"]
@@ -52,47 +52,81 @@ def diagram_scene(request, catalog):
     return geometry,science
 
 def draw_diagram(geometry, science, request, palette):
-    text=labels(request)
-    dual=geometry["diagramType"]=="AltitudeAzimuth"
-    fig,axes=plt.subplots(1,2 if dual else 1,figsize=(11,6) if dual else (8,7),facecolor=palette["background"],squeeze=False)
+    language = request["language"]
+    text = labels(request, catalogue())
+    dual = geometry["diagramType"] == "AltitudeAzimuth"
+    separation = geometry["diagramType"] == "AngularSeparation"
+    fig, axes = plt.subplots(1, 2 if dual else 1, figsize=(170 / 25.4, 247 / 25.4),
+                             facecolor=palette["background"], squeeze=False)
+    if dual:
+        axes[0, 0].set_position([0.04, 0.35, 0.44, 0.43])
+        axes[0, 1].set_position([0.52, 0.35, 0.44, 0.43])
+    else:
+        axes[0, 0].set_position([0.10, 0.32, 0.80, 0.53])
     for ax in axes.flat:
         ax.set_facecolor(palette["background"])
-        ax.set(xlim=(-1.25,1.3),ylim=(-1.25,1.3),aspect="equal")
+        ax.set(xlim=(-1.25, 1.3), ylim=(-1.25, 1.3), aspect="equal")
         ax.axis("off")
-    ax=axes[0,0]
-    ax.plot([-1.1,1.15],[0,0],color=palette["line"])
-    ax.plot([0,0],[0,1.1],"--",color=palette["line"])
-    x,y=geometry["rayEnd"]
-    ax.plot([0,x],[0,y],color=palette["foreground"],linewidth=2)
-    ax.scatter([x],[y],c=palette["foreground"],s=30)
-    angle=geometry["angleDeg"]
-    ax.add_patch(Arc((0,0),0.75,0.75,theta1=min(0,angle),theta2=max(0,angle),color=palette["line"],linewidth=2))
-    label_angle=math.radians(angle/2)
-    ax.text(0.5*math.cos(label_angle),0.5*math.sin(label_angle),f"{angle:.3f}°",color=palette["foreground"],fontsize=12)
-    separation=geometry["diagramType"]=="AngularSeparation"
-    ax.text(0.6,-0.13,text["ray"] if separation else text["horizon"],color=palette["foreground"],fontsize=9)
-    ax.text(0.04,1.12,text["reference"] if separation else text["zenith"],color=palette["foreground"],fontsize=9)
-    if dual:
-        az=geometry["azimuthDeg"]
-        ax=axes[0,1]
-        ax.plot([-1.1,1.1],[0,0],color=palette["line"])
-        ax.plot([0,0],[-1.1,1.1],color=palette["line"])
-        ax.plot([0,geometry["azimuthRayEnd"][0]],[0,geometry["azimuthRayEnd"][1]],color=palette["foreground"],linewidth=2)
-        ax.add_patch(Arc((0,0),0.7,0.7,theta1=90-az,theta2=90,color=palette["line"]))
-        for cardinal,(x,y) in zip(text["cardinals"],[(0,1.15),(1.15,0),(0,-1.15),(-1.15,0)]):
-            ax.text(x,y,cardinal,color=palette["foreground"],ha="center")
-        ax.text(-0.9,-0.8,f"{text['azimuth']} = {az:g}°\n{text['clockwise']}",color=palette["foreground"],fontsize=9)
-    title=text["separation"] if separation else text["computed"] if geometry["mode"]=="Computed" else text["teaching"] if "approximation" in science else text["altitude"]+" — "+text["schematic"]
-    fig.suptitle(title,color=palette["foreground"],fontsize=13)
-    if geometry["mode"]=="Computed" and "observationUtc" in science:
-        observer=science["observer"]
-        note=science["observationUtc"]+f" | {observer['latitude']:+.4f}°, {observer['longitude']:+.4f}°\n{text['azimuth']} {science['azimuthDeg']:.3f}° | {text['noRefraction']}\nHYG v4.1: David Nash / Astronexus (CC BY-SA 4.0)"
-    elif "approximation" in science:
-        note=text["ncp"]
-    elif separation:
-        note=" / ".join(science["starNames"])+" | J2000 | HYG v4.1: David Nash / Astronexus (CC BY-SA 4.0)\n"+text["separationNote"]
+    ax = axes[0, 0]
+    ax.plot([-1.1, 1.15], [0, 0], color=palette["line"], linewidth=0.8)
+    if not separation:
+        ax.plot([0, 0], [0, 1.1], "--", color=palette["line"], linewidth=0.8)
+    x, y = geometry["rayEnd"]
+    ax.plot([0, x], [0, y], color=palette["foreground"], linewidth=2)
+    ax.scatter([x], [y], c=palette["foreground"], s=30)
+    measured_angle = geometry["angleDeg"]
+    ax.add_patch(Arc((0, 0), 0.75, 0.75, theta1=min(0, measured_angle), theta2=max(0, measured_angle),
+                     color=palette["line"], linewidth=2))
+    label_angle = math.radians(measured_angle / 2)
+    ax.text(0.5 * math.cos(label_angle), 0.5 * math.sin(label_angle), angle(measured_angle, language),
+            color=palette["foreground"], fontsize=11)
+    if separation:
+        # First HIP is the horizontal baseline; second HIP is the measured angled ray.
+        ax.text(0.6, -0.13, science["starNames"][0], color=palette["foreground"], fontsize=9)
+        ax.annotate(science["starNames"][1], (x, y), xytext=(8, 8), textcoords="offset points",
+                    color=palette["foreground"], fontsize=9)
     else:
-        note=text["schematic"]+" | "+text["zenithDistance"]
-    fig.text(0.5,0.045,note,ha="center",fontsize=8,color=palette["foreground"])
-    fig.subplots_adjust(bottom=0.15)
+        ax.text(0.6, -0.13, text["horizon"], color=palette["foreground"], fontsize=9)
+        ax.text(0.04, 1.12, text["zenith"], color=palette["foreground"], fontsize=9)
+    if dual:
+        az = geometry["azimuthDeg"]
+        ax = axes[0, 1]
+        ax.plot([-1.1, 1.1], [0, 0], color=palette["line"], linewidth=0.8)
+        ax.plot([0, 0], [-1.1, 1.1], color=palette["line"], linewidth=0.8)
+        ax.plot([0, geometry["azimuthRayEnd"][0]], [0, geometry["azimuthRayEnd"][1]],
+                color=palette["foreground"], linewidth=2)
+        ax.add_patch(Arc((0, 0), 0.7, 0.7, theta1=90 - az, theta2=90,
+                         color=palette["line"], linewidth=1.5))
+        for cardinal, (cx, cy) in zip(text["cardinals"], [(0, 1.15), (1.15, 0), (0, -1.15), (-1.15, 0)]):
+            ax.text(cx, cy, cardinal, color=palette["foreground"], ha="center", fontsize=9)
+        fig.text(0.5, 0.32, f"{text['azimuth']} = {angle(az, language)} | {text['clockwise']}",
+                 color=palette["foreground"], ha="center", fontsize=8)
+    title = text["separation"] if separation else text["computed"] if geometry["mode"] == "Computed" else \
+        text["teaching"] if "approximation" in science else text["altitude"] + " — " + text["schematic"]
+    fig.suptitle(title, color=palette["foreground"], fontsize=13, y=0.92)
+    if geometry["mode"] == "Computed" and "observationUtc" in science:
+        payload = request["scientificDiagram"]
+        note = (time_note(science, payload, language) + "\n" +
+                coordinate_note(payload["observer"], language, text) + "\n" +
+                f"{text['azimuth']} {angle(science['azimuthDeg'], language)} | {text['noRefraction']}")
+        projection = f"{text['azimuth']} / {text['altitude']}"
+    elif "approximation" in science:
+        note = text["ncp"]
+        projection = text["teaching"]
+    elif separation:
+        note = text["separationNote"]
+        projection = text["separation"]
+    else:
+        note = text["zenithDistance"]
+        projection = text["schematic"]
+    fig.text(0.5, 0.245, note, ha="center", va="top", fontsize=8,
+             color=palette["foreground"], linespacing=1.5)
+    for index, line in enumerate(attribution(
+            science, text, projection, uses_catalogue=separation or geometry["mode"] == "Computed",
+            j2000_positions=separation, include_method=geometry["mode"] == "Computed" and not separation)):
+        fig.text(0.5, 0.135 - index * 0.018, line, ha="center", fontsize=7, color=palette["foreground"])
+    if geometry["mode"] == "Computed" or separation:
+        # Retain the HYG attribution and licence verbatim.
+        fig.text(0.5, 0.025, "HYG v4.1: David Nash / Astronexus (CC BY-SA 4.0)",
+                 ha="center", fontsize=8, color=palette["foreground"])
     return fig

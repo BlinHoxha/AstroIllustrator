@@ -1,11 +1,55 @@
 # AstroIllustrator session handoff
 
+## Atlas figure standard, round-4 rework — 18 November 2026
+
+Labels now receive a leader when another plotted star of magnitude 4 or brighter
+is at least as close to the text box as the labelled star. The plot-edge fallback
+remeasures the box after shifting it. The EngineeringCoordination task Handoff
+holds the verification record and review checkpoint; changes remain uncommitted.
+The dense horizon median render time remains 2.23× the baseline in isolated trials;
+this performance regression is provisionally accepted for rework only.
+
+## Atlas figure standard, round-3 rework — 18 November 2026
+
+Dense star labels are placed within the plot using display-coordinate text bounds.
+Nearby collision-free positions take priority; a nearby crowded position takes
+priority over a detached clear one. Labels farther than 20 pt from their star
+receive a leader line. A bounded plot-clamped fallback preserves valid renders.
+The EngineeringCoordination AST-ATLAS-001 Handoff records verification and the
+new review checkpoint. All edits remain uncommitted under Mode B.
+
+## Atlas figure standard — 17 November 2026
+
+Round-2 rework makes required star labels survive dense horizon scenes with bounded,
+deterministic best-effort placement. The 10° static-chart bar now uses the centre
+plate scale exactly. Teaching, separation and schematic diagrams omit redundant
+method lines while preserving catalogue and epoch attribution where applicable.
+The EngineeringCoordination task Handoff records the new comparison and stress
+results, verification and review checkpoint; all work remains uncommitted.
+
+Rework after independent review corrects five presentation findings: catalogue and
+J2000 attribution now follow figure type, method text uses approved labels, the 10°
+bar meets the 1% scale tolerance, Orion labels avoid glyphs and the scale label, and
+fractional elevation and magnitude legends follow request language and limit.
+The 20 example renders in both languages retain identical geometry hashes and all
+manifest fields outside `outputs`. The EngineeringCoordination task Handoff records
+the rework checkpoint, tests, previews and measured PNG performance.
+
+AST-ATLAS-001 implements the existing-scene figure presentation standard on its
+task branch. The renderer reads approved Wave 1 terminology at draw time and
+retains English/international fallback, scientific geometry and manifest content.
+The PNG export is 300 DPI on a 170 × 247 mm portrait canvas; SVG remains available.
+The corresponding EngineeringCoordination task handoff records the baseline
+comparison, preview review, tests, output sizes and exact review checkpoint.
+The work is uncommitted under Mode B pending Claude's publication and review.
+
 ## Atlas terminology catalogue — 17 November 2026
 
 AST-TERM-001 records the approved Wave 1 terminology in
 [terminology-v1.json](../../renderer/catalogs/terminology-v1.json) and the
 [editorial guide](../atlas-terminology.md). W1-E and F-1 remain open follow-ups.
-The catalogue is reference data only; existing renderer labels and calculations are unchanged.
+At the AST-TERM-001 checkpoint the catalogue was reference data only; AST-ATLAS-001
+subsequently added read access in renderer drawing. Calculations remain unchanged.
 
 ## Evaluation records — 17 November 2026
 

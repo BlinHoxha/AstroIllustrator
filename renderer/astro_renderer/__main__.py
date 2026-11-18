@@ -37,7 +37,7 @@ def render(request, output):
     output.mkdir(parents=True, exist_ok=True)
     try:
         fig.savefig(output / "chart.svg", metadata={"Date": None, "Creator": "AstroIllustrator " + __version__})
-        fig.savefig(output / "chart.png", dpi=200, metadata={"Software": "AstroIllustrator " + __version__})
+        fig.savefig(output / "chart.png", dpi=300, metadata={"Software": "AstroIllustrator " + __version__})
     finally:
         plt.close(fig)
     outputs = [dict(format=fmt, fileName=f"chart.{fmt}", sha256=digest((output / f"chart.{fmt}").read_bytes())) for fmt in ["svg", "png"]]

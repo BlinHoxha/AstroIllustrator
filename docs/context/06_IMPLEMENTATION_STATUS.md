@@ -1,11 +1,42 @@
 # Implementation status and prioritized remaining work
 
+## Atlas figure standard — 17 November 2026
+
+Round-4 rework adds a leader where a label is at least as close to another
+plotted magnitude-4-or-brighter star as to its own star. Edge-clamped labels
+are measured again at their final position before distance and ambiguity checks.
+The existing 20 pt leader rule and deterministic fallback remain in force.
+
+Round-3 presentation rework keeps every required star label within the plot and
+ties distant labels to their plotted stars with leader lines. Candidate placement
+uses display-coordinate bounds and distances, nearby positions first, and a
+bounded best-effort fallback. Scientific points and selection are unchanged.
+
+AST-ATLAS-001 updates renderer drawing for existing charts and diagrams. Approved
+Albanian terminology is read from `renderer/catalogs/terminology-v1.json` at draw
+time; unapproved entries use the recorded English or international fallback.
+Localized titles, star labels, dated figure annotations, compass/scale/magnitude
+elements and source/method notes are presentation only. The AngularSeparation
+diagram names its two rays in HIP request order. Existing angle geometry remains
+to scale and has no schematic badge. The A4 portrait canvas is 170 × 247 mm;
+PNG is 300 DPI. The scientific catalogue, calculations, request/response schema,
+geometry and manifest scientific fields are unchanged. Print/editorial and HYG
+publication licensing acceptance remain open.
+Catalogue attribution appears only where catalogue stars are used. J2000 identifies
+static chart positions and the angular-separation reference; dated positions carry
+no J2000 method label. Static, horizon and computed Polaris figures retain approved
+method descriptions; teaching, separation and schematic diagrams omit a repeated
+method line. Dense star labels use a bounded best-effort placement so valid renders
+do not fail. The scale bar uses the centre plate scale exactly; fractional elevation
+uses the language decimal separator, and magnitude legends respect the request limit.
+
 ## Controlled atlas terminology catalogue — 17 November 2026
 
 AST-TERM-001 adds the [terminology catalogue](../../renderer/catalogs/terminology-v1.json)
 and [editorial guide](../atlas-terminology.md) as reference data. Wave 1 entries carry
 the owner's recorded approvals; unresolved wording and implementation details remain open.
-No renderer or scientific catalogue code changed, and no code reads the new catalogue yet.
+At the AST-TERM-001 checkpoint no renderer or scientific catalogue code changed;
+AST-ATLAS-001 subsequently added renderer read access to the terminology catalogue.
 
 ## Model comparison and atlas evaluation — 17 November 2026
 

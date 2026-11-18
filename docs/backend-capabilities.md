@@ -128,6 +128,36 @@ remain persisted failed jobs with an error code/message and a trace/job ID. Inco
 files are never exposed as completed outputs. Global resource limits remain process timeout,
 bounded request/output size and concurrency; no OS memory quota is implemented.
 
+## Atlas figure presentation (AST-ATLAS-001, 17 November 2026)
+
+The renderer reads the approved terminology catalogue at draw time. Albanian figure
+terms and constellation or asterism names appear only when their catalogue status is
+`approved`; otherwise the figure uses the recorded English or international fallback.
+Star labels keep their HYG catalogue names. The 13 educational labels remain visible,
+and other named catalogue stars are labelled when their magnitude is at most 1.5.
+Dense fields use a bounded, deterministic least-overlap position when no clear label
+position exists; label placement does not fail an otherwise valid render.
+
+Static charts show the localized title, north/east compass, centre TAN angular scale,
+glyph-size magnitude legend and the request's magnitude limit. Horizon charts show
+the four azimuth cardinal markers. Dated figures show the resolved local clock and
+UTC equivalent when a time zone is supplied, or UTC alone, plus request coordinates
+rounded only for display. Fractional elevation uses the language's decimal separator;
+legend values do not exceed the request's magnitude limit. Figure angles use one decimal
+and Albanian comma formatting. HYG is named as a data source only for figures using
+catalogue stars. J2000 labels describe static catalogue positions and angular separation,
+while observer-dated figures use observation-date positions. Static charts, horizon
+charts and computed Polaris show approved method descriptions. Teaching, separation
+and schematic diagrams omit a method line already conveyed by their titles.
+The scientific geometry and manifest values retain their original precision.
+
+The default portrait canvas is 170 × 247 mm, with SVG and 300 DPI PNG output. The
+existing diagrams draw their numeric angles to scale, so none displays the reserved
+schematic badge. The AngularSeparation baseline ray names the first HIP star, its
+angled ray names the second, and the unrelated vertical guide is omitted. Existing
+HYG attribution and licence wording remain on figures where they appeared before.
+Print/editorial acceptance and HYG publication licensing remain separate open gates.
+
 ## Remaining backend milestones before broad product delivery
 
 1. Broader independent astronomy/planetarium and print/editorial validation.

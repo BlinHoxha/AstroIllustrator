@@ -117,7 +117,7 @@ Renderer `0.2.0` builds geometry/scientific results first, then renders DarkAtla
 PrintMonochrome with Matplotlib Agg. Geometry SHA-256 uses sorted canonical JSON with
 non-finite numbers forbidden. Language and style are presentation changes, not changes
 to underlying science. SVG uses a stable hash salt and omits variable date metadata;
-PNG is saved at 200 dpi. DejaVu Sans is referenced through Matplotlib, not a guarantee that
+PNG is saved at 300 dpi. DejaVu Sans is referenced through Matplotlib, not a guarantee that
 every downstream print workflow embeds fonts correctly.
 
 Each completed result has SVG, PNG and manifest. The manifest includes original normalized
